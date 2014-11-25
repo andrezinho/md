@@ -1,5 +1,5 @@
 <?php
-require_once '/app/start.php'; //Start para facebook
+require_once '/app/start.php'; //Start para facebook -> ;)
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
