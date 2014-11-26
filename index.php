@@ -1,5 +1,8 @@
 <?php
 require_once '/app/start.php'; //Start para facebook -> ;)
+//require_once '/model/menu.php';
+require_once '/app/funciones.php';
+
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
@@ -61,7 +64,7 @@ require_once '/app/start.php'; //Start para facebook -> ;)
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
 
-<script type="text/javascript" src="mijs/js.js"></script>
+<script type="text/javascript" src="js/mijs/js.js"></script>
 
 
 </head>
@@ -183,21 +186,24 @@ require_once '/app/start.php'; //Start para facebook -> ;)
       <div> 
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
-          <ul class="nav nav-pills nav-justified">
-          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
-            <li> <a href="descuentos.php"><span class="hidden-sm">Viajes</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
+          <ul class="nav nav-pills nav-justified" id="categorias">
+          <li class="dropdown"> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span><i class="fa fa-angle-down fa-fw"></i></a></li>
+            <!--
+            <li class="dropdown"> <a href="descuentos.php"><span class="hidden-sm">Viajes</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
             <li> <a href="about.html"><span class="hidden-sm">Servicios</span> <i class="fa fa-angle-down fa-fw"></i></a> </li>
             <li> <a href="blog.html"><span class="hidden-sm">Restaurants</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
             <li> <a href="contact.html"><span class="hidden-sm ">Productos</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
             <li class="dropdown"> <a href="cart.html"><span class="hidden-sm"> Belleza y Salud</span><i class="fa fa-angle-down fa-fw"></i></a> 
+              -->
               <!-- 
               <div class="dropdown-menu quick-cart">
                 <div class="qc-row qc-row-heading"> hola </div>
                 
               </div>
                --> 
-            </li>
-            <li> <a href="contact.html"><span class="hidden-sm">Entretenimiento</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
+            <!--</li>
+            <li> <a href="contact.html"><span class="hidden-sm">Entretenimiento</span><i class="fa fa-angle-down fa-fw"></i></a> </li>-->
+           
           </ul>
         </div>
           <div class="clearfix"></div>
