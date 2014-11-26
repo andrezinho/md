@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="topheadrow">
-          <a href="index.html"><img src="images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
+          <a href="../../index.php"><img src="images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
 
           <ul class="nav nav-pills pull-right">          
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><?php echo strtoupper($_SESSION['perfil']); ?> <i class="fa fa-angle-down fa-fw"></i> </a>            </li>            

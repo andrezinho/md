@@ -59,7 +59,8 @@ class publicadorController extends Controller
         echo $view->renderPartial();
     }
 
-    public function edit() {
+    public function edit() 
+    {
         $obj = new publicador();
         $obj_l = new local();
         $data = array();

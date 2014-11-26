@@ -14,7 +14,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
+$helper = new FacebookRedirectLoginHelper('http://www.muchosdescuentos.com/pe/');
 
 try {
 	$session = $helper->getSessionFromRedirect();
@@ -95,11 +95,11 @@ try {
             {
 
 			 $stmt = $db->prepare("SELECT u.nrodocumento,u.idusuario,u.idperfil,
-			            							 CONCAT(u.nombres, ' ', u.apellidos) As nombres,
-			            							 u.email,
-			            							 u.idface,
-			            							 p.descripcion as perfil
-			            					 from usuario as u inner join perfil as p on p.idperfil = u.idperfil where u.idface=:c");
+            							 CONCAT(u.nombres, ' ', u.apellidos) As nombres,
+            							 u.email,
+            							 u.idface,
+            							 p.descripcion as perfil
+            					 from usuario as u inner join perfil as p on p.idperfil = u.idperfil where u.idface=:c");
 			 $stmt->bindParam(':c',$id_face,PDO::PARAM_STR);
 			 $stmt->execute();
 			 $r = $stmt->fetchObject();

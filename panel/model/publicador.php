@@ -1,15 +1,15 @@
 <?php
 include_once("Main.php");
-class asesor extends Main
+class publicador extends Main
 {
-    var $idperfil = 2; //Asesor
+    var $idperfil = 3; //Publicador
 
     function indexGrid($page,$limit,$sidx,$sord,$filtro,$query,$cols)
     {
         $sql = "SELECT u.idusuario,
                        concat(u.nombres,' ',u.apellidos),
                        u.nrodocumento,
-                       concat(e.razon_social,'-',l.descripcion),
+                       concat(e.razon_social,' - ',l.descripcion),
                        case u.estado when 1 then 'ACTIVO' else 'INCANTIVO' end
                 from usuario as u inner join local as l on u.idlocal = l.idlocal
                         inner join empresa as e on e.idempresa = l.idempresa
@@ -19,10 +19,10 @@ class asesor extends Main
 
    function edit($id ) 
    {
-        $stmt = $this->db->prepare("SELECT u.*,u.idempresa
+        $stmt = $this->db->prepare("SELECT u.*,l.idempresa
                                     FROM usuario as u
                                     inner join local as l on l.idlocal = u.idlocal
-                                  WHERE idpublicador = :id ");
+                                  WHERE idusuario = :id ");
         $stmt->bindParam(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchObject();
@@ -56,6 +56,7 @@ class asesor extends Main
         $stmt->bindParam(':p9', $_P['nrodocumento'] , PDO::PARAM_STR);
         $stmt->bindParam(':p10', $passw , PDO::PARAM_STR);
         $stmt->bindParam(':p11', $_P['activo'] , PDO::PARAM_INT);
+        $stmt->bindParam(':p12', $_P['idlocal'] , PDO::PARAM_INT);
 
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
@@ -71,8 +72,9 @@ class asesor extends Main
                                                         celular = :p5,
                                                         idtipo_documento = :p6,
                                                         nrodocumento = :p7,
-                                                       estado = :p8
-                                                       WHERE idusuario = :idasesor");
+                                                        estado = :p8,
+                                                        idlocal = :p9
+                                    WHERE idusuario = :idpublicador");
         $stmt->bindParam(':p1', $_P['nombres'] , PDO::PARAM_STR);
         $stmt->bindParam(':p2', $_P['apellidos'] , PDO::PARAM_STR);
         $stmt->bindParam(':p3', $_P['email'] , PDO::PARAM_STR);
@@ -81,7 +83,8 @@ class asesor extends Main
         $stmt->bindParam(':p6', $_P['idtipo_documento'] , PDO::PARAM_INT);
         $stmt->bindParam(':p7', $_P['nrodocumento'] , PDO::PARAM_STR);
         $stmt->bindParam(':p8', $_P['activo'] , PDO::PARAM_INT);
-        $stmt->bindParam(':idasesor', $_P['idusuario'] , PDO::PARAM_INT);
+        $stmt->bindParam(':p9', $_P['idlocal'] , PDO::PARAM_INT);
+        $stmt->bindParam(':idpublicador', $_P['idusuario'] , PDO::PARAM_INT);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);

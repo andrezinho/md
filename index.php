@@ -56,16 +56,11 @@ require_once '/app/start.php'; //Start para facebook -> ;)
 <script>
   !window.jQuery && document.write("<script src='js/jquery.min.js'><\/script>")
 </script>
-
 <!--[if IE 8]>
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
-
-<script type="text/javascript" src="mijs/js.js"></script>
-
-
+<script type="text/javascript" src="js/mijs/js.js"></script>
 </head>
-
 <body>
 <?php //print_r($_SESSION); ?>
 <header>   
@@ -82,19 +77,15 @@ require_once '/app/start.php'; //Start para facebook -> ;)
                   <li><a href="#a">LIMA</a></li>                
                   <li><a href="#a">TRUJILLO</a></li>                
               </ul>
-            </li>
-            <!--<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">(01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
-            </li>-->
+            </li>            
             <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>
-            
-            <?php if (!isset($_SESSION['facebook'])): ?>
+            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
                 <i class="fa fa-user fa-fw"></i>
                   <span class="hidden-xs"> Iniciar Sesión</span>              
-              </a>
-              
+              </a>              
               <div class="loginbox dropdown-menu"> 
                 Conectarse con:<br>
                   <div class="social-icons">
@@ -102,27 +93,23 @@ require_once '/app/start.php'; //Start para facebook -> ;)
                       <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
                       <li class="icon twitter"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
                       <li class="icon facebook" id="icon_facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>"><i class="fa fa-facebook fa-fw"></i></a></li>
-                     
-
                     </ul>
-                  </div>
-               <!-- <span class="form-header">Login</span>-->
+                  </div>               
                <br><br>
                <div id="log-in"><hr> 
                 <span>Login:</span>
                 <span><a href="#">Registrar</a></span>
                </div>
-                
-                <form>
+               <form id="frmlogin" method="post"  action="panel/web/process.php">
                   <div class="form-group"> <i class="fa fa-user fa-fw"></i>
-                    <input class="form-control" id="InputUserName" placeholder="Username" type="text" data-validation="required">
+                    <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
                   </div>
                   <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                    <input class="form-control" id="InputPassword" placeholder="Password" type="password" data-validation="required">
+                    <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
                   </div>
                   <button class="btn medium color1 pull-right" type="submit">Entrar</button>
-                </form>
-                <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
+               </form>
+               <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
               </div>
             </li>
             
@@ -130,12 +117,18 @@ require_once '/app/start.php'; //Start para facebook -> ;)
                  
                 <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
-                  <?php echo $facebook_user->getName();?>
+                  <?php echo $_SESSION['name'];?>
                   </a>
 
                     <div class="loginbox dropdown-menu"> 
+                    
                       <ul>
+                      <?php if($_SESSION['idperfil']!=4) { ?>
                       <li><a href="panel/">Panel Admin</a></li>
+                      <?php } 
+                      else { ?>
+                        <li><a href="#">Mis Datos</a></li>
+                      <?php } ?>
                       <li><a href="#">Mis Cupones</a></li>
                       <li><a href="#">Mis Suscripciones</a></li>
                       <li><a href="app/logout.php">Salir</a></li>

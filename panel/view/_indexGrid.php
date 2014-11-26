@@ -240,7 +240,7 @@ function eliminar()
     <div style="padding:3px 5px; text-align: center">Bienvenido, <b><?php echo $_SESSION['name'] ?></b></div>
     <div>
         <ul class="enlaces-menu">
-            <li><a href="#">Regresar a Inicio</a></li>
+            <li><a href="../../index.php">Regresar a Inicio</a></li>
             <li><a href="#">Cambiar Contraseña</a></li>            
             <li><a href="index.php?controller=user&action=logout" class="logout">Cerrar Session</a></li>            
         </ul>

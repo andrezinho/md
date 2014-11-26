@@ -1,5 +1,4 @@
-$(document).ready(function(){
-
+$(document).ready(function(){	
 	/*$("#icon_facebook").click(function(){
 			name_f=$("#nombre_f").val();
 			ape_f=$("#apellido_f").val();
@@ -9,8 +8,5 @@ $(document).ready(function(){
 			$.get("modelo/adduser_face.php",'name='+name_f+'&lastname='+ape_f+'&email='+mail_f+'&id='+id_f,function(data){
 			 alert(data); });
 		});
-
 */
-
 });
-
