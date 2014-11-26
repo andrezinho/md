@@ -62,14 +62,10 @@ require_once '/app/funciones.php';
 <!--[if IE 8]>
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
-<<<<<<< HEAD
+
 
 <script type="text/javascript" src="js/mijs/js.js"></script>
 
-
-=======
-<script type="text/javascript" src="js/mijs/js.js"></script>
->>>>>>> 71a0256e2c58410598ff6b0fd762e8ef33e9eacc
 </head>
 <body>
 <?php //print_r($_SESSION); ?>
