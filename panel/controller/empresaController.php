@@ -74,6 +74,19 @@ class empresaController extends Controller
         $view->setTemplate( '../view/empresa/_form.php' );
         echo $view->renderPartial();
     }
+
+    public function view() 
+    {
+        $obj = new empresa();
+        $data = array();
+        $view = new View();
+        $obj = $obj->edit($_GET['id']);
+        $data['obj'] = $obj;
+        $data['empresasPadres'] = $this->Select(array('id'=>'idpadre','name'=>'idpadre','table'=>'vista_empresa','code'=>$obj->idpadre));
+        $view->setData($data);
+        $view->setTemplate( '../view/empresa/_form.php' );
+        echo $view->renderPartial();
+    }
     public function save()
     {        
         $obj = new empresa();

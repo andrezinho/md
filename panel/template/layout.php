@@ -34,7 +34,7 @@
 <script type="text/javascript" src="js/jquery.jqGrid.min.js"></script> 
 <!-- <script type="text/javascript" src="js/jquery.jqGrid.src.js"></script> -->
 <script type="text/javascript" src="js/grid.locale-es.js"></script>
-
+<?php //print_r($_SESSION); ?>
 </head>
 <body>
 <header> 
