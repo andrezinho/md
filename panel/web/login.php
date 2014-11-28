@@ -65,7 +65,10 @@
                     <div class="box-item-form"><label class="labels">Email:</label></div>
                     <div class="box-item-form"><input id="usuario" name="usuario" class="ui-widget-content ui-corner-all text" style=" width: 80%; text-align: left; " value=""  /></div>
                     <div class="box-item-form"><label class="labels">Password:</label></div>
-                    <div class="box-item-form"><input type="password" id="password" name="password" class="ui-widget-content ui-corner-all text" style=" width: 80%; text-align: left;" value=""/></div>
+                    <div class="box-item-form">
+                        <input type="password" id="password" name="password" class="ui-widget-content ui-corner-all text" style=" width: 80%; text-align: left;" value=""/>
+                        <input type="hidden" name="type" id="type" value="p" />
+                    </div>
                     <div class="box-item-form"><input type="submit" id="ingresar" value="Iniciar Sessión" class="ui-button"  /></div>
                     <div class="box-item-form">
                         <a href="#">¿No Puedes iniciar session? <br/> Contactece con el WebMaster.</a>

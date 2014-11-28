@@ -17,18 +17,32 @@ class UserController extends Controller {
             $_SESSION['name'] = $obj->nombres;
             $_SESSION['id_perfil'] = $obj->idperfil;
             $_SESSION['perfil'] = $obj->perfil;
-            header('location:index.php');
+            if($_POST['type']=='p')
+            {
+                header('location:index.php');
+            }
+            else
+            {
+                header('location:../../index.php');                
+            }
         }
         else
         {
-            header('location:login.php');
-            print_r(json_encode(array("resp"=>"0","msg"=>"Sus datos son incorrectos")));
+            if($_POST['type']=='p')
+            {
+                header('location:login.php');                
+            }
+            else
+            {   
+                header('location:../../index.php');                
+            }
+            //print_r(json_encode(array("resp"=>"0","msg"=>"Sus datos son incorrectos")));
         }
     }
     function logout()
     {
         session_destroy();
-        header('Location: ../web/login.php');
+        header('Location: ../../index.php');
     }    
     public function index() 
     {

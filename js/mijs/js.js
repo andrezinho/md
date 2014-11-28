@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
 $.get('model/menu.php','&',function(data){ //alert(data);
   var menu = "";
    $.each(data,function(i,j){
@@ -14,7 +13,7 @@ $.get('model/menu.php','&',function(data){ //alert(data);
 
 	 menu += "</li>";
 	});
-//fin each data
+
 
    $("#listamenu").append(menu);
 

@@ -23,8 +23,6 @@ require_once '/app/funciones.php';
 <!-- IView Slider CSS -->
 <link href="css/iView.css" rel="stylesheet">
 
-<!--	Responsive 3D Menu	-->
-<link href="css/menu3d.css" rel="stylesheet"/>
 
 <link href="css/micss.css" rel="stylesheet"/>
 
@@ -51,8 +49,6 @@ require_once '/app/funciones.php';
 <!-- Custom Scripts -->
 <script src="js/scripts.js"></script>
 
-<!-- MegaMenu -->
-<script src="js/menu3d.js" type="text/javascript"></script>
 <!-- iView Slider -->
 <script src="js/raphael-min.js" type="text/javascript"></script>
 <script src="js/jquery.easing.js" type="text/javascript"></script>
@@ -65,11 +61,9 @@ require_once '/app/funciones.php';
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
 
-
 <script type="text/javascript" src="js/mijs/js.js"></script>
 </head>
 <body>
-<?php //print_r($_SESSION); ?>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
   <div class="container">
@@ -119,9 +113,7 @@ require_once '/app/funciones.php';
                <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
               </div>
             </li>
-            
               <?php else: ?>
-                 
                 <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
                   <?php echo $_SESSION['name'];?>

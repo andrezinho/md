@@ -6,6 +6,7 @@
         Purpose of the stylesheet follows.
 */
 select,input { height: 32px; font-family: arial; border:1px solid #CCC !important;}
+textarea { border:1px solid #CCC !important;}
 
 label { display: inline-block; font-size: 12px; }
 .labels { width: 100px; text-align: right; margin-right: 2px;color:#333;}
