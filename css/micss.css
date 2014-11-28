@@ -1,0 +1,18 @@
+  .submenu{
+ 	display: none;
+ 	background: #B6090C;
+ 	height: auto;
+ 	width: 679%;
+ 	z-index: 5;
+ 	text-align: center;
+ 	position: absolute;
+ 	min-height: 150px;
+ 	margin-left: -180px;
+ 	margin-top: 0px;
+ 	
+ }
+ .submenu p{
+ 	float: left;
+ 	margin-left: 10px;
+ 	padding: .2em;
+ }

@@ -26,6 +26,8 @@ require_once '/app/funciones.php';
 <!--	Responsive 3D Menu	-->
 <link href="css/menu3d.css" rel="stylesheet"/>
 
+<link href="css/micss.css" rel="stylesheet"/>
+
 <!-- Animations -->
 <link href="css/animate.css" rel="stylesheet" type="text/css"/>
 
@@ -62,14 +64,9 @@ require_once '/app/funciones.php';
 <!--[if IE 8]>
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
-<<<<<<< HEAD
+
 
 <script type="text/javascript" src="js/mijs/js.js"></script>
-
-
-=======
-<script type="text/javascript" src="js/mijs/js.js"></script>
->>>>>>> 71a0256e2c58410598ff6b0fd762e8ef33e9eacc
 </head>
 <body>
 <?php //print_r($_SESSION); ?>
@@ -186,24 +183,12 @@ require_once '/app/funciones.php';
       <div> 
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
-          <ul class="nav nav-pills nav-justified" id="categorias">
-          <li class="dropdown"> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span><i class="fa fa-angle-down fa-fw"></i></a></li>
-            <!--
-            <li class="dropdown"> <a href="descuentos.php"><span class="hidden-sm">Viajes</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
-            <li> <a href="about.html"><span class="hidden-sm">Servicios</span> <i class="fa fa-angle-down fa-fw"></i></a> </li>
-            <li> <a href="blog.html"><span class="hidden-sm">Restaurants</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
-            <li> <a href="contact.html"><span class="hidden-sm ">Productos</span><i class="fa fa-angle-down fa-fw"></i></a> </li>
-            <li class="dropdown"> <a href="cart.html"><span class="hidden-sm"> Belleza y Salud</span><i class="fa fa-angle-down fa-fw"></i></a> 
-              -->
-              <!-- 
-              <div class="dropdown-menu quick-cart">
-                <div class="qc-row qc-row-heading"> hola </div>
-                
-              </div>
-               --> 
-            <!--</li>
-            <li> <a href="contact.html"><span class="hidden-sm">Entretenimiento</span><i class="fa fa-angle-down fa-fw"></i></a> </li>-->
-           
+          <ul class="nav nav-pills nav-justified" id="listamenu">
+          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span><i class="fa fa-angle-down fa-fw"></i></a>
+          </li>
+
+            <!-- Menu -->
+
           </ul>
         </div>
           <div class="clearfix"></div>

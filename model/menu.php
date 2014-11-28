@@ -20,7 +20,7 @@ $db = Spdo::singleton();
            
             $menu[$cont] = array(
                                 'texto' => ucfirst($valor['descripcion']),
-                                //'url' => $url,
+                                'codigo' => $valor['idcategoria'],
                                 'enlaces' => array()
                 );
             $cont2 = 0;
