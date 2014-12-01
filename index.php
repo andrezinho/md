@@ -122,7 +122,7 @@ require_once '/app/funciones.php';
                     <div class="loginbox dropdown-menu"> 
                     
                       <ul>
-                      <?php if($_SESSION['idperfil']!=4) { ?>
+                      <?php if($_SESSION['id_perfil']!=4) { ?>
                       <li><a href="panel/">Panel Admin</a></li>
                       <?php } 
                       else { ?>
@@ -171,7 +171,7 @@ require_once '/app/funciones.php';
     </div>
   </div>
   <div class="container">
-    <div class="row clearfix" style="width: 1140px;margin-left: 0px;">
+    <div class="row clearfix" style="width: 1140px;margin-left: 0px;" id="posicion">
       <div> 
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">

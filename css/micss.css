@@ -1,18 +1,17 @@
-  .submenu{
+
+nav.submenu{
  	display: none;
  	background: #B6090C;
- 	height: auto;
- 	width: 679%;
+ 	width: 1140px;
  	z-index: 5;
- 	text-align: center;
  	position: absolute;
- 	min-height: 150px;
- 	margin-left: -180px;
- 	margin-top: 0px;
- 	
+ 	height: auto;
+ 	max-height:200px; 
+ 	padding: 10px;
  }
- .submenu p{
- 	float: left;
- 	margin-left: 10px;
- 	padding: .2em;
+ nav span.sublista{
+ 	display: inline-block;
+ 	width: 20%; float: left;
  }
+ nav span.sublista a:hover{color: #000;}
+ 
