@@ -16,9 +16,10 @@ function save()
   {
       $.post('index.php',str,function(res)
       {
-        if(res[0]==1){
+        if(res[0]==1)
+        {
           $("#box-frm").dialog("close");
-          gridReload(); 
+          gridReload();
         }
         else
         {
