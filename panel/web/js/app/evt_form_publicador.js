@@ -25,6 +25,10 @@ function loadlocal($ide)
         $("#idlocal").empty().append(html);
     },'json')
   }
+  else
+  {
+    $("#idlocal").empty().append('<option value="">...</option>');
+  }
 }
 function cdoc()
 {

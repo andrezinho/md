@@ -93,7 +93,17 @@ class subcategoriaController extends Controller
         print_r(json_encode($result));
     }
    
-   
+     public function arraysc()
+    {
+        $obj = new subcategoria();
+        $data = array();
+        if(!isset($_GET['idc']))
+        {
+            $_GET['idc']=0;
+        }
+        $data = $obj->arraysc($_GET['idc']);
+        print_r(json_encode($data));
+    } 
 }
 
 ?>

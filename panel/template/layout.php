@@ -22,7 +22,7 @@
 <link href="css/cssmenu.css" rel="stylesheet" type="text/css" />
 <link href="css/style_forms.css" rel="stylesheet" type="text/css" />
 <link href="css/ui.jqgrid.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>    
 <script type="text/javascript" src="js/menus.js"></script>
 <script type="text/javascript" src="js/session.js"></script>

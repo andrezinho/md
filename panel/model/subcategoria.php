@@ -47,5 +47,24 @@ class subcategoria extends Main
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
     }
+    function arraysc($idcategoria)
+    {
+      if($idcategoria==0)
+      {
+        $stmt = $this->db->prepare("SELECT idsubcategoria,descripcion from subcategoria where estado <> 0");      
+      }
+      else
+      {
+        $stmt = $this->db->prepare("SELECT idsubcategoria,descripcion from subcategoria where idcategoria = :idc");      
+        $stmt->bindParam(':idc',$idcategoria,PDO::PARAM_INT);
+      }
+      $stmt->execute();
+      $data = array();
+      foreach($stmt->fetchAll() as $r)
+      {
+        $data[] = array($r[0],$r[1]);
+      }
+      return $data;
+    }
 }
 ?>

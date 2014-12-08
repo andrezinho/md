@@ -10,7 +10,6 @@ function save()
   bval = true;        
   bval = bval && $( "#descripcion" ).required();        
   bval = bval && $("#orden").required();
-  //bval = bval && $( "#orden" ).required();
   var str = $("#frm").serialize();
   if ( bval ) 
   {
