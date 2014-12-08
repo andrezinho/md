@@ -99,7 +99,7 @@ require_once '/app/funciones.php';
                <br><br>
                <div id="log-in"><hr> 
                 <span>Login:</span>
-                <span><a href="#">Registrar</a></span>
+                <span><a href="cuenta.php" id="registrar">Registrar</a></span>
                </div>
                <form id="frmlogin" method="post"  action="panel/web/process.php">
                   <div class="form-group"> <i class="fa fa-user fa-fw"></i>
@@ -126,7 +126,7 @@ require_once '/app/funciones.php';
                       <li><a href="panel/">Panel Admin</a></li>
                       <?php } 
                       else { ?>
-                        <li><a href="#">Mis Datos</a></li>
+                        <li><a href="cuenta.php">Mis Datos</a></li>
                       <?php } ?>
                       <li><a href="#">Mis Cupones</a></li>
                       <li><a href="#">Mis Suscripciones</a></li>
@@ -1210,20 +1210,20 @@ require_once '/app/funciones.php';
       <div class="col-sm-3 col-xs-12 shopinfo">
         <h4 class="title">INFORMACI&Oacute;N</h4>
         <ul>
-            <li><a href="#">Preguntas Frecuentes.</a></li>
-            <li><a href="#">Acerca del Pago en Efectivo.</a></li>
-            <li><a href="#">Libro de Reclamaciones.</a></li>
-            <li><a href="#">Pol&iacute;ticas y Privacidad.</a></li>
-            <li><a href="#">Mapa del sitio.</a></li>            
+            <li><a href="#" style="color:#333 !important;">Preguntas Frecuentes.</a></li>
+            <li><a href="#" style="color:#333 !important;">Acerca del Pago en Efectivo.</a></li>
+            <li><a href="#" style="color:#333 !important;">Libro de Reclamaciones.</a></li>
+            <li><a href="#" style="color:#333 !important;">Pol&iacute;ticas y Privacidad.</a></li>
+            <li><a href="#" style="color:#333 !important;">Mapa del sitio.</a></li>            
         </ul>        
       </div>
       <div class="col-sm-3 col-xs-12 shopinfo">
         <h4 class="title">EMPRESAS</h4>
-            <li><a href="#">Empresa 1</a></li>
-            <li><a href="#">Empresa 2</a></li>
-            <li><a href="#">Empresa 3</a></li>
-            <li><a href="#">Empresa 4</a></li>
-            <li><a href="#">Empresa 5</a></li>                        
+            <li><a href="#" style="color:#333 !important;">Empresa 1</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 2</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 3</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 4</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 5</a></li>                        
       </div>
       <div class="col-sm-3 col-xs-12 getintouch">
         <h4 class="title">CONT&Aacute;CTENOS</h4>

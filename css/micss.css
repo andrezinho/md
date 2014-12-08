@@ -11,7 +11,158 @@ nav.submenu{
  }
  nav span.sublista{
  	display: inline-block;
- 	width: 20%; float: left;
+ 	width: 20%; 
+ 	float: left;
+ 	margin-bottom: 7px;
  }
  nav span.sublista a:hover{color: #000;}
+
+ article.enlaces, aside.formulario, article.conface{
+ 	display: inline-block;
+ 	vertical-align: top;
+ }
+
+ article.enlaces{
+ 	width: 20%;
+ 	
+ }
+ aside.formulario{
+ 	width: 50%;
+ 	border-left: 1px solid #000;
+ }
+ aside#bienvenido{
+ 	display: none;
+ 	margin: 0 auto;
+ 	height: auto;
+ 	min-height: 100px;
+ 	width: 50%;
+ 	text-align: center;
+ 	
+ }
+ article.conface{
+ 	width: 40%;
+ }
+.conface img{width: 50%;}
  
+ article.enlaces a{
+ 	color: blue;
+ }
+article.enlaces a:active{
+ 	color: #000;
+ }
+ input[type="radio"].genero{
+ 	height: 1.3em;
+ 	display: inline-block;
+ 	margin-left: -8em;
+ 	vertical-align: middle;
+
+ }
+ label.gen{
+ 	margin-left: -9em;	
+ }
+
+ #ciudad{
+ 	display: none;
+ 	margin-left: 2em;
+ 	width: 25%;
+ }
+#form-datos{
+	width: 500px;
+	margin-left: 5em;
+}
+
+#form-datos input{
+	width: 100%;
+}
+#form-datos b{ color: red;}
+
+#cupones tr{
+	border-bottom: 1px solid #000;
+}
+
+input.check,b.lugar{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: .5em;
+}
+
+#add{
+	cursor: pointer;
+}
+
+#contenedor {
+    margin: 40px auto;
+    width: 750px;  /* Ancho del contenedor */
+    margin-left: 5em;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+}
+
+#contenedor input {
+height: 32px;
+visibility: hidden;
+}
+
+#contenedor label {
+float: left;
+cursor: pointer;
+font-size: 15px;  /* Tamaño del texto de las pestañas */
+line-height: 40px;
+height: 40px;
+padding: 0 20px;
+display: block;
+color: #888;  /* Color del texto de las pestañas */
+text-align: center;
+border-radius: 5px 5px 0 0;
+background: #eee;  /* Fondo de las pestañas */
+margin-right: 5px;
+}
+
+#contenedor input:hover + label {
+background: #ddd;  /* Fondo de las pestañas al pasar el cursor por encima */
+color: #666;  /* Color del texto de las pestañas al pasar el cursor por encima */
+}
+
+#contenedor input:checked + label {
+background: #CA0101;  /* Fondo de las pestañas al presionar */
+color: #fff; /* Color de las pestañas al presionar */
+z-index: 6;
+line-height: 45px;
+height: 45px;
+position: relative;
+top: -5px;
+-webkit-transition: .1s;
+-moz-transition: .1s;
+-o-transition: .1s;
+-ms-transition: .1s;
+}
+
+.content {
+background: #FFF;  /* Fondo del contenido */
+position: relative;
+width: 100%;
+height: 350px;  /* Alto del contenido */
+padding: 30px;
+z-index: 5;
+border-radius: 0 5px 5px 5px;
+border-top: 1px solid #000;
+}
+
+.content div {
+position: absolute;
+z-index: -100;
+opacity: 0;
+transition: all linear 0.1s;
+}
+
+#contenedor input.tab-selector-1:checked ~ .content .content-1,
+#contenedor input.tab-selector-2:checked ~ .content .content-2,
+#contenedor input.tab-selector-3:checked ~ .content .content-3,
+#contenedor input.tab-selector-4:checked ~ .content .content-4 {
+    z-index: 100;
+    opacity: 1;
+    -webkit-transition: all ease-out 0.2s 0.1s;
+-moz-transition: all ease-out 0.2s 0.1s;
+-o-transition: all ease-out 0.2s 0.1s;
+-ms-transition: all ease-out 0.2s 0.1s;
+}

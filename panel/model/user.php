@@ -5,6 +5,8 @@ class User extends Main {
     {
         $statement = $this->db->prepare("SELECT u.idusuario,
                                                 concat(u.nombres,' ',u.apellidos) as nombres,
+                                                u.nombres as nombre,
+                                                u.apellidos as apellido,
                                                 u.email,
                                                 u.nrodocumento,
                                                 p.descripcion as perfil,

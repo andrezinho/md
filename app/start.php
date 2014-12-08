@@ -14,7 +14,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://www.muchosdescuentos.com/pe/');
+$helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
 
 try {
 	$session = $helper->getSessionFromRedirect();
@@ -42,14 +42,16 @@ try {
 				$email_face    =   $facebook_user->getProperty('email');
 				$id_face       =   $facebook_user->getId();
 
-			    $stmt = $db->prepare("SELECT count(idface) as n from usuario where idface=:c ");
-			    $stmt->bindParam(':c',$id_face,PDO::PARAM_STR);
+			    $stmt = $db->prepare("SELECT count(email) as n,idface as face,idusuario as u from usuario where email=:c group by idface,idusuario");
+			    $stmt->bindParam(':c',$email_face,PDO::PARAM_STR);
 			    $stmt->execute();
 			    $r = $stmt->fetchObject();
 			    $nombre_face = utf8_decode($nombre_face);
 			    $apellido_face = utf8_decode($apellido_face);
 			    if($r->n==0)
 			    {
+
+			     
 			        try 
 			        {
 			            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -65,6 +67,8 @@ try {
 			            //sesiones
 			            $stmt = $db->prepare("SELECT u.nrodocumento,u.idusuario,u.idperfil,
 			            							 CONCAT(u.nombres, ' ', u.apellidos) As nombres,
+			            							 u.nombres as nombre,
+			            							 u.apellidos as apellido,
 			            							 u.email,
 			            							 u.idface,
 			            							 p.descripcion as perfil
@@ -79,6 +83,8 @@ try {
 			            $_SESSION['dni'] = $r->nrodocumento;
 			            $_SESSION['email'] = $r->email;
 			            $_SESSION['name'] = utf8_decode($r->nombres);
+			            $_SESSION['primer_name'] = utf8_decode($r->nombre);
+			            $_SESSION['apellido'] = utf8_decode($r->apellido);
 			            $_SESSION['id_perfil'] = $r->idperfil;
 			            $_SESSION['perfil'] = $r->perfil;
 
@@ -94,23 +100,40 @@ try {
             else
             {
 
-			 $stmt = $db->prepare("SELECT u.nrodocumento,u.idusuario,u.idperfil,
-            							 CONCAT(u.nombres, ' ', u.apellidos) As nombres,
-            							 u.email,
-            							 u.idface,
-            							 p.descripcion as perfil
-            					 from usuario as u inner join perfil as p on p.idperfil = u.idperfil where u.idface=:c");
-			 $stmt->bindParam(':c',$id_face,PDO::PARAM_STR);
-			 $stmt->execute();
-			 $r = $stmt->fetchObject();
+            	if($r->face=="")
+            	{
+            		    $stmt = $db->prepare("UPDATE usuario SET idface=:i WHERE idusuario=:u");
+			            $stmt->bindParam(':i',$id_face,PDO::PARAM_STR);
+			            $stmt->bindParam(':u',$r->u,PDO::PARAM_INT);
+			            $stmt->execute();
 
-			 $_SESSION['idface']   =$r->idface;
-			$_SESSION['idusuario'] = $r->idusuario;
-            $_SESSION['dni'] = $r->nrodocumento;
-            $_SESSION['email'] = $r->email;
-            $_SESSION['name'] = utf8_decode($r->nombres);
-            $_SESSION['id_perfil'] = $r->idperfil;
-            $_SESSION['perfil'] = $r->perfil;
+            	}
+
+            	else{
+
+
+					 $stmt = $db->prepare("SELECT u.nrodocumento,u.idusuario,u.idperfil,
+		            							 CONCAT(u.nombres, ' ', u.apellidos) As nombres,
+		            							 u.nombres as nombre,
+			            						 u.apellidos as apellido,
+		            							 u.email,
+		            							 u.idface,
+		            							 p.descripcion as perfil
+		            					 from usuario as u inner join perfil as p on p.idperfil = u.idperfil where u.idface=:c");
+					 $stmt->bindParam(':c',$id_face,PDO::PARAM_STR);
+					 $stmt->execute();
+					 $r = $stmt->fetchObject();
+
+					 $_SESSION['idface']   =$r->idface;
+					$_SESSION['idusuario'] = $r->idusuario;
+		            $_SESSION['dni'] = $r->nrodocumento;
+		            $_SESSION['email'] = $r->email;
+		            $_SESSION['name'] = utf8_decode($r->nombres);
+		            $_SESSION['primer_name'] = utf8_decode($r->nombre);
+			        $_SESSION['apellido'] = utf8_decode($r->apellido);
+		            $_SESSION['id_perfil'] = $r->idperfil;
+		            $_SESSION['perfil'] = $r->perfil;
+		            }
             }
 
 	endif;
