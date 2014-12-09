@@ -1,5 +1,5 @@
 <?php
-require_once '/app/start.php'; //Start para facebook -> ;)
+require_once '/app/start.php'; //Start para facebook -> x)
 //require_once '/model/menu.php';
 require_once '/app/funciones.php';
 
