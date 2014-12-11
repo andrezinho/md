@@ -3,15 +3,23 @@ include_once("Main.php");
 class User extends Main {
     function Start() 
     {
-        $statement = $this->db->prepare("SELECT u.idusuario,
-                                                concat(u.nombres,' ',u.apellidos) as nombres,
-                                                u.nombres as nombre,
-                                                u.apellidos as apellido,
-                                                u.email,
-                                                u.nrodocumento,
-                                                p.descripcion as perfil,
-                                                p.idperfil
-                                        from usuario as u inner join perfil as p on p.idperfil = u.idperfil
+        $statement = $this->db->prepare("SELECT     u.idusuario,
+                                                    concat(u.nombres,' ',u.apellidos) as nombres,
+                                                    u.nombres as nombre,
+                                                    u.apellidos as apellido,
+                                                    u.email,
+                                                    u.nrodocumento,
+                                                    p.descripcion as perfil,
+                                                    p.idperfil,
+                                                    e.razon_social as empresa,
+                                                    l.descripcion as local,
+                                                    l.idlocal,
+                                                    s.idsuscripcion,
+                                                    s.estado as suscripcion_estado
+                                            from usuario as u inner join perfil as p on p.idperfil = u.idperfil
+                                            left outer join local as l on l.idlocal = u.idlocal
+                                            left outer join empresa as e on e.idempresa = l.idempresa
+                                            left outer join suscripcion as s on s.idlocal = l.idlocal
                                         where  u.email = :user AND u.passw = :password ");
         $statement->bindParam (":user", $_POST['usuario'] , PDO::PARAM_STR);
         $statement->bindParam (":password", $_POST['password'] , PDO::PARAM_STR);
@@ -40,10 +48,60 @@ class User extends Main {
             $obj = $stmt->fetchObject();
             return $obj->num;
         }
-        else {
+        else 
+        {
             return 0;
         }
     }
+
+    function change_password_send($p)
+    {
+        try 
+        { 
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->db->beginTransaction(); 
+            
+            //Verificamos si el password actual es el correcto
+            $stmt = $this->db->prepare("SELECT count(*) as n FROM usuario where email = :e and passw=:p ");
+            $stmt->bindParam(':e',$_SESSION['email'],PDO::PARAM_STR);
+            $stmt->bindParam(':p',$p['passw'],PDO::PARAM_STR);
+            $stmt->execute();
+            $re = $stmt->fetchObject();
+            if($re->n==1)
+            {
+                //Verificamos si la nueva contraseña es igual a otra
+                if($p['npassw']==$p['rpassw'])
+                {
+                    $stmt = $this->db->prepare("UPDATE usuario set passw = :np where email = :e ");
+                    $stmt->bindParam(':np',$p['npassw'],PDO::PARAM_STR);
+                    $stmt->bindParam(':e',$_SESSION['email'],PDO::PARAM_STR);
+                    $stmt->execute();
+                    $res = 1;
+                    $msg = "El cambio se realizó exitosamente";
+                }
+                else
+                {
+                    $res = 2;
+                    $msg = "Tienes que ingresar la misma contraseña dos veces para confirmarla.";
+                }
+            }
+            else
+            {
+                $res = 2;
+                $msg = "El password actual no es correcto.";
+            }
+
+            $this->db->commit();
+            return array('res'=>$res,'msg'=>$msg);
+        }
+        catch(PDOException $e)
+        {
+            $this->db->rollBack();
+            return array('res'=>'2','msg'=>'Error : '.$e->getMessage() . $str);
+        }
+
+    }
+
     function save_change_passw($pw,$id)
     {
        if($id==$_SESSION['idempleado'])
@@ -60,7 +118,8 @@ class User extends Main {
         }
     }
     
-    function index($query , $p ,$c) {
+    function index($query , $p ,$c) 
+    {
         $sql = "SELECT empleado.idempleado,                        
                        concat(empleado.nombre,' ',empleado.apellidos) as nombres,
                        empleado.aleas,
@@ -80,7 +139,8 @@ class User extends Main {
         return $data;
     }
     
-    function edit($id ) {
+    function edit($id ) 
+    {
         $stmt = $this->db->prepare("SELECT * FROM empleado WHERE idempleado = :id");
         $stmt->bindParam(':id', $id , PDO::PARAM_STR);
         $stmt->execute();

@@ -6,6 +6,9 @@ $(function()
     $("#idcategoria").change(function(){
       loadSubCategorias($(this).val());
     });
+    $("#precio_regular,#precio").change(function(){
+       calc_descuento();
+    });
 });
 
 function save()
@@ -81,4 +84,30 @@ function abilitarLoadImage()
   {
     $("#link-upload-imgen").empty().append("<a style='color:blue' href='javascript:popup(\"upload/index.php?p="+idp+"\",500,300)' >Subir Imagen</a>");
   }
+}
+
+function calc_descuento()
+{
+  var itd = $("#idtipo_descuento").val(),
+      td = $("#idtipo_descuento option:selected").html(),
+        x = 0,
+        p = $("#precio").val(),
+       pr = $("#precio_regular").val();
+  if(td=="Porcentaje")
+  {
+    if(p!=""&&pr!="") 
+    {
+      x = 100-(p*100)/pr;
+      $("#descuento").val("-"+parseInt(x)+"%");
+    }
+    else
+    {
+      $("#descuento").val("");
+    }    
+  }
+  else
+  {
+    $("#descuento").val(td);
+  }
+
 }

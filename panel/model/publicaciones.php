@@ -4,13 +4,39 @@ class publicaciones extends Main
 {
     function indexGrid($page,$limit,$sidx,$sord,$filtro,$query,$cols)
     {
-        $sql = "SELECT p.idpublicaciones,
-                       p.titulo1,
-                       sc.descripcion,
-                       concat(substring(cast(p.fecha_inicio as nchar),9,2),'/',substring(cast(p.fecha_inicio as nchar),6,2),'/',substring(cast(p.fecha_inicio as nchar),1,4)),
-                       concat(substring(cast(p.fecha_fin as nchar),9,2),'/',substring(cast(p.fecha_fin as nchar),6,2),'/',substring(cast(p.fecha_fin as nchar),1,4)),
-                       case p.estado when 1 then 'Activo' else 'Inactiva' end as estado
-                from publicaciones as p inner join subcategoria as sc on p.idsubcategoria = sc.idsubcategoria";    
+        
+        if($_SESSION['id_perfil']==1)
+        {
+            $sql = "SELECT p.idpublicaciones,
+                           p.titulo1,
+                           sc.descripcion,
+                           concat(substring(cast(p.fecha_inicio as nchar),9,2),'/',substring(cast(p.fecha_inicio as nchar),6,2),'/',substring(cast(p.fecha_inicio as nchar),1,4)),
+                           concat(substring(cast(p.fecha_fin as nchar),9,2),'/',substring(cast(p.fecha_fin as nchar),6,2),'/',substring(cast(p.fecha_fin as nchar),1,4)),
+                           concat(e.razon_social,' - ',l.descripcion),
+                           concat(u.nombres,' ',u.apellidos),
+                           case p.estado when 1 then 'Activo' else 'Inactiva' end as estado
+                    from publicaciones as p inner join subcategoria as sc on p.idsubcategoria = sc.idsubcategoria
+                            inner join usuario as u on u.idusuario = p.idusuario
+                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion                         
+                            inner join local as l on l.idlocal = s.idlocal
+                            inner join empresa as e on e.idempresa = l.idempresa";
+        }
+        else
+        {
+            $sql = "SELECT p.idpublicaciones,
+                           p.titulo1,
+                           sc.descripcion,
+                           concat(substring(cast(p.fecha_inicio as nchar),9,2),'/',substring(cast(p.fecha_inicio as nchar),6,2),'/',substring(cast(p.fecha_inicio as nchar),1,4)),
+                           concat(substring(cast(p.fecha_fin as nchar),9,2),'/',substring(cast(p.fecha_fin as nchar),6,2),'/',substring(cast(p.fecha_fin as nchar),1,4)),
+                           case p.estado when 1 then 'Activo' else 'Inactiva' end as estado,
+                           concat(u.nombres,' ',u.apellidos)
+                    from publicaciones as p inner join subcategoria as sc on p.idsubcategoria = sc.idsubcategoria
+                            inner join usuario as u on u.idusuario = p.idusuario
+                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion                         
+                            inner join local as l on l.idlocal = s.idlocal
+                    WHERE l.idlocal = ".$_SESSION['idlocal'];
+            
+        }
         return $this->execQuery($page,$limit,$sidx,$sord,$filtro,$query,$cols,$sql);
     }
     function edit($id ) 
@@ -52,7 +78,7 @@ class publicaciones extends Main
                                                     :p7,:p8,:p9,:p10,:p11,:p12,
                                                     :p13,:p14,:p15,:p16
                                             );");
-            $idsuscripcion = 1;
+            $idsuscripcion = $_SESSION['idsuscripcion'];
             $idtipo=1;
             $idusuario=$_SESSION['idusuario'];
 

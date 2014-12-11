@@ -25,12 +25,11 @@ class empresa extends Main
     
     function insert($_P ) 
     {
-        $_P['logo'] = "";
+        
         $_P['colores']="";
         $stmt = $this->db->prepare("INSERT into empresa(ruc,
                                                         razon_social,
-                                                        razon_comercial,
-                                                        logo,
+                                                        razon_comercial,                                                        
                                                         colores,
                                                         telefonos,
                                                         facebook,
@@ -39,12 +38,11 @@ class empresa extends Main
                                                         website,
                                                         estado,
                                                         nombre_contacto)
-                                    values(:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12)");
+                                    values(:p1,:p2,:p3,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12)");
         
         $stmt->bindParam(':p1', $_P['ruc'] , PDO::PARAM_INT);
         $stmt->bindParam(':p2', $_P['razon_social'] , PDO::PARAM_STR);
-        $stmt->bindParam(':p3', $_P['razon_comercial'] , PDO::PARAM_STR);
-        $stmt->bindParam(':p4', $_P['logo'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p3', $_P['razon_comercial'] , PDO::PARAM_STR);        
         $stmt->bindParam(':p5', $_P['colores'] , PDO::PARAM_STR);
         $stmt->bindParam(':p6', $_P['telefonos'] , PDO::PARAM_STR);
         $stmt->bindParam(':p7', $_P['facebook'] , PDO::PARAM_STR);
@@ -64,8 +62,7 @@ class empresa extends Main
     {
         $sql = "update empresa set  ruc=:p1,
                                     razon_social=:p2,
-                                    razon_comercial=:p3,
-                                    logo=:p4,
+                                    razon_comercial=:p3,                                    
                                     colores=:p5,
                                     telefonos=:p6,
                                     facebook=:p7,
@@ -79,8 +76,7 @@ class empresa extends Main
               
         $stmt->bindParam(':p1', $_P['ruc'] , PDO::PARAM_INT);
         $stmt->bindParam(':p2', $_P['razon_social'] , PDO::PARAM_STR);
-        $stmt->bindParam(':p3', $_P['razon_comercial'] , PDO::PARAM_STR);
-        $stmt->bindParam(':p4', $_P['logo'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p3', $_P['razon_comercial'] , PDO::PARAM_STR);        
         $stmt->bindParam(':p5', $_P['colores'] , PDO::PARAM_STR);
         $stmt->bindParam(':p6', $_P['telefonos'] , PDO::PARAM_STR);
         $stmt->bindParam(':p7', $_P['facebook'] , PDO::PARAM_STR);

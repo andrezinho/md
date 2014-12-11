@@ -60,6 +60,9 @@ class publicador extends Main
 
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
+
+        $this->send_email($_P['email'],$_P['nombres']." ".$_P['apellidos'],$passw);
+
         return array($p1 , $p2[2]);
     }
 
@@ -114,5 +117,44 @@ class publicador extends Main
         }
         return $data;
     }
+
+
+function send_email($email,$name,$passw)
+{
+    $email_to  = $email. '';        
+    //$email_to .= 'andres.gm15@gmail.com';
+    
+    $email_subject = "Password";  
+    
+    $html = '<div style="background: #FAFAFA; padding: 30px;">
+                <div>
+                    <img src="http://www.muchosdescuentos.com/img/logo.png"/>
+                </div>
+                <h2 style="font-size:20px; color: #666666;">
+                    &iexcl;Bienvenido a Muchos Descuentos!
+                </h2>
+                <div style="font-size:14px; color: #666">
+                    <p>Hola, <b>'.utf8_decode($name).'</b></p>
+                    <p>
+                        Este es tu password: <b>'.$passw.'</b>
+                    </p>                
+                </div>
+            </div>
+            <div style="background: #EEEEEE; padding: 20px; text-align: center;">
+                <p style="font-size:12px;">
+                    Este correo fue enviado a <b>'.$email.'</b>
+                </p>                
+            </div>';
+    
+    $email_messaje = $html;
+    
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+    $headers .= 'From: Muchos Descuentos <soporte@muchosdescuentos.com>' . "\r\n";
+    
+    mail($email_to, $email_subject, $email_messaje, $headers);
+    
+    }
+
 }
 ?>

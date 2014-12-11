@@ -6,25 +6,66 @@ require_once '../model/subcategoria.php';
 
 class publicacionesController extends Controller
 {
-    var $cols = array(
-                        1 => array('Name'=>'Codigo','NameDB'=>'p.idpublicaciones','align'=>'center','width'=>'30'),
-                        2 => array('Name'=>'Titulo','NameDB'=>'p.titulo1','search'=>true),
-                        3 => array('Name'=>'Tipo','NameDB'=>'sc.descripcion','search'=>true,'align'=>'center','width'=>'70'),
-                        4 => array('Name'=>'Fecha Incio.','NameDB'=>'p.fecha_inicio','search'=>true,'align'=>'center','width'=>'50'),
-                        5 => array('Name'=>'Fecha Fin.','NameDB'=>'p.fecha_fin','search'=>true,'align'=>'center','width'=>'50'),
-                        6 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'30','align'=>'center','color'=>'#FFFFFF')
-                     );
+ 
+        var $cols_admin = array(
+                            1 => array('Name'=>'Codigo','NameDB'=>'p.idpublicaciones','align'=>'center','width'=>'30'),
+                            2 => array('Name'=>'Titulo','NameDB'=>'p.titulo1','search'=>true),
+                            3 => array('Name'=>'Tipo','NameDB'=>'sc.descripcion','search'=>true,'align'=>'center','width'=>'70'),
+                            4 => array('Name'=>'Fecha Incio.','NameDB'=>'p.fecha_inicio','search'=>true,'align'=>'center','width'=>'50'),
+                            5 => array('Name'=>'Fecha Fin.','NameDB'=>'p.fecha_fin','search'=>true,'align'=>'center','width'=>'50'),
+                            6 => array('Name'=>'Empresa Local','NameDB'=>'','width'=>'70','align'=>'center'),
+                            7 => array('Name'=>'Publicador','NameDB'=>'u.nombres','width'=>'70','align'=>'center'),
+                            8 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'30','align'=>'center','color'=>'#FFFFFF')
+                         );  
+
+        var $cols_public = array(
+                            1 => array('Name'=>'Codigo','NameDB'=>'p.idpublicaciones','align'=>'center','width'=>'30'),
+                            2 => array('Name'=>'Titulo','NameDB'=>'p.titulo1','search'=>true),
+                            3 => array('Name'=>'Tipo','NameDB'=>'sc.descripcion','search'=>true,'align'=>'center','width'=>'70'),
+                            4 => array('Name'=>'Fecha Incio.','NameDB'=>'p.fecha_inicio','search'=>true,'align'=>'center','width'=>'50'),
+                            5 => array('Name'=>'Fecha Fin.','NameDB'=>'p.fecha_fin','search'=>true,'align'=>'center','width'=>'50'),
+                            6 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'30','align'=>'center','color'=>'#FFFFFF'),
+                            7 => array('Name'=>'Publicador','NameDB'=>'u.nombres','width'=>'70','align'=>'center')
+                         );     
+        var $cols = array() ;
+   
 
     public function index() 
     {
         $data = array();
+        if($_SESSION['id_perfil']==1)
+        {
+            $this->cols=$this->cols_admin;
+        }
+        else
+        {
+            $this->cols = $this->cols_public;
+        }
+
+
         $data['colsNames'] = $this->getColsVal($this->cols);
         $data['colsModels'] = $this->getColsModel($this->cols);
         $data['cmb_search'] = $this->Select(array('id'=>'fltr','name'=>'fltr','text_null'=>'','table'=>$this->getColsSearch($this->cols)));
         $data['controlador'] = $_GET['controller'];
+
         //......................(nuev,edit,elim,vermp)
-        $data['actions'] = array(true,true,true,false);
+        if($_SESSION['id_perfil']==3)
+        {
+            $new = true;$update = true;$delete = true;$view=true;
+            if($_SESSION['suscripcion_estado']!=1)
+            {
+                $new=false;$update=false;$delete=false;
+            }
+        }
+        else 
+        {
+            $new=false;$update=false;$delete=false;$view=true;
+        }
+
+        $data['actions'] = array($new,$update,$delete,$view);
         $data['titulo'] = "Publicaciones de Descuentos";
+        if($_SESSION['empresa']!="")
+            $data['enlace'] = "Publicaciones de Descuentos - Empresa: <b>".$_SESSION['empresa']."</b> &nbsp;&nbsp;Local: <b>".$_SESSION['local']."</b>";
 
         $view = new View();
         $view->setData($data);
@@ -35,6 +76,15 @@ class publicacionesController extends Controller
 
     public function indexGrid() 
     {
+        if($_SESSION['id_perfil']==1)
+        {
+            $this->cols=$this->cols_admin;
+        }
+        else
+        {
+            $this->cols = $this->cols_public;
+        }
+
         $obj = new publicaciones();
         $page = (int)$_GET['page'];
         $limit = (int)$_GET['rows'];
@@ -76,6 +126,27 @@ class publicacionesController extends Controller
         $data['subcategoria'] = $this->Select(array('name'=>'idsubcategoria','id'=>'idsubcategoria','table'=>$sc,'code'=>$obj->idsubcategoria));
         $data['tipo_descuento'] = $this->Select(array('name'=>'idtipo_descuento','id'=>'idtipo_descuento','table'=>'tipo_descuento','code'=>$obj->idtipo_descuento));
 
+        
+        $view->setData($data);
+        $view->setTemplate( '../view/publicaciones/_form.php' );
+        echo $view->renderPartial();        
+    }
+
+    public function view() 
+    {
+        $obj = new publicaciones();
+        $obj_l = new subcategoria();
+        $data = array();
+        $view = new View();
+
+        $obj = $obj->edit($_GET['id']);
+        $data['obj'] = $obj;
+
+        $data['categoria'] = $this->Select(array('name'=>'idcategoria','id'=>'idcategoria','table'=>'categoria','code'=>$obj->idcategoria));
+        $sc = $obj_l->arraysc($obj->idcategoria);
+        $data['subcategoria'] = $this->Select(array('name'=>'idsubcategoria','id'=>'idsubcategoria','table'=>$sc,'code'=>$obj->idsubcategoria));
+        $data['tipo_descuento'] = $this->Select(array('name'=>'idtipo_descuento','id'=>'idtipo_descuento','table'=>'tipo_descuento','code'=>$obj->idtipo_descuento));
+        $data['noload']="1";
         
         $view->setData($data);
         $view->setTemplate( '../view/publicaciones/_form.php' );

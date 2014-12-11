@@ -241,7 +241,7 @@ function eliminar()
     <div>
         <ul class="enlaces-menu">
             <li><a href="../../index.php">Regresar a Inicio</a></li>
-            <li><a href="#">Cambiar Contraseña</a></li>            
+            <li><a id="change_passw" href="#">Cambiar Contraseña</a></li>            
             <li><a href="index.php?controller=user&action=logout" class="logout">Cerrar Session</a></li>            
         </ul>
     </div>

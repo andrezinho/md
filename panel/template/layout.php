@@ -92,6 +92,7 @@
 <div class="container" >    
     <?php echo $content; ?>
 </div>
+<div id="box-frm-m" class="ui-widget-content ui-corner-all" style="height:400px; width:890px; display:none; margin:5px auto"></div>
 <footer class="footer"></footer>
 </body>
 </html>

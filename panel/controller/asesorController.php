@@ -51,8 +51,7 @@ class asesorController extends Controller
     public function create()
     {
         $data = array();
-        $view = new View();        
-        //$data['more_options'] = $this->more_options('asesor');        
+        $view = new View();
         $data['tipo_documento'] = $this->Select(array('name'=>'idtipo_documento','id'=>'idtipo_documento','table'=>'tipo_documento'));
         $view->setData($data);
         $view->setTemplate( '../view/asesor/_form.php' );
@@ -64,8 +63,7 @@ class asesorController extends Controller
         $data = array();
         $view = new View();
         $obj = $obj->edit($_GET['id']);
-        $data['obj'] = $obj;        
-        //$data['more_options'] = $this->more_options('asesor');
+        $data['obj'] = $obj;
         $data['tipo_documento'] = $this->Select(array('name'=>'idtipo_documento','id'=>'idtipo_documento','table'=>'tipo_documento','code'=>$obj->idtipo_documento));
         $view->setData($data);
         $view->setTemplate( '../view/asesor/_form.php' );

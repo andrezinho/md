@@ -10,6 +10,26 @@ $(document).ready(function() {
           w = $(document).width();                
           $(".head_nav").generaMenu(opciones_menu);                
       },'json');
+     $("#box-frm-m").dialog({
+      modal:true,
+      autoOpen:false,
+      width:'auto',
+      height:'auto',
+      resizing:true
+     });
+     $("#change_passw").click(function(){      
+      $("#box-frm-m").dialog({buttons: {
+                  'Cerrar': function(){ $(this).dialog('close');},
+                  'Cambiar Password':function(){save_change();}
+                },
+                title:'Cambio de Password'});
+      $.get('index.php','controller=user&action=change_passw',function(data){        
+        $("#box-frm-m").empty().append(data);
+        $("#box-frm-m").dialog("open");
+      });
+      
+
+     });
            var $floatingbox = $('#site_head'); 
            if($('#body').length > 0)
            {
@@ -63,4 +83,25 @@ function validateMail(idMail)
     //Mail incorrecto
     object.style.color="#f00";
     return false;
+}
+function save_change()
+{
+   var bval = true;
+   bval = bval && $("#passw").required();
+   bval = bval && $("#npassw").required();
+   bval = bval && $("#rpassw").required();
+   if(bval)
+   {
+      var npassw = $("#npassw").val(),
+          rpassw = $("#rpassw").val(),
+          passw  = $("#passw").val();
+      if(npassw==rpassw)
+      {
+        $.post('index.php','controller=user&action=change_passw_send&npassw='+npassw+'&rpassw='+rpassw+'&passw='+passw,function(data)
+        {
+           if(data.res=="1"){alert(data.msg); $("#box-frm-m").dialog("close"); }
+            else {$("#pass_d").empty().append(data.msg);$("#pass_d").show("slow");}
+        },'json');
+      }
+   }
 }

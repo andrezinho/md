@@ -130,12 +130,17 @@
                     Formato: jpg 
                     </p>
                     <div id="link-upload-imgen">
-                    <?php if($obj->idpublicaciones!="") { ?>
+                    <?php 
+                    if($noload!="1")
+                    {
+
+
+                    if($obj->idpublicaciones!="") { ?>
                     <a style="color:blue" href="javascript:popup('upload/index.php?p=<?php echo $obj->idpublicaciones; ?>',500,300)" >Subir Imagen</a>
                     <?php } 
                     else { ?>
                     <p style="color:red">Para poder subir la imagen primero debe hacer click en "Confirmar Registro"</p>
-                    <?php } ?>
+                    <?php }  }?>
                     </div>
                 </div>
             </div>

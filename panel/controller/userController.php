@@ -19,6 +19,13 @@ class UserController extends Controller {
             $_SESSION['apellido'] = utf8_decode($obj->apellido);
             $_SESSION['id_perfil'] = $obj->idperfil;
             $_SESSION['perfil'] = $obj->perfil;
+
+            $_SESSION['empresa'] = $obj->empresa;
+            $_SESSION['local'] = $obj->local;
+            $_SESSION['idlocal'] = $obj->idlocal;
+            $_SESSION['idsuscripcion'] = $obj->idsuscripcion;
+            $_SESSION['suscripcion_estado'] = $obj->suscripcion_estado;
+
             if($_POST['type']=='p')
             {
                 header('location:index.php');
@@ -196,8 +203,9 @@ class UserController extends Controller {
             }
         }
     }
+
     public function delete()
-      {
+    {
         $obj = new User();
         $p = $obj->delete($_POST);
         if ($p[0]){
@@ -213,10 +221,10 @@ class UserController extends Controller {
             $view->setlayout( '../template/layout.php' );
             $view->render();
         }
-      }
+  }
 
   public function search()
-    {
+  {
         if (!isset($_GET['p'])){$_GET['p']=1;}
         $obj = new User();
         $data = array();
@@ -254,8 +262,9 @@ class UserController extends Controller {
         $view->setlayout('../template/list.php');
         $view->render();
     }
+
     public function search_autocomplete()
-        {
+    {
             $obj = new User();
             $data = array();
             $view = new View();
@@ -271,6 +280,24 @@ class UserController extends Controller {
             $view->setData( $data );
             $view->setTemplate( '../view/user/_json.php' );
             echo $view->renderPartial();
-        }
+    }
+
+    public function change_passw()
+    {
+        $obj = new User();
+        $data = array();
+        $view = new View();                
+        $view->setData($data);
+        $view->setTemplate( '../view/user/change_password.php' );        
+        echo $view->renderPartial();
+    }
+
+    public function change_passw_send()
+    {
+        $obj = new User();
+        $result = array();
+        $p = $obj->change_password_send($_POST);
+        print_r(json_encode($p));
+    }
 }
 ?>

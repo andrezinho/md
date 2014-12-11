@@ -6,8 +6,9 @@
 <form id="frm" >    
     <div id="tabs">
     <ul>
-      <li><a href="#tabs-1">Informacion General</a></li>      
+      <li><a href="#tabs-1">Informacion General</a></li>            
       <li><a href="#tabs-4">Cuentas de Pago</a></li>      
+      <li><a href="#tabs-2">Logo</a></li>  
     </ul>
     <div id="tabs-1">
         <div style="width:700px;"></div>
@@ -63,6 +64,7 @@
                  activo('activo',$rep);
             ?>
     </div>  
+    
     <div id="tabs-4">
         <p>
             Número de Cuentas Bancarias con la que cuenta la empresa.
@@ -76,6 +78,41 @@
         <br/>
         <label for="interbank" class="labels" style="width:130px;">InterBank:</label>
         <input type="text" id="interbank"  name="interbank" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->interbank; ?>" onkeypress="return permite(event,'num_car');"  />
+    </div>
+
+    <div id="tabs-2">       
+        <div style="width:700px;"></div>
+        <div>
+            <div style="width:200px; height:200px; background:#dadada; float:left;" id="imagen-d">
+                <?php if($obj->logo!="") { ?>
+                <img src="imagenes/logos/<?php echo $obj->logo; ?>" />
+                <?php } ?>
+            </div>
+            <div style="float:left;">
+                <div style="padding:10px;">
+                    <h2 style="margin:2px;">Logo de la Empresa</h2>
+                    <p style="font-size:11px;"> Recomendaciones: <br/> 
+                    <b>Dimensiones: 200px X 200px </b><br/>                    
+                    La imagen no debe pesar más de 1MB <br/>
+                    Formato: jpg, png 
+                    </p>
+                    <div id="link-upload-imgen">
+                    <?php 
+                    if($noload!="1")
+                    {
+
+
+                    if($obj->idempresa!="") { ?>
+                    <a style="color:blue" href="javascript:popup('upload/logo.php?p=<?php echo $obj->idempresa; ?>',500,300)" >Subir Imagen</a>
+                    <?php } 
+                    else { ?>
+                    <p style="color:red">Para poder subir el logo primero debe hacer click en "Confirmar Registro"</p>
+                    <?php }  }?>
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
     </div>
     
     
