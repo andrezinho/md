@@ -1,3 +1,27 @@
+<?php 
+$host="http://".$_SERVER['SERVER_NAME']."/md";
+require_once '/app/start.php'; //Start para facebook -> ;)
+$db = Spdo::singleton();
+
+$url=$_GET["id"];
+
+$id=explode("-",$url);
+$n=count($id);
+
+$titulo="";
+for($s=0; $s<($n-1); $s++) { 
+  $titulo .=$id[$s]." ";
+}
+$id=$id[$n-1];
+
+
+$stmt = $db->prepare("SELECT * FROM publicaciones WHERE idpublicaciones=:id");
+        $stmt->bindValue(':id', $id , PDO::PARAM_INT);
+        $stmt->execute();
+        $r = $stmt->fetch();
+        $ahorro=$r['precio_regular']-$r['precio'];
+
+ ?>
 <!DOCTYPE html>
 <html class="noIE" lang="en-US">
 <head>
@@ -8,50 +32,50 @@
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <title>Muchos Descuentos - Detalle</title>
 <!-- Reset CSS -->
-<link href="css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $host;?>/css/normalize.css" rel="stylesheet" type="text/css"/>
 <!-- Bootstrap core CSS -->
-<link href="css/bootstrap.css" rel="stylesheet">
+<link href="<?php echo $host;?>/css/bootstrap.css" rel="stylesheet">
 
 <!-- Iview Slider CSS -->
-<link href="css/iview.css" rel="stylesheet">
+<link href="<?php echo $host;?>/css/iview.css" rel="stylesheet">
 
 <!--  Responsive 3D Menu  -->
-<link href="css/menu3d.css" rel="stylesheet"/>
+<link href="<?php echo $host;?>/css/menu3d.css" rel="stylesheet"/>
 
 <!-- Animations -->
-<link href="css/animate.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $host;?>/css/animate.css" rel="stylesheet" type="text/css"/>
 
 <!-- Custom styles for this template -->
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $host;?>/css/custom.css" rel="stylesheet" type="text/css" />
 
 <!-- Style Switcher -->
-<link href="css/style-switch.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo $host;?>/css/style-switch.css" rel="stylesheet" type="text/css"/>
 
 <!-- Color -->
-<link href="css/skin/color.css" id="colorstyle" rel="stylesheet">
+<link href="<?php echo $host;?>/css/skin/color.css" id="colorstyle" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
+<!--[if lt IE 9]> <script src="<?php echo $host;?>/js/html5shiv.js"></script> <script src="<?php echo $host;?>/js/respond.min.js"></script> <![endif]-->
 
 <!-- Bootstrap core JavaScript -->
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap-select.js"></script>
+<script src="<?php echo $host;?>/js/jquery-1.10.2.min.js"></script>
+<script src="<?php echo $host;?>/js/bootstrap.min.js"></script>
+<script src="<?php echo $host;?>/js/bootstrap-select.js"></script>
 
 <!-- Custom Scripts -->
-<script src="js/scripts.js"></script>
+<script src="<?php echo $host;?>/js/scripts.js"></script>
 
 <!-- MegaMenu -->
-<script src="js/menu3d.js" type="text/javascript"></script>
+<script src="<?php echo $host;?>/js/menu3d.js" type="text/javascript"></script>
 
 <!-- iView Slider -->
-<script src="js/raphael-min.js" type="text/javascript"></script>
-<script src="js/jquery.easing.js" type="text/javascript"></script>
-<script src="js/iview.js" type="text/javascript"></script>
-<script src="js/retina-1.1.0.min.js" type="text/javascript"></script>
+<script src="<?php echo $host;?>/js/raphael-min.js" type="text/javascript"></script>
+<script src="<?php echo $host;?>/js/jquery.easing.js" type="text/javascript"></script>
+<script src="<?php echo $host;?>/js/iview.js" type="text/javascript"></script>
+<script src="<?php echo $host;?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
 
 <!--[if IE 8]>
-    <script type="text/javascript" src="js/selectivizr.js"></script>
+    <script type="text/javascript" src="<?php echo $host;?>/js/selectivizr.js"></script>
     <![endif]-->
 
 </head>
@@ -67,7 +91,7 @@
 
         <div class="topheadrow">
 
-            <a href="index.html"><img src="images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
+            <a href="<?php echo $host;?>/index.php"><img src="<?php echo $host;?>/images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
 
 
 
@@ -95,7 +119,7 @@
                     <ul>
                       <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
                       <li class="icon twitter"><a href="#a"><i class="fa fa-twitter fa-fw"></i></a></li>
-                      <li class="icon facebook"><a href="#a"><i class="fa fa-facebook fa-fw"></i></a></li>
+                      <li class="icon facebook" id="icon_facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>"><i class="fa fa-facebook fa-fw"></i></a></li>
                     </ul>
                   </div>
                <!-- <span class="form-header">Login</span>-->
@@ -146,7 +170,7 @@
             <div class="product-details-head" style="float:left; width:200px; border-right: 1px solid #fafafa;">
                 <div class="short-info-det-name-empresa">                    
                   <div class="name-empresa">
-                    <img src="images/logo-empresa.jpg" class="logo-empresa">  
+                    <img src="<?php echo $host;?>/images/logo-empresa.jpg" class="logo-empresa">  
                     <b>Shoes Center</b>
                   </div>
                 <div class="frase-empresa">La comodidad en tus pies</div>
@@ -221,22 +245,22 @@
     <div class="row">
         
         <section id="contenido">
-              <div class="box-heading"><span>Nombre del Producto</span></div>  
+              <div class="box-heading"><span><?php echo strtoupper($titulo);?></span></div>  
           <section id="producto-detalle">        
             <article class="producto-image">
-              <img src="images/products/product1.jpg" class="big-image" />
+              <img src="<?php echo $host;?>/panel/web/imagenes  /<?php echo $r['imagen'];?>.jpg" class="big-image" />
             </article>
             <article class="producto-detalle"> 
                 <div class="product-details">
                     <div class="short-info-det">
-                        <div class="precio-empresa"><b>Precio S/.</b><b class="c-precio">60</b></div>
+                        <div class="precio-empresa"><b>Precio S/.</b><b class="c-precio"><?php echo $r['precio']; ?></b></div>
                             <div class="product-btns-detalle">
                                 <div class="product-big-btns">
                                     <button class="btn-comprar" data-toggle="tooltip" title="Comprar">COMPRAR</button>
                                     <button class="btn btn-wishlist-det" data-toggle="tooltip" title="Agregar a mis deseos"> <i class="fa fa-heart fa-fw"></i> </button>
                                 </div>
                             </div>
-                            <div class="time" style="padding:8px 0;"><img src="images/time.jpg">Finaliza el: <b>04:02:59</b></div>
+                            <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza el: <b><?php echo $r['hora_fin'];?></b></div>
                     </div>
                 </div>
                 <div class="product-details">
@@ -246,16 +270,16 @@
                             <p>Descuento</p>
                             <p>Ahorro</p>
                             <div class="limpia"></div>
-                            <p class="p1">S/. 279.90</p>
-                            <p class="p2">40%</p>
-                            <p class="p3">S/. 111.96</p>
+                            <p class="p1">S/. <?php echo $r['precio_regular'];?></p>
+                            <p class="p2"><?php echo $r['descuento'];?></p>
+                            <p class="p3">S/. <?php echo $ahorro;?></p>
                         </div>
                     </div>
                 </div>
               <div class="product-details">
                 <div class="short-info-det">                   
                       <div class="short-info-opt" style="height: 40px">                           
-                          <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.html" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                          <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.php" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
                           <!-- <div  class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.html" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div> -->
                           <script src="https://apis.google.com/js/platform.js" async defer>
                             {lang: 'es'}
@@ -307,7 +331,7 @@
                 <!-- detail mobile -->
                 <h3 class="tab_title mobile"><span class="logo_section logo_info"></span>TODO SOBRE LA OFERTA</h3>
                 <!-- detail mobile -->
-                ¡Vacaciones en el sur! Disfruta unos días junto a tu pareja en la hermosa ciudad de Ica. Visitar la Laguna de la Huacachina son solo algunas de las cosas que podrás hacer. ¡Escápate con 59% de descuento! <br/><br/>
+                <!--¡Vacaciones en el sur! Disfruta unos días junto a tu pareja en la hermosa ciudad de Ica. Visitar la Laguna de la Huacachina son solo algunas de las cosas que podrás hacer. ¡Escápate con 59% de descuento! <br/><br/>
 
                               <b>La oferta incluye:</b><br>
                               <b>OPCIÓN 1:</b><br>
@@ -325,7 +349,13 @@
                               
                               <b>CONDICIONES COMERCIALES</b>
                               Aqui van todas las condiciones comerciales.<br/>
-                              Hola condiciones.<br/>
+                              Hola condiciones.<br/>-->
+                              <?php echo $r['descripcion'];?><br>
+                              
+                              <b>CONDICIONES COMERCIALES</b>
+
+                              <?php echo $r['cc'];?>
+
                       </div>
                  </div>
                   <div class="tab-pane " id="reviews">          
@@ -417,11 +447,11 @@
                                         <div class="product-block">
                                             <div class="image">
                                                 <div class="product-label product-sale"><span>-30%</span></div>
-                                                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a>
+                                                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a>
                                                 </div>
                                                 <div class="product-meta">
                                                       <div class="name">
-                                                            <a href="producto.html">
+                                                            <a href="<?php echo $host;?>/producto.php">
                                                                   Parrila extrema + bebidas + show musical para 4  
                                                             </a>
                                                       </div>
@@ -446,10 +476,10 @@
               <div class="product-block">
                 <div class="image"> 
                   <div class="product-label product-sale"><span>-30%</span></div>
-                <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
                 <div class="product-meta">
                   <div class="name">
-                  <a href="producto.html">
+                  <a href="<?php echo $host;?>/producto.php">
                     Parrila extrema + bebidas + show musical para 5 
                   </a>
                   </div>
@@ -474,7 +504,7 @@
               <div class="product-block">
                 <div class="image"> 
                   <div class="product-label product-sale"><span>-30%</span></div>
-                <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                <a class="img" href="<?php echo $host;?>/producto.php"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
                 <div class="product-meta">
                   <div class="name">
                   <a href="producto.html">
@@ -514,7 +544,7 @@
            <div class="product-block">
             <div class="image">
               <div class="product-label product-sale"><span>-30%</span></div>
-              <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+              <a class="img" href="<?php echo $host;?>/producto.php"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
             <div class="product-meta">
               <div class="name">
                 <a href="producto.html">
@@ -566,7 +596,7 @@
          <div class="product-block">
             <div class="image">
               <div class="product-label product-sale"><span>-30%</span></div>
-              <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+              <a class="img" href="<?php echo $host;?>/producto.php"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
             <div class="product-meta">
               <div class="name">
                 <a href="producto.html">
@@ -689,7 +719,7 @@
 </footer>
 <!-- end: footer --> 
 
-<script src="js/jquery.elevatezoom.js" type="text/javascript"></script> 
+<script src="<?php echo $host;?>/js/jquery.elevatezoom.js" type="text/javascript"></script> 
 <script>
 
 (function($) {

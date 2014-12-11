@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once '/lib/spdo.php';
 require '/config/facebook.php';

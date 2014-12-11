@@ -1,33 +1,8 @@
 <?php
 require_once '/app/start.php'; //Start para facebook -> ;)
+//require_once '/model/menu.php';
 require_once '/app/funciones.php';
-$db = Spdo::singleton();
 
-$host="http://".$_SERVER['SERVER_NAME']."/md";
-
-$url=$_GET["id"];
-$str=explode("-", $url);
-
-$n=count($str);
-$id="";
-for($i=0; $i<$n; $i++){
-$id .=$str[$i]." ";
-}
-
-$stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion,p.precio,p.precio_regular,
-                             p.imagen
-                      FROM publicaciones as p
-                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      WHERE c.descripcion=:id");
-        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-        $r = $stmt->fetch();
-
-        //echo $nc;
-        
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
@@ -40,56 +15,53 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
 <title>Muchos Descuentos</title>
 
 <!-- Reset CSS -->
-<link href="<?php echo $host; ?>/css/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="css/normalize.css" rel="stylesheet" type="text/css"/>
 
 <!-- Bootstrap core CSS -->
-<link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
 
 <!-- IView Slider CSS -->
-<link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
+<link href="css/iView.css" rel="stylesheet">
 
 
-<link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
+<link href="css/micss.css" rel="stylesheet"/>
 
 <!-- Animations -->
-<link href="<?php echo $host; ?>/css/animate.css" rel="stylesheet" type="text/css"/>
+<link href="css/animate.css" rel="stylesheet" type="text/css"/>
 
 <!-- Custom styles for this template -->
-<link href="<?php echo $host; ?>/css/custom.css" rel="stylesheet" type="text/css" />
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
 
 <!-- Style Switcher -->
-<link href="<?php echo $host; ?>/css/style-switch.css" rel="stylesheet" type="text/css"/>
+<link href="css/style-switch.css" rel="stylesheet" type="text/css"/>
 
 <!-- Color -->
-<link href="<?php echo $host; ?>/css/skin/color.css" id="colorstyle" rel="stylesheet">
+<link href="css/skin/color.css" id="colorstyle" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
 
 <!-- Bootstrap core JavaScript -->
-<script src="<?php echo $host; ?>/js/jquery-1.10.2.min.js"></script>
-<script src="<?php echo $host; ?>/js/bootstrap.min.js"></script>
-<script src="<?php echo $host; ?>/js/bootstrap-select.js"></script>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-select.js"></script>
 
 <!-- Custom Scripts -->
-<script src="<?php echo $host; ?>/js/scripts.js"></script>
+<script src="js/scripts.js"></script>
 
 <!-- iView Slider -->
-<script src="<?php echo $host; ?>/js/raphael-min.js" type="text/javascript"></script>
-<script src="<?php echo $host; ?>/js/jquery.easing.js" type="text/javascript"></script>
-<script src="<?php echo $host; ?>/js/iView.js" type="text/javascript"></script>
-<script src="<?php echo $host; ?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
+<script src="js/raphael-min.js" type="text/javascript"></script>
+<script src="js/jquery.easing.js" type="text/javascript"></script>
+<script src="js/iView.js" type="text/javascript"></script>
+<script src="js/retina-1.1.0.min.js" type="text/javascript"></script>
 <script>
-  !window.jQuery && document.write("<script src='<?php echo $host; ?>/js/jquery.min.js'><\/script>")
+  !window.jQuery && document.write("<script src='js/jquery.min.js'><\/script>")
 </script>
 <!--[if IE 8]>
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
 
-<script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
-<script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
-
-<!--<base href="http://localhost/md/index.php" />-->
+<script type="text/javascript" src="js/mijs/js.js"></script>
 </head>
 <body>
 <header>   
@@ -98,7 +70,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
     <div class="row">
       <div class="col-md-12">
         <div class="topheadrow">
-          <a href="<?php echo $host; ?>/index.php"><img src="<?php echo $host; ?>/images/logo.png" /></a>
+          <img src="images/logo.png" />
           <ul class="nav nav-pills pull-right">
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Lima <i class="fa fa-angle-down fa-fw"></i></a>              
@@ -204,7 +176,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
           <ul class="nav nav-pills nav-justified" id="listamenu">
-          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
+          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span><i class="fa fa-angle-down fa-fw"></i></a>
           </li>
 
             <!-- Menu -->
@@ -218,24 +190,319 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
 </header>
 <!-- end: Header --> 
 <!-- Products -->
+<div class="container">
+  <div class="row" >
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
+        <div class="box-heading"><span>Descuentos del d&iacute;a</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+      <div class="box-content">
+        <div class="box-products slide" id="productc1">          
+          <div class="carousel-inner"> 
+            <!-- Items Row -->
+            <div class="item active">
+              <div class="row box-product"> 
+                <!-- Product -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <div class="product-block">
+                    <div class="image">
+                      <div class="product-label product-sale"><span>-30%</span></div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                    <div class="product-meta">
+                      <div class="name">
+                        <a href="producto.html">
+                        Parrila extrema + bebidas + show musical para 4
+                        </a>
+                      </div>
+                      
+                      <div class="big-price"> 
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                            96
+                          </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                            119.50
+                          </span> 
+                      </div>
+                      <div class="big-btns"><a href="producto.html" class="btn btn-default btn-View pull-left" href="">Comprar</a></div>
 
+                      <div class="small-price">
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                          96
+                        </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                          119.50
+                        </span>
+                      </div>
+                      <div class="rating"> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star-half-o"></i> 
+                        <i class="fa fa-star-o"></i> 
+                      </div>
+                      
+                      <div class="small-btns">
+                        <button class="btn btn-default btn-wishlist pull-left" title="">
+                         <i class="fa fa-heart fa-fw"></i> 
+                        </button>
+                        <button class="btn btn-default btn-compare pull-left" title="View"><a href="producto.html">VER <b>&GT;</b> </a></button>
+                      </div>
 
+                    </div>
+                    <div class="meta-back"></div>
+                  </div> <!-- aqui. -->
+                </div>
+                <!-- end: Product --> 
+                <!-- Product -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <div class="product-block">
+                    <div class="image">
+                      <div class="product-label product-sale"><span>-30%</span></div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                    <div class="product-meta">
+                      <div class="name">
+                        <a href="producto.html">
+                        Parrila extrema + bebidas + show musical para 4
+                        </a>
+                      </div>
+                      <div class="big-price"> 
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                            96
+                          </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                            119.50
+                          </span> 
+                      </div>
+                      <div class="big-btns"><a href="producto.html" class="btn btn-default btn-View pull-left" href="">Comprar</a></div>
+                      <div class="small-price">
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                          96
+                        </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                          119.50
+                        </span>
+                      </div>
+                      <div class="rating"> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star-half-o"></i> 
+                        <i class="fa fa-star-o"></i> 
+                      </div>
+                      
+                      <div class="small-btns">
+                        <button class="btn btn-default btn-wishlist pull-left" title="">
+                         <i class="fa fa-heart fa-fw"></i> 
+                        </button> 
+                        <button class="btn btn-default btn-compare pull-left" title="View"><a href="producto.html">VER <b>&GT;</b></a></button>
+                      </div>
+
+                    </div>
+                    <div class="meta-back"></div>
+                  </div> <!-- aqui. -->
+                </div>
+                <!-- end: Product --> 
+                <!-- Product -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <div class="product-block">
+                    <div class="image">
+                      <div class="product-label product-sale"><span>-30%</span></div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                    <div class="product-meta">
+                      <div class="name">
+                        <a href="producto.html">
+                        Parrila extrema + bebidas + show musical para 4
+                        </a>
+                      </div>
+                      <div class="big-price"> 
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                            96
+                          </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                            119.50
+                          </span> 
+                      </div>
+                      <div class="big-btns"><a href="producto.html" class="btn btn-default btn-View pull-left" href="">Comprar</a></div>
+                      <div class="small-price">
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                          96
+                        </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                          119.50
+                        </span>
+                      </div>
+                      <div class="rating"> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star"></i> 
+                        <i class="fa fa-star-half-o"></i> 
+                        <i class="fa fa-star-o"></i> 
+                      </div>
+                      
+                      <div class="small-btns">
+                        <button class="btn btn-default btn-wishlist pull-left" title="">
+                         <i class="fa fa-heart fa-fw"></i> 
+                        </button>
+                        <button class="btn btn-default btn-compare pull-left" title="View"><a href="producto.html">VER <b>&GT;</b></a></button>
+                      </div>
+
+                    </div>
+                    <div class="meta-back"></div>
+                  </div> <!-- aqui. -->
+                </div>
+                <!-- end: Product --> 
+              </div>
+            </div>
+            <!-- end: Items Row --> 
+            <!-- Items Row -->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 box-block sidebar">
+      <div class="box-heading"><span>Descuentos Especiales</span></div>
+      <div class="box-content" >
+        <div class="box-products slide carousel-fade" id="productc2">
+          <ol class="carousel-indicators">
+            <li class="active" data-slide-to="0" data-target="#productc2"></li>
+            <li class="" data-slide-to="1" data-target="#productc2"></li>
+            <li class="" data-slide-to="2" data-target="#productc2"></li>
+          </ol>
+          <div class="carousel-inner" style="height:352px"> 
+            <!-- item -->
+            <div class="item active">
+              <div class="product-block">
+                <div class="image">
+                  <div class="product-label product-sale"><span>-30%</span></div>
+                  <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                <div class="product-meta">
+                        <div class="name">
+                          <a href="producto.html">
+                          Parrila extrema + bebidas + show musical para 4  
+                          </a>
+                        </div>
+                        <div class="big-price"> 
+                            <span class="price-new">
+                                <span class="sym">$</span>
+                              96
+                            </span> 
+                            <span class="price-old">
+                            <span class="sym">$</span>
+                              119.50
+                            </span> 
+                        </div>                   
+                        <div class="big-btns">
+                            <a class="btn btn-default btn-View pull-left" href="producto.html">Ver</a>                            
+                        </div> 
+                    
+                      
+                    
+                  </div>
+                <div class="meta-back"></div>
+              </div>
+            </div>
+            <!-- end: item --> 
+            <!-- item -->
+            <!-- slide descuentos especiales-->
+            <div class="item">
+              <div class="product-block">
+                <div class="image"> 
+                  <div class="product-label product-sale"><span>-30%</span></div>
+                <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                <div class="product-meta">
+                  <div class="name">
+                  <a href="producto.html">
+                    Parrila extrema + bebidas + show musical para 5 
+                  </a>
+                  </div>
+                 <div class="big-price"> 
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                            96
+                          </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                            119.50
+                          </span> 
+                      </div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Ver</a></div>
+                </div>
+                <div class="meta-back"></div>
+              </div>
+            </div>
+            <!-- end: item --> 
+            <!-- item -->
+            <div class="item">
+              <div class="product-block">
+                <div class="image"> 
+                  <div class="product-label product-sale"><span>-30%</span></div>
+                <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                <div class="product-meta">
+                  <div class="name">
+                  <a href="producto.html">
+                  Parrila extrema + bebidas + show musical para 6 
+                  </a>
+                  </div>
+                 <div class="big-price"> 
+                        <span class="price-new">
+                          <span class="sym">$</span>
+                            96
+                          </span> 
+                        <span class="price-old">
+                          <span class="sym">$</span>
+                            119.50
+                          </span> 
+                      </div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Ver</a></div>
+                </div>
+                <div class="meta-back"></div>
+              </div>
+            </div>
+            <!-- end: item --> 
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <a class="carousel-control left" data-slide="prev" href="#productc2">
+            <i class="fa fa-angle-left fa-fw"></i> 
+          </a> 
+          <a class="carousel-control right" data-slide="next" href="#productc2"> 
+            <i class="fa fa-angle-right fa-fw"></i> 
+          </a> 
+        </div>
+        <div class="nav-bg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix f-space30"></div>
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-      <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- Viajes</b></span></div>
-      <div class="box-content" id="item">
+      <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+      <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
             <!-- Items Row -->
             <div class="item active">
-              <div class="row box-product" > 
+              <div class="row box-product"> 
                 <!-- Product -->
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -275,7 +542,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                         <button class="btn btn-default btn-wishlist pull-left" title="">
                          <i class="fa fa-heart fa-fw"></i> 
                         </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">Ver1</a> <b>&GT;</b></button>
+                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">Ver</a> <b>&GT;</b></button>
                       </div>
 
                     </div>
@@ -288,7 +555,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -341,7 +608,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -394,7 +661,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -434,7 +701,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                         <button class="btn btn-default btn-wishlist pull-left" title="">
                          <i class="fa fa-heart fa-fw"></i> 
                         </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER4 <b>&GT;</b></a></button>
+                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
                       </div>
 
                     </div>
@@ -453,7 +720,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -507,7 +774,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -560,7 +827,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -613,7 +880,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -677,7 +944,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -730,7 +997,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -783,7 +1050,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -836,7 +1103,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
@@ -884,7 +1151,6 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                   </div> <!-- aqui. -->
                 </div>
                 <!-- end: Product --> 
-
               </div>
             </div>
 
@@ -909,35 +1175,25 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
   </div>
 </div>
 <!-- end: Widgets -->
-
 <div class="row clearfix f-space30"></div>
-
 <!-- footer -->
 
 
-<section class="pages">
-      <div class="holder">
-        <a class="jp-previous jp-disabled">← previous</a>
-        <a class="jp-current">1</a>
-        <span class="jp-hidden">...</span>
-        <a>2</a>
-        <a>3</a>
-        <a>4</a>
-        <a>5</a>
-        <a class="jp-hidden">6</a>
-        <a class="jp-hidden">7</a>
-        <a class="jp-hidden">8</a>
-        <a class="jp-hidden">9</a>
-        <span>...</span>
-        <a>10</a>
-        <a class="jp-next">next →</a>
-    </div>
+<section class="like-box">
+  
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-like-box" data-href="https://www.facebook.com/MuchosDescuentos?fref=ts" data-width="1141px" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="false"></div>
+
+
 </section>
-
-
-
-
-
 
 <footer class="footer">
 <!--<section class="footer-img"></section>-->
@@ -954,20 +1210,20 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
       <div class="col-sm-3 col-xs-12 shopinfo">
         <h4 class="title">INFORMACI&Oacute;N</h4>
         <ul>
-            <li><a href="#">Preguntas Frecuentes.</a></li>
-            <li><a href="#">Acerca del Pago en Efectivo.</a></li>
-            <li><a href="#">Libro de Reclamaciones.</a></li>
-            <li><a href="#">Pol&iacute;ticas y Privacidad.</a></li>
-            <li><a href="#">Mapa del sitio.</a></li>            
+            <li><a href="#" style="color:#333 !important;">Preguntas Frecuentes.</a></li>
+            <li><a href="#" style="color:#333 !important;">Acerca del Pago en Efectivo.</a></li>
+            <li><a href="#" style="color:#333 !important;">Libro de Reclamaciones.</a></li>
+            <li><a href="#" style="color:#333 !important;">Pol&iacute;ticas y Privacidad.</a></li>
+            <li><a href="#" style="color:#333 !important;">Mapa del sitio.</a></li>            
         </ul>        
       </div>
       <div class="col-sm-3 col-xs-12 shopinfo">
         <h4 class="title">EMPRESAS</h4>
-            <li><a href="#">Empresa 1</a></li>
-            <li><a href="#">Empresa 2</a></li>
-            <li><a href="#">Empresa 3</a></li>
-            <li><a href="#">Empresa 4</a></li>
-            <li><a href="#">Empresa 5</a></li>                        
+            <li><a href="#" style="color:#333 !important;">Empresa 1</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 2</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 3</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 4</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 5</a></li>                        
       </div>
       <div class="col-sm-3 col-xs-12 getintouch">
         <h4 class="title">CONT&Aacute;CTENOS</h4>

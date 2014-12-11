@@ -1418,7 +1418,7 @@ a.color3:hover {
 	bottom: 30px;
 	position: absolute;
 	display: inline-block;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 900;
 	height: auto;
 	opacity: 1;
@@ -1429,11 +1429,11 @@ a.color3:hover {
 	-webkit-transition: all 0.7s ease-in-out;
 }
 .product-block .product-meta .small-price .sym {
-	font-size: 14px;
+	font-size: 13px;
 	vertical-align: super;
 }
 .product-block .product-meta .small-price .price-old {
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: 400;
 	padding-left: 5px;
 	text-decoration: line-through;
