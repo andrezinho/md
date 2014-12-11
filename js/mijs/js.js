@@ -38,11 +38,15 @@ $.get('cuenta/datos.php',function(datos){//alert(datos);
 });
 
 //menu y submenu
-$.get('model/menu.php','&',function(data){ //alert(data);
+//window.location.protocol (http:)
+//window.location.pathname (md/)
+var host=window.location.host;
+host=host+"/md";
+$.get('http://'+host+'/model/menu.php','&',function(data){ //alert(data);
   var menu = "";
    $.each(data,function(i,j){
    	 var idc=j.codigo;
-	 menu += "<li id='categoria-"+idc+"'><a href='descuentos/"+j.texto+"'><span class='hidden-sm'>"+j.texto+"</span><i class='fa fa-angle-down fa-fw'></i></a>";
+	 menu += "<li id='categoria-"+idc+"'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"'><span class='hidden-sm'>"+j.texto+"</span><i class='fa fa-angle-down fa-fw'></i></a>";
 	 menu += "<nav id='submenu-"+idc+"' class='submenu'>";
 		
 		$.each(j.enlaces,function(k,p){
@@ -239,3 +243,27 @@ function ndoc(v)
     }
   };
 })( jQuery );
+
+//*********************************************************************
+var amigable  = (function() {
+  var tildes = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç", 
+    conver = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+        cuerpo  = {};
+ 
+  for (var i=0, j=tildes.length; i<j; i++ ) { 
+    cuerpo[tildes.charAt(i)] = conver.charAt(i);
+  }
+ 
+  return function(str) {
+    var salida = [];
+    for( var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt( i );
+      if(cuerpo.hasOwnProperty(str.charAt(i))) {
+        salida.push(cuerpo[c]);
+      } else {
+        salida.push(c);
+      }
+    }
+    return salida.join('').replace(/[^-A-Za-z0-9]+/g, '-').toLowerCase();
+  }
+})();
