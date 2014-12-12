@@ -36,8 +36,10 @@ class local extends Main
                                                        horario,
                                                        mapa_google,
                                                        pagina_web,
-                                                       estado) 
-                                    VALUES(:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11);");
+                                                       estado,
+                                                       latitud,
+                                                       longitud) 
+                                    VALUES(:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13);");
         $stmt->bindParam(':p1', $_P['idempresa'] , PDO::PARAM_STR);
         $stmt->bindParam(':p2', $_P['distrito'] , PDO::PARAM_STR);
         $stmt->bindParam(':p3', $_P['descripcion'] , PDO::PARAM_STR);
@@ -49,6 +51,8 @@ class local extends Main
         $stmt->bindParam(':p9', $_P['mapa_google'] , PDO::PARAM_STR);
         $stmt->bindParam(':p10', $_P['pagina_web'] , PDO::PARAM_STR);
         $stmt->bindParam(':p11',$_P['activo'] , PDO::PARAM_INT);
+        $stmt->bindParam(':p12',$_P['latitud'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p13',$_P['longitud'] , PDO::PARAM_STR);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
@@ -66,7 +70,9 @@ class local extends Main
                                        horario=:p7,
                                        mapa_google=:p8,
                                        pagina_web=:p9,
-                                       estado=:p10
+                                       estado=:p10,
+                                       latitud=:p11,
+                                       longitud=:p12
                                     WHERE idlocal = :idlocal");
 
         $stmt->bindParam(':p1', $_P['distrito'] , PDO::PARAM_STR);
@@ -79,6 +85,8 @@ class local extends Main
         $stmt->bindParam(':p8', $_P['mapa_google'] , PDO::PARAM_STR);
         $stmt->bindParam(':p9', $_P['pagina_web'] , PDO::PARAM_STR);
         $stmt->bindParam(':p10',$_P['activo'] , PDO::PARAM_INT);
+        $stmt->bindParam(':p11',$_P['latitud'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p12',$_P['longitud'] , PDO::PARAM_STR);
 
         $stmt->bindParam(':idlocal', $_P['idlocal'] , PDO::PARAM_INT);
         

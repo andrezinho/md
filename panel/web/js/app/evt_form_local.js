@@ -1,5 +1,6 @@
 $(function() 
 {  
+    $( "#tabs" ).tabs({collapsible: true });
     $( "#descripcion" ).focus();
     $( "#departamento,#provincia,#distrito" ).css({'width':'270px'});
     $("#div_activo").buttonset();
