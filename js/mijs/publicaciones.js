@@ -27,7 +27,7 @@ $(document).ready(function(){
             publi +='<button class="btn btn-default btn-wishlist pull-left" title="">';
             publi +='<i class="fa fa-heart fa-fw"></i></button>';
             publi +='<button class="btn btn-default btn-compare pull-left" title="View">';
-            publi +='<a href="producto.html">VER <b>&GT;</b> </a></button></div></div>';
+            publi +='<a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">VER <b>&GT;</b> </a></button></div></div>';
             publi +='<div class="meta-back"></div></div>';
             publi +='</div> ';
 

@@ -14,7 +14,7 @@ for($i=0; $i<$n; $i++){
 $id .=$str[$i]." ";
 }
 
-$stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
+$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                              c.descripcion,p.precio,p.precio_regular,
                              p.imagen
                       FROM publicaciones as p
@@ -24,7 +24,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
         $stmt->bindValue(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
         $nc= $stmt->rowCount();
-        $r = $stmt->fetch();
+       
 
         //echo $nc;
         
@@ -223,7 +223,7 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-      <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- Viajes</b></span></div>
+      <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- <?php echo $id;?></b></span></div>
       <div class="box-content" id="item">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
@@ -231,36 +231,45 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
             <div class="item active">
               <div class="row box-product" > 
                 <!-- Product -->
+                
+
+                <?php while($r = $stmt->fetch()){
+
+                $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
+                $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
+                  ?>
+
+
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
+                      <div class="product-label product-sale"><span><?php echo "-".$r['descuento'];?></span></div>
+                      <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo $r['titulo1'];?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
+                        <?php echo $r['titulo1'];?>
                         </a>
                       </div>
                       <div class="big-price"> 
                         <span class="price-new">
                           <span class="sym">$</span>
-                            96
+                           <?php echo $r['precio'];?>
                           </span> 
                         <span class="price-old">
                           <span class="sym">$</span>
-                            119.50
+                            <?php echo $r['precio_regular'];?>
                           </span> 
                       </div>
                       <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
                       <div class="small-price">
                         <span class="price-new">
                           <span class="sym">$</span>
-                          96
+                          <?php echo $r['precio'];?>
                         </span> 
                         <span class="price-old">
                           <span class="sym">$</span>
-                          119.50
+                          <?php echo $r['precio_regular'];?>
                         </span>
                       </div>
                       <div class="rating"> 
@@ -275,620 +284,28 @@ $stmt = $db->prepare("SELECT p.titulo1, p.titulo2, p.descripcion,
                         <button class="btn btn-default btn-wishlist pull-left" title="">
                          <i class="fa fa-heart fa-fw"></i> 
                         </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">Ver1</a> <b>&GT;</b></button>
+                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="<?php echo $link; ?>">Ver</a> <b>&GT;</b></button>
                       </div>
 
                     </div>
                     <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
+                  </div> 
+                </div> <!-- fin col-lg-3 col-md-3 col-sm-6 col-xs-12-->
 
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
 
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER4 <b>&GT;</b></a></button>
-                      </div>
 
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
+                <?php }?>
+
+
+
+
+
               </div>
             </div>
-            <!-- end: Items Row --> 
-            <!-- Items Row -->
-            <div class="item">
-              <div class="row box-product"> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="View"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 5
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="View"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-              </div>
-            </div>
-            <!-- end: Items Row --> 
+            
           </div>
         </div>
-
-
-          <div class="row clearfix f-space30"></div>
-              <!-- segundo bloque-->
-              <div class="meta-back"></div>
-              <div class="row box-product"> 
-                <!-- Product -->
-               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 6
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host; ?>/images/products/product1.jpg" title="product title"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          96
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          119.50
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">VER <b>&GT;</b></a></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
-                <!-- end: Product --> 
-
-              </div>
-            </div>
-
-
+        </div>
 
       </div>
     </div>
