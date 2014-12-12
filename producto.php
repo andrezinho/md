@@ -1,7 +1,7 @@
 <?php 
 $host="http://".$_SERVER['SERVER_NAME']."/md";
-require_once '/app/start.php'; //Start para facebook -> ;)
-$db = Spdo::singleton();
+require '/app/start.php'; //Start para facebook -> ;)
+$db = Spdo::singleton(); 
 
 $url=$_GET["id"];
 
@@ -17,7 +17,7 @@ $id=$id[$n-1];
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                             p.fecha_fin,p.hora_inicio,p.hora_fin,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google
@@ -28,12 +28,12 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
                        WHERE idpublicaciones=:id");
-        $stmt->bindValue(':id', $id , PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
         $r = $stmt->fetch();
         $ahorro=$r['precio_regular']-$r['precio'];
         $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
-        if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'].".jpg";}
+        if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
         else{$logo=$host."/images/nologo.png";}
         
 
