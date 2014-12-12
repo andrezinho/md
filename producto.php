@@ -15,11 +15,27 @@ for($s=0; $s<($n-1); $s++) {
 $id=$id[$n-1];
 
 
-$stmt = $db->prepare("SELECT * FROM publicaciones WHERE idpublicaciones=:id");
+$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
+                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,
+                             e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
+                             l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
+                             l.mapa_google
+                      FROM publicaciones as p
+                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
+                              INNER JOIN local as l on l.idlocal=su.idlocal
+                              INNER JOIN empresa as e on e.idempresa=l.idempresa 
+                       WHERE idpublicaciones=:id");
         $stmt->bindValue(':id', $id , PDO::PARAM_INT);
         $stmt->execute();
         $r = $stmt->fetch();
         $ahorro=$r['precio_regular']-$r['precio'];
+        $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
+        if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'].".jpg";}
+        else{$logo=$host."/images/nologo.png";}
+        
 
  ?>
 <!DOCTYPE html>
@@ -146,7 +162,7 @@ $stmt = $db->prepare("SELECT * FROM publicaciones WHERE idpublicaciones=:id");
                   <ul>
                   <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
                   <li class="icon twitter"><a href="#a"><i class="fa fa-twitter fa-fw"></i></a></li>
-                  <li class="icon facebook"><a href="#a"><i class="fa fa-facebook fa-fw"></i></a></li>
+                  <li class="icon facebook"><a href="https://www.facebook.com/MuchosDescuentos?fref=ts" target="_blank"><i class="fa fa-facebook fa-fw"></i></a></li>
                 </ul>
                 </div>
             </div>
@@ -170,17 +186,31 @@ $stmt = $db->prepare("SELECT * FROM publicaciones WHERE idpublicaciones=:id");
             <div class="product-details-head" style="float:left; width:200px; border-right: 1px solid #fafafa;">
                 <div class="short-info-det-name-empresa">                    
                   <div class="name-empresa">
-                    <img src="<?php echo $host;?>/images/logo-empresa.jpg" class="logo-empresa">  
-                    <b>Shoes Center</b>
+                    <img src="<?php echo $logo;?>" class="logo-empresa">  
+                    <b><?php echo $r['empresa'];?></b>
                   </div>
-                <div class="frase-empresa">La comodidad en tus pies</div>
+                <div class="frase-empresa"><?php //echo frase ?></div>
                 </div>
             </div>
             <div style="width:auto; float:left; border-right: 1px solid #fafafa;">                                
-                <div style="padding:10px 10px">                    
-                    <select class="web-list list-local">
-                        <option>Local 1</option>
-                        <option>Local 2</option>
+                <div style="padding:10px 10px"> 
+
+
+                <?php 
+                  $stmt = $db->prepare("SELECT * FROM local WHERE idempresa=:ide");
+                  $stmt->bindValue(':ide', $r['idempresa'] , PDO::PARAM_INT);
+                  $stmt->execute();
+                ?>
+
+
+                    <select class="web-list list-local" style="max-width:140px;">
+                    
+                    <?php while($x = $stmt->fetch()){ $c=1;?>
+
+                      <option value="<?php echo $x['idubigeo'];?>"><?php echo $x['descripcion'];?></option>
+                    
+                    <?php $c++; }?>
+                    
                     </select>
                </div>
             </div>                      
@@ -209,9 +239,9 @@ $stmt = $db->prepare("SELECT * FROM publicaciones WHERE idpublicaciones=:id");
             <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
                 <div class="social-icons" style="">                    
                       <ul >
-                        <li class="icon google-plus" ><a href="#a" style="background:#DC2310"><i class="fa fa-google-plus fa-fw"></i></a></li>                  
-                        <li class="icon twitter"><a href="#a" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>
-                        <li class="icon facebook"><a href="#a" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>
+                        <li class="icon youtube" ><a href="<?php echo $r['youtube'];?>" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>                  
+                        <li class="icon twitter"><a href="<?php echo $r['twitter'];?>" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>
+                        <li class="icon facebook"><a href="<?php echo $r['facebook'];?>" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>
                       </ul>
                 </div>
             </div>
@@ -245,10 +275,10 @@ $stmt = $db->prepare("SELECT * FROM publicaciones WHERE idpublicaciones=:id");
     <div class="row">
         
         <section id="contenido">
-              <div class="box-heading"><span><?php echo strtoupper($titulo);?></span></div>  
+              <div class="box-heading"><span><?php echo strtoupper($r['titulo2']);?></span></div>  
           <section id="producto-detalle">        
             <article class="producto-image">
-              <img src="<?php echo $host;?>/panel/web/imagenes  /<?php echo $r['imagen'];?>.jpg" class="big-image" />
+              <img src="<?php echo $img;?>" class="big-image" />
             </article>
             <article class="producto-detalle"> 
                 <div class="product-details">
