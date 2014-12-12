@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once '/lib/spdo.php';
-require '/config/facebook.php';
-require '/vendor/autoload.php';
+require_once '/config/facebook.php';
+require_once '/vendor/autoload.php';
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
@@ -13,7 +13,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://www.muchosdescuentos.com/pe/');
+$helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
 
 try {
 	$session = $helper->getSessionFromRedirect();
