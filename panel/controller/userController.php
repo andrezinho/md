@@ -14,9 +14,9 @@ class UserController extends Controller {
             $_SESSION['idusuario'] = $obj->idusuario;
             $_SESSION['dni'] = $obj->nrodocumento;
             $_SESSION['email'] = $obj->email;
-            $_SESSION['name'] = utf8_decode($obj->nombres);
-            $_SESSION['primer_name'] = utf8_decode($obj->nombre);
-            $_SESSION['apellido'] = utf8_decode($obj->apellido);
+            $_SESSION['name'] = utf8_encode($obj->nombres);
+            $_SESSION['primer_name'] = utf8_encode($obj->nombre);
+            $_SESSION['apellido'] = utf8_encode($obj->apellido);
             $_SESSION['id_perfil'] = $obj->idperfil;
             $_SESSION['perfil'] = $obj->perfil;
 

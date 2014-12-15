@@ -3,7 +3,10 @@ require_once '../lib/spdo.php';
 $db = Spdo::singleton();
 
 
-        $stmt = $db->prepare("SELECT * from publicaciones order by idpublicaciones desc");
+        $stmt = $db->prepare("SELECT * 
+                              FROM publicaciones
+                              WHERE estado<>0 
+                              ORDER BY idpublicaciones desc limit 3");
         //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -13,6 +16,7 @@ $db = Spdo::singleton();
         {
             
             $menu[$cont] = array(
+                                'idtipo_descuento' => $valor['idtipo_descuento'],
                                 'idpublicaciones' => $valor['idpublicaciones'],
                                 'titulo1' => ucfirst($valor['titulo1']),
                                 'titulo2' => $valor['titulo2'],
