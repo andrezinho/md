@@ -1,19 +1,7 @@
-<<<<<<< HEAD
+
 <?php
 require '/app/start.php'; //Start para facebook -> ;) 
-
-=======
-<?php 
-
-$host="http://".$_SERVER['SERVER_NAME']."/md";
-<<<<<<< HEAD
-require_once '/app/start.php'; 
 $db = Spdo::singleton();
-=======
-require '/app/start.php'; //Start para facebook -> ;)
->>>>>>> 5b2c9697e025055f799b961d5d4681bc0882f732
-$db = Spdo::singleton(); 
->>>>>>> 474fa6e7ffef9b581e0506e2acb80e3253bfb7d6
 
 $url=$_GET["id"];
 
