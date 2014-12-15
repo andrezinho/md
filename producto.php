@@ -1,7 +1,19 @@
+<<<<<<< HEAD
 <?php
 require '/app/start.php'; //Start para facebook -> ;) 
 
+=======
+<?php 
+
+$host="http://".$_SERVER['SERVER_NAME']."/md";
+<<<<<<< HEAD
+require_once '/app/start.php'; 
+$db = Spdo::singleton();
+=======
+require '/app/start.php'; //Start para facebook -> ;)
+>>>>>>> 5b2c9697e025055f799b961d5d4681bc0882f732
 $db = Spdo::singleton(); 
+>>>>>>> 474fa6e7ffef9b581e0506e2acb80e3253bfb7d6
 
 $url=$_GET["id"];
 
@@ -128,6 +140,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Tef: (01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
             </li>
             <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>
+            <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown"> <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> Iniciar Sesión</span></a>
               <div class="loginbox dropdown-menu"> 
                 Conectarse con:<br>
@@ -154,7 +167,28 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                 <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
               </div>
             </li>
+            <?php else: ?>
+              <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
+                  <?php echo $_SESSION['name'];?>
+                  </a>
 
+                    <div class="loginbox dropdown-menu"> 
+                    
+                      <ul>
+                      <?php if($_SESSION['id_perfil']!=4) { ?>
+                      <li><a href="panel/">Panel Admin</a></li>
+                      <?php } 
+                      else { ?>
+                        <li><a href="cuenta.php">Mis Datos</a></li>
+                      <?php } ?>
+                      <li><a href="#">Mis Cupones</a></li>
+                      <li><a href="#">Mis Suscripciones</a></li>
+                      <li><a href="<?php echo $host ?>/app/logout.php">Salir</a></li>
+                      </ul>               
+                    </div>
+                </li>
+                <?php endif; ?>
           </ul>
 
           <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
