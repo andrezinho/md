@@ -379,7 +379,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                               Hola condiciones.<br/>-->
                               <?php echo $r['descripcion'];?><br>
                               
-                              <b>CONDICIONES COMERCIALES</b><br><br>
+                              <b>CONDICIONES COMERCIALES</b><br><br><!-- a -->
 
                               <?php echo $r['cc'];?>
 
