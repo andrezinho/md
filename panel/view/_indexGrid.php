@@ -246,18 +246,6 @@ function eliminar()
         </ul>
     </div>
 </div>
-<!-- 
-<div class="box-lateral-option">
-    <div style="padding:3px 5px;font-weight: bold;">Favoritos</div>
-    <div>
-        <ul class="enlaces-menu">
-            <li><a href="#">Categorias</a></li>
-            <li><a href="#">Publicaciones</a></li>
-            <li><a href="#">Ciudades</a></li>
-        </ul>
-    </div>
-</div>
--->
 </div>
   <div id="box-frm" class="ui-widget-content ui-corner-all" style="height:400px; width:890px; display:none; margin:5px auto">      
   </div>

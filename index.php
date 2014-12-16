@@ -75,13 +75,13 @@ require_once '/app/funciones.php';
       <div class="col-md-12">
         <div class="topheadrow">
           <img src="images/logo.png" />
-          <ul class="nav nav-pills pull-right">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Lima <i class="fa fa-angle-down fa-fw"></i></a>              
-              <ul class="dropdown-menu" role="menu">
-                  <li><a href="#a">LIMA</a></li>                
-                  <li><a href="#a">TRUJILLO</a></li>                
-              </ul>
+          <ul class="nav nav-pills pull-right">            
+            <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
+              <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
+                <?php 
+                  $sql = "SELECT ";
+                ?>
+              </select>
             </li>            
             <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
             <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
