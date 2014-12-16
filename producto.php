@@ -1,8 +1,5 @@
-<?php 
-
-$host="http://".$_SERVER['SERVER_NAME']."/md";
-
-require_once '/app/start.php'; 
+<?php
+require '/app/start.php'; //Start para facebook -> ;) 
 $db = Spdo::singleton();
 
 $url=$_GET["id"];
@@ -19,7 +16,7 @@ $id=$id[$n-1];
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google
@@ -293,9 +290,6 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 <div class="row clearfix f-space20"></div>
 <div class="container">
 
-
-
-
     <div class="row">
         
         <section id="contenido">
@@ -406,7 +400,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                               Hola condiciones.<br/>-->
                               <?php echo $r['descripcion'];?><br>
                               
-                              <b>CONDICIONES COMERCIALES</b>
+                              <b>CONDICIONES COMERCIALES</b><br><br><!-- a b-->
 
                               <?php echo $r['cc'];?>
 

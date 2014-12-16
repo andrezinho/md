@@ -3,6 +3,11 @@ session_start();
 require_once '/lib/spdo.php';
 require_once '/config/facebook.php';
 require_once '/vendor/autoload.php';
+require 'funciones.php';
+
+$host="http://".$_SERVER['SERVER_NAME']."/md";
+$actual=dameURL();
+
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
@@ -81,9 +86,9 @@ try {
 						$_SESSION['idusuario'] = $r->idusuario;
 			            $_SESSION['dni'] = $r->nrodocumento;
 			            $_SESSION['email'] = $r->email;
-			            $_SESSION['name'] = utf8_decode($r->nombres);
-			            $_SESSION['primer_name'] = utf8_decode($r->nombre);
-			            $_SESSION['apellido'] = utf8_decode($r->apellido);
+			            $_SESSION['name'] = utf8_encode($r->nombres);
+			            $_SESSION['primer_name'] = utf8_encode($r->nombre);
+			            $_SESSION['apellido'] = utf8_encode($r->apellido);
 			            $_SESSION['id_perfil'] = $r->idperfil;
 			            $_SESSION['perfil'] = $r->perfil;
 
@@ -127,9 +132,9 @@ try {
 					$_SESSION['idusuario'] = $r->idusuario;
 		            $_SESSION['dni'] = $r->nrodocumento;
 		            $_SESSION['email'] = $r->email;
-		            $_SESSION['name'] = utf8_decode($r->nombres);
-		            $_SESSION['primer_name'] = utf8_decode($r->nombre);
-			        $_SESSION['apellido'] = utf8_decode($r->apellido);
+		            $_SESSION['name'] = utf8_encode($r->nombres);
+		            $_SESSION['primer_name'] = utf8_encode($r->nombre);
+			        $_SESSION['apellido'] = utf8_encode($r->apellido);
 		            $_SESSION['id_perfil'] = $r->idperfil;
 		            $_SESSION['perfil'] = $r->perfil;
 		            }

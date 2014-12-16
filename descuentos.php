@@ -3,7 +3,7 @@ require_once '/app/start.php'; //Start para facebook -> ;)
 require_once '/app/funciones.php';
 $db = Spdo::singleton();
 
-$host="http://".$_SERVER['SERVER_NAME']."/md";
+//$host="http://".$_SERVER['SERVER_NAME']."/md";
 
 $url=$_GET["id"];
 $str=explode("-", $url);
@@ -15,8 +15,8 @@ $id .=$str[$i]." ";
 }
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion,p.precio,p.precio_regular,
-                             p.imagen
+                             c.descripcion,p.precio,p.precio_regular,p.descuento,
+                             p.imagen,p.idtipo_descuento
                       FROM publicaciones as p
                       INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                       INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -24,7 +24,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         $stmt->bindValue(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
         $nc= $stmt->rowCount();
-       
+
 
         //echo $nc;
         
@@ -151,14 +151,14 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                     
                       <ul>
                       <?php if($_SESSION['id_perfil']!=4) { ?>
-                      <li><a href="panel/">Panel Admin</a></li>
+                      <li><a href="<?php echo $host;?>/panel/">Panel Admin</a></li>
                       <?php } 
                       else { ?>
-                        <li><a href="cuenta.php">Mis Datos</a></li>
+                        <li><a href="<?php echo $host;?>/cuenta.php">Mis Datos</a></li>
                       <?php } ?>
                       <li><a href="#">Mis Cupones</a></li>
                       <li><a href="#">Mis Suscripciones</a></li>
-                      <li><a href="app/logout.php">Salir</a></li>
+                      <li><a href="<?php echo $host;?>/app/logout.php">Salir</a></li>
                       </ul>               
                     </div>
                 </li>
@@ -237,13 +237,15 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 
                 $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
                 $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
+                if($r['idtipo_descuento']!=1){$descuento="-".$r['descuento']."%";}
+                else{$descuento=$r['descuento'];} 
                   ?>
 
 
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
-                      <div class="product-label product-sale"><span><?php echo "-".$r['descuento'];?></span></div>
+                      <div class="product-label product-sale"><span><?php echo $descuento;?></span></div>
                       <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo $r['titulo1'];?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">

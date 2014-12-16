@@ -1,11 +1,13 @@
 $(document).ready(function(){
 	$.get("model/publicaciones.php","&",function(data){//alert(data);
 		publi="";
-		$.each(data,function(i,j){
+		$.each(data,function(i,j){ 
 			publi +='<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" >';
 			publi +='<div class="product-block">';
 			publi +='<div class="image">';
-			publi +='<div class="product-label product-sale"><span>-30%</span></div>';
+			if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>-'+j.descuento+'%</span></div>';}
+			else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
+
 			publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="product info" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a> </div>';
 			publi +='<div class="product-meta">';
 			publi +='<div class="name">';

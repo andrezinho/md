@@ -3553,8 +3553,9 @@ article.producto-especial{
 	display: inline-block;
 	margin-top: 10px;
 }
-.name-empresa b{
+img.logo_empresa,.name-empresa b{
 font-size: 1.5em;
+vertical-align: middle;
 }
 .name-empresa p{
 	display: inline-block;
@@ -3606,10 +3607,10 @@ b.c-precio{
 	width: 20px;
 	height: 20px;
 }
-img.logo-empresa, b{
+img.logo-empresa{
 	width: 40px;
 	height: 40px; 
-	margin-top: 6px;
+	vertical-align: middle;
 }
 .product-details-head {
 	background: #EEEEEE;
