@@ -3,7 +3,6 @@ include_once("Main.php");
 class asesor extends Main
 {
     var $idperfil = 2; //Asesor
-
     function indexGrid($page,$limit,$sidx,$sord,$filtro,$query,$cols)
     {
         $sql = "SELECT idusuario,
@@ -17,7 +16,8 @@ class asesor extends Main
         return $this->execQuery($page,$limit,$sidx,$sord,$filtro,$query,$cols,$sql);
     }
 
-    function edit($id ) {
+    function edit($id ) 
+    {
         $stmt = $this->db->prepare("SELECT * FROM usuario WHERE idusuario = :id");
         $stmt->bindParam(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
