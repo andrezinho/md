@@ -8,7 +8,8 @@ $id=explode("-",$url);
 $n=count($id);
 
 $titulo="";
-for($s=0; $s<($n-1); $s++) { 
+for($s=0; $s<($n-1); $s++) 
+{ 
   $titulo .=$id[$s]." ";
 }
 $id=$id[$n-1];
@@ -19,7 +20,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                              p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
-                             l.mapa_google
+                             l.mapa_google,l.latitud,l.longitud
                       FROM publicaciones as p
                               INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                               INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -50,16 +51,12 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 <link href="<?php echo $host;?>/css/normalize.css" rel="stylesheet" type="text/css"/>
 <!-- Bootstrap core CSS -->
 <link href="<?php echo $host;?>/css/bootstrap.css" rel="stylesheet">
-
 <!-- Iview Slider CSS -->
 <link href="<?php echo $host;?>/css/iview.css" rel="stylesheet">
-
 <!--  Responsive 3D Menu  -->
 <link href="<?php echo $host;?>/css/menu3d.css" rel="stylesheet"/>
-
 <!-- Animations -->
 <link href="<?php echo $host;?>/css/animate.css" rel="stylesheet" type="text/css"/>
-
 <!-- Custom styles for this template -->
 <link href="<?php echo $host;?>/css/custom.css" rel="stylesheet" type="text/css" />
 
@@ -73,6 +70,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 <!--[if lt IE 9]> <script src="<?php echo $host;?>/js/html5shiv.js"></script> <script src="<?php echo $host;?>/js/respond.min.js"></script> <![endif]-->
 
 <!-- Bootstrap core JavaScript -->
+
 <script src="<?php echo $host;?>/js/jquery-1.10.2.min.js"></script>
 <script src="<?php echo $host;?>/js/bootstrap.min.js"></script>
 <script src="<?php echo $host;?>/js/bootstrap-select.js"></script>
@@ -446,10 +444,9 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                                          </tbody>
                                     </table>
                                   </td>
-                                  <td>
-                                    <section id="mapa">
-                                          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1982.1129930889124!2d-76.36987206824831!3d-6.493045374463339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2spe!4v1409630416904" width="400" height="255" frameborder="0" style="border:0">
-                                          </iframe>
+                                  <td>                                    
+                                    <section id="map">                                          
+                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>"></iframe>                                    
                                     </section>
                                   </td>
                               </tr>              
