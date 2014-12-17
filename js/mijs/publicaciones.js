@@ -8,7 +8,7 @@ $(document).ready(function(){
 			if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>-'+j.descuento+'%</span></div>';}
 			else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
 
-			publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="product info" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a> </div>';
+			publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="'+j.titulo1+'" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a> </div>';
 			publi +='<div class="product-meta">';
 			publi +='<div class="name">';
 			publi +='<a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
@@ -38,6 +38,41 @@ $(document).ready(function(){
        $("#publicacion").append(publi);
 
 	},'json');
+
+
+
+$.get("model/especial.php","&",function(data){
+    publi="";
+  
+	$.each(data,function(i,j){
+
+
+		if(i==0){publi +='<div class="item active">';}
+		else{publi +='<div class="item">';}
+        publi +='<div class="product-block">';
+        publi +='<div class="image">';
+        publi +='<div class="product-label product-sale"><span>-30%</span></div>';
+        publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="product info" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="product title"></a></div>';
+        publi +='<div class="product-meta">';
+        publi +='<div class="name">';
+        publi +='<a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
+        publi +='<div class="big-price">'; 
+        publi +='<span class="price-new">';
+        publi +='<span class="sym">$</span>'+j.precio+'</span> ';
+        publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
+        publi +='<div class="big-btns">';
+        publi +='<a class="btn btn-default btn-View pull-left" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">Ver</a></div></div>';
+        publi +='<div class="meta-back"></div></div></div>';
+          
+		});
+ 
+
+$("#items").append(publi);
+},'json');
+
+
+
+
 });
 
 

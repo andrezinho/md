@@ -5,7 +5,7 @@ $db = Spdo::singleton();
 
         $stmt = $db->prepare("SELECT * 
                               FROM publicaciones
-                              WHERE estado<>0 and tipo<>1
+                              WHERE estado<>0 and tipo=1
                               ORDER BY idpublicaciones desc limit 3");
         //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
         $stmt->execute();

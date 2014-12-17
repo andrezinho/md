@@ -17,7 +17,7 @@ $id=$id[$n-1];
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,p.cc,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google,l.latitud,l.longitud
@@ -216,19 +216,22 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 
 
                 <?php 
-                  $stmt = $db->prepare("SELECT * FROM local WHERE idempresa=:ide");
+                  $stmt = $db->prepare("SELECT l.*,u.descripcion as ubigeo
+                                        FROM local as l 
+                                        inner join ubigeo as u on u.idubigeo=l.idubigeo
+                                        WHERE l.idempresa=:ide");
                   $stmt->bindValue(':ide', $r['idempresa'] , PDO::PARAM_INT);
                   $stmt->execute();
+                  $u=$stmt->fetch();
                 ?>
-
 
                     <select class="web-list list-local" style="max-width:140px;">
                     
-                    <?php while($x = $stmt->fetch()){ $c=1;?>
+                    <?php while($x = $stmt->fetch()){ ?> 
 
                       <option value="<?php echo $x['idubigeo'];?>"><?php echo $x['descripcion'];?></option>
                     
-                    <?php $c++; }?>
+                    <?php }?>
                     
                     </select>
                </div>
@@ -375,30 +378,15 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                <div class="tab-pane active" id="detalle-producto">
                   <div >
                 <!-- detail mobile -->
-                <h3 class="tab_title mobile"><span class="logo_section logo_info"></span>TODO SOBRE LA OFERTA</h3>
+                <h3 class="tab_title mobile">
+                    <span class="logo_section logo_info"></span>
+                    TODO SOBRE LA OFERTA
+                </h3>
                 <!-- detail mobile -->
-                <!--¡Vacaciones en el sur! Disfruta unos días junto a tu pareja en la hermosa ciudad de Ica. Visitar la Laguna de la Huacachina son solo algunas de las cosas que podrás hacer. ¡Escápate con 59% de descuento! <br/><br/>
-
-                              <b>La oferta incluye:</b><br>
-                              <b>OPCIÓN 1:</b><br>
-                              S/. 199 en vez de S/. 480 por:<br>
-                              • 1 Noche en Casasol Hotel (válido de domingo a jueves)<br>
-                              • Visita a la laguna de Huacachina<br>
-                              • Paseo en tubulares<br>
-                              • Traslados hacia los lugares donde se realizan las actividades<br>
-                              • Desayunos<br>
-                              <br>
-                       
-                              <b>Descripción:</b><br>
-                              <b>Casasol Hotel</b> se encuentra ubicado a 15 minutos del centro de la ciudad, en un lugar campestre rodeado de vegetación y de una piscina para que tú y tu acompañante disfruten al máximo los días de calor. Las habitaciones cuentan con TV con cable, agua caliente y anexo telefónico. Los tours cuentan con traslados desde el hotel hacia la atracción turística (Huacachina), además del retorno al hotel.<br>
-                              <br>
-                              
-                              <b>CONDICIONES COMERCIALES</b>
-                              Aqui van todas las condiciones comerciales.<br/>
-                              Hola condiciones.<br/>-->
+              
                               <?php echo $r['descripcion'];?><br>
                               
-                              <b>CONDICIONES COMERCIALES</b><br><br><!-- a b-->
+                              <h3>CONDICIONES COMERCIALES</h3>
 
                               <?php echo $r['cc'];?>
 
@@ -412,31 +400,36 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                                     <table>
                                         <tbody valign="top">
                                           <tr>
-                                              <td colspan="2">La empresa<br> <strong>Shoes Center</strong><br>
-                                                  <p>Es una empresa dedicada a la importacion de marcas posicionadas<br> en el mercado como Puma,etc</p>
+                                              <td colspan="2">La empresa<br> <strong><?php echo $r['empresa'];?></strong><br>
+                                                  <p><?php echo $r['razon_comercial'];?></p>
                                               </td>
                                           </tr>
                                           <tr>
                                               <td>                    
                                                 <b>Direccion:</b> <br>
-                                                    Av. Alfredo Mendiola 3698 - CC<br>
-                                                    Mega Plaza Norte
+                                                    <?php echo $r['direccion']."<br>";
+                                                          echo $u['ubigeo'];
+                                                     ?>
+                                                    
                                               </td>
                                               <td><b>Horario:</b> <br>
-                                                  De lunes a domingo<br> de 10am a 10pm.
+                                                  <!-- De lunes a domingo<br> de 10am a 10pm.-->
+                                                  <?php echo $r['horario']; ?>
                                               </td>
                                           </tr>
                                           <tr>
-                                              <td><b>Telefono:</b> <br>
-                                                  (01)-000000
+                                              <td><b>Telefonos:</b> <br>
+                                                  <?php echo $r['telefono1']."<br>";
+                                                        echo $r['telefono2'];
+                                                  ?>
                                               </td>
                                               <td><b> Email:</b><br>
-                                                  email@midominio.com.pe
+                                                 <?php echo $u['email'];?>
                                               </td>
                                           </tr>
                                           <tr>
                                               <td><b>Sitio Web:</b><br>
-                                                  http://www.empresa.com.pe
+                                                  <?php echo $u['pagina_web'];?>
                                               </td>
                                               <td>                                                        
                                               </td>
@@ -444,9 +437,14 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                                          </tbody>
                                     </table>
                                   </td>
-                                  <td>                                    
-                                    <section id="map">                                          
-                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>"></iframe>                                    
+
+                                  <td>
+                                    
+                                    <section id="mapa">
+                                                                            
+                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
+                                      </iframe>                                    
+
                                     </section>
                                   </td>
                               </tr>              
@@ -525,7 +523,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                 <div class="product-meta">
                   <div class="name">
                   <a href="<?php echo $host;?>/producto.php">
-                    Parrila extrema + bebidas + show musical para 5 
+                    Parrila extrema + bebidas + show musical para 5 aa
                   </a>
                   </div>
                  <div class="big-price"> 
