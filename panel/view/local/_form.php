@@ -8,19 +8,18 @@ function inicializar(l1,l2)
     {
         var map = new GMap2(document.getElementById("map"));
         map.setCenter(new GLatLng(l1, l2), 17);
-
-        function informacion(ubicacion, descripcion) 
+        
+        function informacion(ubicacion, descripcion)
         {
             var marca = new GMarker(ubicacion);
-            GEvent.addListener(marca, "click", function() {
-            marca.openInfoWindowHtml(descripcion); } );
+            GEvent.addListener(marca, "click", function() { marca.openInfoWindowHtml(descripcion); } );
             return marca;
         }
-
+        
         var ubicacion = new GLatLng(l1, l2);
         var descripcion = 'Direccion del Local';
         var marca = informacion(ubicacion, descripcion);
-
+        
         map.addOverlay(marca);
     }
 }
@@ -55,30 +54,10 @@ function cargar_mapa()
         <input id="descripcion" maxlength="200" name="descripcion" onkeypress="return permite(event,'car');" class="text ui-widget-content ui-corner-all" style=" width: 408px; text-align: left;" value="<?php echo $obj->descripcion; ?>" /> <span class="item-required">*</span>
         <br>
         
-        <label for="departamento" class="labels" style="width:130px;">Departamento:</label>
-        <?php echo $departamento; ?> <span class="item-required">*</span>
-        
+        <label for="idciudad" class="labels" style="width:130px;">Ciudad:</label>
+        <?php echo $ciudad; ?> <span class="item-required">*</span>        
         <br/>
-        <label for="provincia" class="labels" style="width:130px;">Provincia:</label>
-        <?php 
-            if($obj->idlocal!="")
-            {echo $provincia; }
-            else
-            { echo "<select class='ui-widget-content ui-corner-all text' name='provincia' id='provincia' ><option>...</option></select>";}
-        ?> 
-        <span class="item-required">*</span>
-        
-        <br/>
-        <label for="distrito" class="labels" style="width:130px;">Distrito:</label>
-        <?php
-            if($obj->idlocal!="")
-            {echo $distrito; }
-            else
-            { echo "<select class='ui-widget-content ui-corner-all text' name='distrito' id='distrito' ><option>...</option></select>";}
-        ?> 
-        <span class="item-required">*</span>
 
-        <br/>
         <label for="nombre_contacto" class="labels" style="width:130px;">Direccion:</label>
         <input type="text" id="direccion"  name="direccion" class="text ui-widget-content ui-corner-all" style=" width: 408px; text-align: left;" value="<?php echo $obj->direccion; ?>" onkeypress="return permite(event,'num_car');" maxlength="100" /> <span class="item-required">*</span>
         

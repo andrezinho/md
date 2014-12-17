@@ -5,9 +5,20 @@ require_once '/config/facebook.php';
 require_once '/vendor/autoload.php';
 require 'funciones.php';
 
+if(!isset($_SESSION['idciudad']))
+{
+
+	$stmt = $db->prepare("SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod limit 1  ");
+	$stmt->execute();
+	$data = array();
+	$row = $stmt->fetchObject();
+
+	$_SESSION['ciudad'] = $row->descripcion;
+	$_SESSION['idciudad'] = $row->idciudad;
+}
+
 $host="http://".$_SERVER['SERVER_NAME']."/md";
 $actual=dameURL();
-
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
@@ -20,7 +31,8 @@ use Facebook\FacebookRequestException;
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
 $helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
 
-try {
+try 
+{
 	$session = $helper->getSessionFromRedirect();
 
 	if ($session):
@@ -54,8 +66,6 @@ try {
 			    $apellido_face = utf8_decode($apellido_face);
 			    if($r->n==0)
 			    {
-
-			     
 			        try 
 			        {
 			            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

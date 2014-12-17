@@ -50,6 +50,10 @@ class publicaciones extends Main
     }
     function insert($_P ) 
     {
+        if(!isset($_P['tipo']))
+        {
+            $_P['tipo'] = 0;
+        }
         try 
         { 
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -71,12 +75,13 @@ class publicaciones extends Main
                                                     hora_inicio,
                                                     fecha_fin,
                                                     hora_fin,
-                                                    estado)
+                                                    estado,
+                                                    tipo)
                                                     VALUES
                                                     (
                                                     :p1,:p2,:p3,:p4,:p5,:p6,
                                                     :p7,:p8,:p9,:p10,:p11,:p12,
-                                                    :p13,:p14,:p15,:p16
+                                                    :p13,:p14,:p15,:p16,:p17
                                             );");
             $idsuscripcion = $_SESSION['idsuscripcion'];
             $idtipo=1;
@@ -101,6 +106,7 @@ class publicaciones extends Main
             $stmt->bindParam(':p14',$_P['fecha_fin'] , PDO::PARAM_STR);
             $stmt->bindParam(':p15',$_P['hora_fin'] , PDO::PARAM_STR);
             $stmt->bindParam(':p16',$_P['activo'] , PDO::PARAM_INT);
+            $stmt->bindParam(':p17',$_P['tipo'] , PDO::PARAM_INT);
             $stmt->execute();
 
             $idp = $this->IdlastInsert("publicaciones","idpublicaciones");

@@ -25,4 +25,7 @@ class Spdo extends PDO
          return self::$instance;
     }
 }
+
+$db = Spdo::singleton();
+
 ?>

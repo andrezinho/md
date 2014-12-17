@@ -2,10 +2,12 @@
 require_once '../lib/controller.php';
 require_once '../lib/view.php';
 require_once '../model/user.php';
+require_once '../model/ciudad.php';
 class UserController extends Controller {
     public static function  login() 
     {
-        $obj = new User();        
+        $obj = new User();   
+        $objc = new ciudad();
         $_p = $obj->Start();
         $obj = $_p['obj'];           
         if ($obj->idusuario != '') 
@@ -26,6 +28,7 @@ class UserController extends Controller {
             $_SESSION['idsuscripcion'] = $obj->idsuscripcion;
             $_SESSION['suscripcion_estado'] = $obj->suscripcion_estado;
 
+            
             if($_POST['type']=='p')
             {
                 header('location:index.php');

@@ -22,7 +22,7 @@ class Perfil extends Main
     {
         $stmt = $this->db->prepare("INSERT INTO perfil (descripcion, estado) VALUES(:p1,:p2)");
         $stmt->bindParam(':p1', $_P['descripcion'] , PDO::PARAM_STR);
-        $stmt->bindParam(':p2', $_P['activo'] , PDO::PARAM_BOOL);
+        $stmt->bindParam(':p2', $_P['activo'] , PDO::PARAM_INT);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
@@ -31,7 +31,7 @@ class Perfil extends Main
     function update($_P ) {
         $stmt = $this->db->prepare("UPDATE perfil set descripcion = :p1, estado = :p2 WHERE idperfil = :idperfil");
         $stmt->bindParam(':p1', $_P['descripcion'] , PDO::PARAM_STR);
-        $stmt->bindParam(':p2', $_P['activo'] , PDO::PARAM_BOOL);
+        $stmt->bindParam(':p2', $_P['activo'] , PDO::PARAM_INT);
         $stmt->bindParam(':idperfil', $_P['idperfil'] , PDO::PARAM_INT);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();

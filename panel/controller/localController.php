@@ -3,6 +3,7 @@ require_once '../lib/controller.php';
 require_once '../lib/view.php';
 require_once '../model/local.php';
 require_once '../model/empresa.php';
+require_once '../model/ciudad.php';
 
 class localController extends Controller
 {
@@ -14,7 +15,8 @@ class localController extends Controller
                         4 => array('Name'=>'Ciudad','NameDB'=>'u.descripcion','width'=>'90','align'=>'center','color'=>'#FFFFFF'),
                         5 => array('Name'=>'Telefono','NameDB'=>'l.telefono','width'=>'90','align'=>'center','color'=>'#FFFFFF')
                      );
-    public function index() 
+
+    public function index()
     {
         $obje = new empresa();
         $data = array();                               
@@ -54,30 +56,30 @@ class localController extends Controller
 
     public function create()
     {
+        $objc = new ciudad();
         $data = array();
         $view = new View();                
         $d = $this->departamentos();
-        $data['departamento'] = $this->Select(array('name'=>'departamento','id'=>'departamento','table'=>$d));                
+        
+        $c = $objc->arrayCiudad();        
+        $data['ciudad'] = $this->Select(array('name'=>'distrito','id'=>'distrito','table'=>$c));
         $data['idempresa'] = $_GET['emp'];
         $view->setData($data);
         $view->setTemplate( '../view/local/_form.php' );
         echo $view->renderPartial();
     }
 
-    public function edit() 
+    public function edit()
     {
+        $objc = new ciudad();
         $obj = new local();
         $data = array();
         $view = new View();
         $obj = $obj->edit($_GET['id']);
         $data['obj'] = $obj;        
         
-        $d = $this->departamentos();
-        $data['departamento'] = $this->Select(array('name'=>'departamento','id'=>'departamento','table'=>$d,'code'=>  substr($obj->idubigeo, 0,2)."0000"));
-        $p = $this->provincia($obj->idubigeo);
-        $data['provincia'] = $this->Select(array('name'=>'provincia','id'=>'provincia','table'=>$d,'code'=>  substr($obj->idubigeo, 0,2)."0000"));
-        $dd = $this->distrito($obj->idubigeo);
-        $data['distrito'] = $this->Select(array('name'=>'distrito','id'=>'distrito','table'=>$dd,'code'=> $obj->idubigeo));
+        $c = $objc->arrayCiudad();        
+        $data['ciudad'] = $this->Select(array('name'=>'distrito','id'=>'distrito','table'=>$c,'code'=>$obj->idubigeo));
         
         $data['more_options'] = $this->more_options('local');
         $view->setData($data);
@@ -138,5 +140,4 @@ class localController extends Controller
         print_r(json_encode($data));
     }
 }
-
 ?>

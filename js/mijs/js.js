@@ -1,4 +1,13 @@
+var host=window.location.host;
+host=host+"/md";
 $(document).ready(function(){
+//Eventos cambio de ciudad
+$("#ciudades").change(function(){
+    var c = $(this).val();
+    $.get('http://'+host+'/model/change_ciudad.php','c='+c,function(data){      
+      location.reload();
+    });
+  });
 //menu lateral
 $("#datos").click(function(){
 	$("#datos").css({color:"#000"});
@@ -40,8 +49,7 @@ $.get('cuenta/datos.php',function(datos){//alert(datos);
 //menu y submenu
 //window.location.protocol (http:)
 //window.location.pathname (md/)
-var host=window.location.host;
-host=host+"/md";
+
 $.get('http://'+host+'/model/menu.php','&',function(data){ //alert(data);
   var menu = "";
    $.each(data,function(i,j){

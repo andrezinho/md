@@ -1,6 +1,5 @@
 <?php
 require_once '/app/start.php'; //Start para facebook -> ;)
-//require_once '/model/menu.php';
 require_once '/app/funciones.php';
 
 ?>
@@ -59,8 +58,7 @@ require_once '/app/funciones.php';
 </script>
 <!--[if IE 8]>
     <script type="text/javascript" src="js/selectivizr.js"></script>
-    <![endif]-->
-
+<![endif]-->
 <script type="text/javascript" src="js/utilitarios.js"></script>
 <script type="text/javascript" src="js/mijs/js.js"></script>
 <script type="text/javascript" src="js/mijs/publicaciones.js"></script>
@@ -78,8 +76,21 @@ require_once '/app/funciones.php';
           <ul class="nav nav-pills pull-right">            
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
-                <?php 
-                  $sql = "SELECT ";
+                <?php                   
+                  $sql = "SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
+                  $stmt = $db->prepare($sql);
+                  $stmt->execute();                  
+                  foreach($stmt->fetchAll() as $r)
+                  {
+                     $s = "";
+                     if($r[0]==$_SESSION['idciudad'])
+                     {
+                       $s = "selected";
+                     }
+                     ?>
+                     <option value="<?php echo $r[0] ?>" <?php echo $s; ?>><?php echo $r[1]; ?></option>
+                     <?php
+                  }
                 ?>
               </select>
             </li>            

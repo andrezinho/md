@@ -43,12 +43,22 @@
             }  else { ?>
         <select name="idsubcategoria" id="idsubcategoria">
             <option value="">...</option>
-        </select> <span class="item-required">*</span> 
-        <?php } ?>
+        </select>
+        <?php } ?> <span class="item-required">*</span> 
         <br/>
 
         <label for="idtipo_descuento" class="labels" style="width:130px;">Tipo Descuento:</label>
-        <?php echo $tipo_descuento; ?>
+        <?php echo $tipo_descuento; ?> <span class="item-required">*</span> 
+
+        <label for="tipo" class="labels" style="width:80px;">Especial:</label>
+        <?php 
+        $ck = "";
+         if($obj->tipo=="1")
+         {
+            $ck ="checked";
+         }
+        ?>
+        <input type="checkbox" name="tipo" id="tipo" value="1" style="vertical-align:middle;" <?php echo $ck; ?>/>
         <br/>
 
         <label for="titulo1" class="labels" style="width:130px;">Titulo Corto:</label>
