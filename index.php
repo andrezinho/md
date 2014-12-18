@@ -29,7 +29,7 @@ $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.ti
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE l.idubigeo='".$_SESSION['idciudad']."' order by ");
+                       WHERE l.idubigeo='".$_SESSION['idciudad']."' order by idpublicaciones desc");
 //$stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $pub->execute();
 
