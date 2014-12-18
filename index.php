@@ -29,7 +29,7 @@ $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.ti
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE l.idubigeo='".$_SESSION['idciudad']."'");
+                       WHERE l.idubigeo='".$_SESSION['idciudad']."' order by ");
 //$stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $pub->execute();
 
@@ -43,34 +43,29 @@ $pub->execute();
 <meta content="Muchos Descuentos" name="description">
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <title>Muchos Descuentos</title>
-<link href="css/normalize.css" rel="stylesheet" type="text/css"/>
+
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/iView.css" rel="stylesheet">
-
 <link href="css/micss.css" rel="stylesheet"/>
-
+<link type="text/css" href="css/jquery-ui.min.css" rel="stylesheet" />
+<link type="text/css" href="css/jquery-ui.structure.min.css" rel="stylesheet" />
+<link type="text/css" href="css/jquery-ui.theme.min.css" rel="stylesheet" />
 <!-- Animations -->
-<link href="css/animate.css" rel="stylesheet" type="text/css"/>
+
 
 <!-- Custom styles for this template -->
 <link href="css/custom.css" rel="stylesheet" type="text/css" />
-
 <!-- Style Switcher -->
 <link href="css/style-switch.css" rel="stylesheet" type="text/css"/>
-
 <!-- Color -->
 <link href="css/skin/color.css" id="colorstyle" rel="stylesheet">
-
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
-
 <!-- Bootstrap core JavaScript -->
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap-select.js"></script>
 
-<!-- Custom Scripts -->
-<script src="js/scripts.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>    
+<script src="js/bootstrap.min.js"></script>
 
 <!-- iView Slider -->
 <script src="js/raphael-min.js" type="text/javascript"></script>
@@ -86,10 +81,9 @@ $pub->execute();
 <script type="text/javascript" src="js/utilitarios.js"></script>
 <script type="text/javascript" src="js/mijs/js.js"></script>
 <script type="text/javascript" src="js/mijs/publicaciones.js"></script>
-
-<!--<base href="http://localhost/md/index.php" />-->
 </head>
 <body>
+<div id="frm-suscripcion"></div>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
   <div class="container">
@@ -117,8 +111,9 @@ $pub->execute();
                   }
                 ?>
               </select>
-            </li>            
-            <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
+            </li>       
+
+            <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
             <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
@@ -175,8 +170,6 @@ $pub->execute();
                 </li>
                 <?php endif; ?>
                  
-                
-            
           </ul>
         </div>
       </div>
