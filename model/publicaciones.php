@@ -11,6 +11,7 @@ $db = Spdo::singleton();
                     inner join local as l on l.idlocal = s.idlocal                
                 WHERE p.estado<>0 and p.tipo<>1 and l.idubigeo = '".$_SESSION['idciudad']."'
                 ORDER BY idpublicaciones desc limit 3 ";
+
     }
     else
     {
@@ -23,12 +24,10 @@ $db = Spdo::singleton();
             ORDER BY idpublicaciones desc limit 3 ";
     }
 
-    $stmt = $db->prepare($sql);
-    
+    $stmt = $db->prepare($sql);    
     $stmt->execute();
     $items = $stmt->fetchAll();
-    $cont = 0;
-    
+    $cont = 0;    
     foreach ($items as $valor)
     {        
         $menu[$cont] = array(
@@ -51,5 +50,4 @@ $db = Spdo::singleton();
         $cont ++;
     }
     print_r(json_encode($menu));
-    
 ?>
