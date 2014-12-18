@@ -385,7 +385,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                 </h3>
                 <!-- detail mobile -->
               
-                              <?php echo $r['descripcion'];?><br>
+                              <?php echo $r['desc_publi'];?><br>
                               
                               <h3>CONDICIONES COMERCIALES</h3>
 

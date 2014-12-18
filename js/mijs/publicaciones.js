@@ -75,21 +75,6 @@ $("#items").append(publi);
 
 
 
-
-
-$.get("model/publicaciones-all.php","&",function(data){
-publi +="";
-$.each(data,function(i,j){
-	
-
-
-});
-
-},'json');
-
-
-
-
 });
 
 
