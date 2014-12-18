@@ -6,8 +6,8 @@ $stmt = $db->prepare("SELECT *
                       FROM publicaciones
                       WHERE estado<>0 and tipo=1
                       ORDER BY idpublicaciones desc limit 3");
-        $stmt->execute();
-        $lista= $stmt->rowCount();
+$stmt->execute();
+$lista= $stmt->rowCount();
 
 ?>
 <!DOCTYPE html>
@@ -17,18 +17,10 @@ $stmt = $db->prepare("SELECT *
 <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta content="Muchos Descuentos" name="description">
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<!--<meta content="logoby.us" name="author">-->
 <title>Muchos Descuentos</title>
-
-<!-- Reset CSS -->
 <link href="css/normalize.css" rel="stylesheet" type="text/css"/>
-
-<!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
-
-<!-- IView Slider CSS -->
 <link href="css/iView.css" rel="stylesheet">
-
 
 <link href="css/micss.css" rel="stylesheet"/>
 
@@ -242,14 +234,9 @@ $stmt = $db->prepare("SELECT *
             else{$activo="";}
             echo '<li class="'.$activo.'" data-slide-to="'.$i.'" data-target="#productc2"></li>';
           }?>
-
           </ol>
           <div class="carousel-inner" id="items"  style="height:352px"> 
-
-            
             <!-- PRODUCTOS ESPECIALES -->           
-            
-
           </div>
         </div>
         <div class="carousel-controls">
@@ -713,8 +700,6 @@ $stmt = $db->prepare("SELECT *
             <!-- end: Items Row --> 
           </div>
         </div>
-
-
           <div class="row clearfix f-space30"></div>
               <!-- segundo bloque-->
               <div class="meta-back"></div>
@@ -933,20 +918,8 @@ $stmt = $db->prepare("SELECT *
                 <!-- end: Product --> 
               </div>
             </div>
-
-
-
             <div class="row clearfix f-space30"></div>
             <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
-
-
-
-
-
-
-
-
-
             <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
@@ -2289,21 +2262,6 @@ $stmt = $db->prepare("SELECT *
               </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </div>
   </div>
@@ -2409,44 +2367,37 @@ $stmt = $db->prepare("SELECT *
   
 </footer>
 <!-- end: footer --> 
-
-
-<script>
-
+<script type="text/javascript">
 (function($) {
   "use strict";
- $('#menuMega').menu3d();
-                $('#iView').iView({
-                    pauseTime: 10000,
-                    pauseOnHoView: true,
-                    directionNavHoViewOpacity: 0.6,
-                    timer: "360Bar",
-                    timerBg: '#2da5da',
-                    timerColor: '#fff',
-                    timerOpacity: 0.9,
-                    timerDiameter: 20,
-                    timerPadding: 1,
-					touchNav: true,
-                    timerStroke: 2,
-                    timerBarStrokeColor: '#fff'
-                });
-				
-                $('.quickbox').carousel({
-                    interval: 10000
-                });
-               $('#monthly-deals').carousel({
-                    interval: 3000
-                });
-                $('#productc2').carousel({
-                    interval: 4000
-                });
-                $('#tweets').carousel({
-                    interval: 5000
-                });
+    $('#menuMega').menu3d();
+    $('#iView').iView({
+        pauseTime: 10000,
+        pauseOnHoView: true,
+        directionNavHoViewOpacity: 0.6,
+        timer: "360Bar",
+        timerBg: '#2da5da',
+        timerColor: '#fff',
+        timerOpacity: 0.9,
+        timerDiameter: 20,
+        timerPadding: 1,
+touchNav: true,
+        timerStroke: 2,
+        timerBarStrokeColor: '#fff'
+    });				
+    $('.quickbox').carousel({
+        interval: 10000
+    });
+   $('#monthly-deals').carousel({
+        interval: 3000
+    });
+    $('#productc2').carousel({
+        interval: 4000
+    });
+    $('#tweets').carousel({
+        interval: 5000
+    });
 })(jQuery);
-
-
-          
-        </script>
+</script>
 </body>
 </html>

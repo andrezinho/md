@@ -1,13 +1,17 @@
 <?php 
+session_start();
 require_once '../lib/spdo.php';
 $db = Spdo::singleton();
+    
+    $sql = "SELECT p.* 
+            FROM publicaciones as p inner join suscripcion as s 
+                on s.idsuscripcion = p.idsuscripcion
+                inner join local as l on l.idlocal = s.idlocal
+            WHERE p.estado<>0 and p.tipo<>1 and l.idubigeo = '".$_SESSION['idciudad']."'
+            ORDER BY idpublicaciones desc limit 3";
 
-
-        $stmt = $db->prepare("SELECT * 
-                              FROM publicaciones
-                              WHERE estado<>0 and tipo<>1
-                              ORDER BY idpublicaciones desc limit 3");
-        //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
+    $stmt = $db->prepare($sql);
+        
         $stmt->execute();
         $items = $stmt->fetchAll();
         $cont = 0;     
