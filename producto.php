@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '/app/start.php'; //Start para facebook -> ;) 
 $db = Spdo::singleton();
 
@@ -27,7 +28,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE idpublicaciones=:id");
+                       WHERE idpublicaciones=:id and l.idubigeo='".$_SESSION['idciudad']."'");
         $stmt->bindValue(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
         $r = $stmt->fetch();
