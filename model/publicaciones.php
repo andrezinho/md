@@ -22,6 +22,7 @@ $db = Spdo::singleton();
                 left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
             WHERE p.estado<>0 and p.tipo<>1 and l.idubigeo = '".$_SESSION['idciudad']."'
             ORDER BY idpublicaciones desc limit 3 ";
+
     }
 
     $stmt = $db->prepare($sql);    
@@ -30,12 +31,13 @@ $db = Spdo::singleton();
     $cont = 0;    
     foreach ($items as $valor)
     {        
+
         $menu[$cont] = array(
                             'idtipo_descuento' => $valor['idtipo_descuento'],
                             'idpublicaciones' => $valor['idpublicaciones'],
-                            'titulo1' => ucfirst($valor['titulo1']),
-                            'titulo2' => $valor['titulo2'],
-                            'descripcion' => $valor['descripcion'],
+                            'titulo1' => utf8_encode($valor['titulo1']),
+                            'titulo2' => utf8_encode($valor['titulo2']),
+                            'descripcion' => utf8_encode($valor['descripcion']),
                             'precio_regular' => $valor['precio_regular'],
                             'precio' => $valor['precio'],
                             'descuento' => $valor['descuento'],
