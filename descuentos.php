@@ -292,6 +292,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                     </div>
                     <div class="meta-back"></div>
                   </div> 
+                  <div class="row clearfix f-space30"></div>
                 </div> <!-- fin col-lg-3 col-md-3 col-sm-6 col-xs-12-->
 
 

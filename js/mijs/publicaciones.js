@@ -74,14 +74,15 @@ $.get("model/especial.php","&",function(data){
 $("#items").append(publi);
 },'json');
 
-$.get("model/publicaciones-all.php","&",function(data){
-    publi +="";
-    $.each(data,function(i,j){});
-},'json');
+
+
 });
+
+
 function addwishlist(i)
 {
     $.post('model/addwish.php','i='+i,function(r){
         $("#fa-heart-"+i).css("color","#FCD209");
     });
 }
+
