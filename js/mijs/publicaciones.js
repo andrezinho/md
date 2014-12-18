@@ -56,7 +56,9 @@ $.get("model/especial.php","&",function(data){
 		else{publi +='<div class="item">';}
         publi +='<div class="product-block">';
         publi +='<div class="image">';
-        publi +='<div class="product-label product-sale"><span>-30%</span></div>';
+        if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>-'+j.descuento+'%</span></div>';}
+        else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
+        
         publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="product info" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="product title"></a></div>';
         publi +='<div class="product-meta">';
         publi +='<div class="name">';
@@ -71,7 +73,15 @@ $.get("model/especial.php","&",function(data){
 		});
 $("#items").append(publi);
 },'json');
+
+$.get("model/publicaciones-all.php","&",function(data){
+publi +="";
+$.each(data,function(i,j){
+	
 });
+
+},'json');
+
 
 function addwishlist(i)
 {

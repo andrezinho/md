@@ -2,12 +2,36 @@
 require_once '/app/start.php'; //Start para facebook -> ;)
 require_once '/app/funciones.php';
 $db = Spdo::singleton();
-$stmt = $db->prepare("SELECT * 
-                      FROM publicaciones
-                      WHERE estado<>0 and tipo=1
+$stmt = $db->prepare("SELECT p.* 
+                      FROM publicaciones as p 
+                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
+                           inner join local as l on l.idlocal = s.idlocal
+                      WHERE p.estado<>0 and p.tipo<>1 and l.idubigeo = '".$_SESSION['idciudad']."'
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
 $lista= $stmt->rowCount();
+
+$st = $db->prepare("SELECT * FROM categoria ORDER BY orden asc");
+$st->execute();
+
+
+
+$pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
+                             c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                             e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
+                             l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
+                             l.mapa_google,l.latitud,l.longitud
+                      FROM publicaciones as p
+                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
+                              INNER JOIN local as l on l.idlocal=su.idlocal
+                              INNER JOIN empresa as e on e.idempresa=l.idempresa 
+                       WHERE l.idubigeo='".$_SESSION['idciudad']."'");
+//$stmt->bindValue(':id', $id , PDO::PARAM_STR);
+$pub->execute();
+
 
 ?>
 <!DOCTYPE html>
@@ -222,11 +246,13 @@ $lista= $stmt->rowCount();
       <div class="box-content" >
         <div class="box-products slide carousel-fade" id="productc2">
           <ol class="carousel-indicators">
+          
           <?php for ($i=0; $i<$lista ; $i++){ 
             if ($i==0) {$activo="active";}
             else{$activo="";}
             echo '<li class="'.$activo.'" data-slide-to="'.$i.'" data-target="#productc2"></li>';
           }?>
+
           </ol>
           <div class="carousel-inner" id="items"  style="height:352px"> 
             <!-- PRODUCTOS ESPECIALES -->           
@@ -248,9 +274,11 @@ $lista= $stmt->rowCount();
 
 <div class="row clearfix f-space30"></div>
 <div class="container">
-  <div class="row">
+  <div class="row" id="category">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-      <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+
+      <div class="box-heading"><span>Descuentos de <?php echo $viajes;?></span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+
       <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
@@ -258,36 +286,49 @@ $lista= $stmt->rowCount();
             <div class="item active">
               <div class="row box-product"> 
                 <!-- Product -->
+
+                <?php while($p=$pub->fetch()){
+                  if($p['idcategoria']==1){
+                ?>
+
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
-                      <div class="product-label product-sale"><span>-30%</span></div>
-                      <a class="img" href="producto.html"><img alt="product info" src="images/products/product1.jpg" title="product title"></a> </div>
+                      
+                      <?php if($p['idtipo_descuento']!=1){?>
+                        <div class="product-label product-sale"><span>-<?php echo $p['descuento'];?>%</span></div>
+                      <?php } else { ?>
+                    
+                    <div class="product-label product-sale"><span><?php echo $p['descuento'];?></span></div>
+                    <?php }?>
+
+                      
+                      <a class="img" href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>"><img alt="product info" src="panel/web/imagenes/home/small_<?php echo $p['imagen'] ?>.jpg" title="<?php echo $p['titulo1']?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
-                        Parrila extrema + bebidas + show musical para 4
+                        <?php echo $p['titulo1'];?>
                         </a>
                       </div>
                       <div class="big-price"> 
                         <span class="price-new">
                           <span class="sym">$</span>
-                            96
+                            <?php echo $p['precio']?>
                           </span> 
                         <span class="price-old">
                           <span class="sym">$</span>
-                            119.50
+                            <?php echo $p['precio_regular']?>
                           </span> 
                       </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Comprar</a></div>
                       <div class="small-price">
                         <span class="price-new">
                           <span class="sym">$</span>
-                          96
+                          <?php echo $p['precio']?>
                         </span> 
                         <span class="price-old">
                           <span class="sym">$</span>
-                          119.50
+                          <?php echo $p['precio_regular']?>
                         </span>
                       </div>
                       <div class="rating"> 
@@ -302,15 +343,21 @@ $lista= $stmt->rowCount();
                         <button class="btn btn-default btn-wishlist pull-left" title="">
                          <i class="fa fa-heart fa-fw"></i> 
                         </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto.html">Ver</a> <b>&GT;</b></button>
+                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Ver</a> <b>&GT;</b></button>
                       </div>
 
                     </div>
                     <div class="meta-back"></div>
                   </div> <!-- aqui. -->
                 </div>
+
+                <?php } } ?>
                 <!-- end: Product --> 
                 <!-- Product -->
+
+
+                <!--
+
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
@@ -360,10 +407,14 @@ $lista= $stmt->rowCount();
 
                     </div>
                     <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
+                  </div> aqui.
+                </div>  -->
                 <!-- end: Product --> 
                 <!-- Product -->
+
+                <!--
+
+
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
@@ -413,10 +464,14 @@ $lista= $stmt->rowCount();
 
                     </div>
                     <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
+                  </div>  aqui. 
+                </div> -->
                 <!-- end: Product --> 
                 <!-- Product -->
+
+
+                <!--
+
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
@@ -466,8 +521,8 @@ $lista= $stmt->rowCount();
 
                     </div>
                     <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                </div>
+                  </div>  aqui. 
+                </div> -->
                 <!-- end: Product --> 
               </div>
             </div>
@@ -912,6 +967,10 @@ $lista= $stmt->rowCount();
               </div>
             </div>
             <div class="row clearfix f-space30"></div>
+
+
+
+
             <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
             <div class="box-content">
         <div class="box-products slide" id="productc3">
@@ -2377,7 +2436,7 @@ $lista= $stmt->rowCount();
 touchNav: true,
         timerStroke: 2,
         timerBarStrokeColor: '#fff'
-    });				
+    });       
     $('.quickbox').carousel({
         interval: 10000
     });
