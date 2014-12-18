@@ -3911,7 +3911,7 @@ width: 100%;
 }
 .product-details .product-big-btns .btn-wishlist-det {
 	background-color: #c73b2c;
-	color: #ffffff;
+	color: red;
 	float: right;
 	width: 50px;
 	margin: 0 auto;

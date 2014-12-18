@@ -1,6 +1,28 @@
 var host=window.location.host;
 host=host+"/md";
 $(document).ready(function(){
+
+//Suscripciones
+$("#frm-suscripcion").dialog({
+      modal:true,
+      autoOpen:false,
+      width:'auto',
+      height:'auto',
+      resizing:true,
+      title:"Suscripcion a Descuentos",
+      buttons: {
+                  'Cerrar': function(){ $(this).dialog('close');},
+                  'Confirmar':function(){PI.sending();}
+                }
+     });
+$("#recibir_ofertas").click(function(){
+  $.get('http://'+host+'/view/_suscripcion.php','',function(data){    
+    $("#frm-suscripcion").empty().append(data);
+    $("#frm-suscripcion").dialog("open");    
+    PI.onReady();
+  })
+   
+});
 //Eventos cambio de ciudad
 $("#ciudades").change(function(){
     var c = $(this).val();
@@ -275,3 +297,58 @@ var amigable  = (function() {
     return salida.join('').replace(/[^-A-Za-z0-9]+/g, '-').toLowerCase();
   }
 })();
+
+
+///Suscripcion
+var PI = {
+            onReady : function() 
+            {              
+                //$('#email_suscripcion').focus();                                
+            },            
+            sending  : function()
+            {
+              
+               var email = $("#email_suscripcion").val(),
+                   mname = $("#name_suscripcion").val();
+              if(mname!="")
+               {
+                  if(PI.validar(email))
+                 {
+                    $.post('model/suscripcion.php','e='+email+'&n='+mname,function(r){
+                    if(r.res=="1")
+                    {
+                        alert("Gracias por suscribirte.\nTe estaremos enviando nuevos descuentos.");
+                        $("#frm-suscripcion").dialog('close');
+                    }
+                    else
+                    {
+                        alert(r.msg);
+                    }
+                    },'json');
+                 }
+                 else
+                 {
+                    $("#email_suscripcion").addClass("ui-state-error");
+                    $("#email_suscripcion").focus();
+                 }
+                    
+                
+               }
+               else
+               {
+                   alert("Ingrese su nombre.");
+                   $("#name_suscripcion").addClass("ui-state-error");
+                   $("#name_suscripcion").focus();
+               }
+               
+                   
+            },
+            validar : function(e) 
+            {
+                expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if ( !expr.test(e) )
+                    return false
+                else
+                    return true;
+            }
+};
