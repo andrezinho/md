@@ -114,7 +114,7 @@ $pub->execute();
             </li>       
 
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
@@ -276,10 +276,11 @@ $pub->execute();
 <div class="row clearfix f-space30"></div>
 <div class="container">
   <div class="row" id="category">
+      
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-
+        
       <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
-
+      
       <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
@@ -362,13 +363,12 @@ $pub->execute();
         </div>
           
         </div>
-        <div class="row clearfix f-space30"></div>
+      
+      <div class="row clearfix f-space30"></div>
 
-
-
-
-            <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
-            <div class="box-content">
+      <div class="box-heading"><span>Descuentos de qq</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+      
+      <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
             <!-- Items Row -->
@@ -1031,23 +1031,11 @@ $pub->execute();
               </div>
             </div>
 
+      <div class="row clearfix f-space30"></div>
+      
+      <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
 
-
-
-
-
-             <div class="row clearfix f-space30"></div>
-            <div class="box-heading"><span>Descuentos de Viajes</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
-
-
-
-
-
-
-
-
-
-            <div class="box-content">
+      <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
             <!-- Items Row -->
@@ -1710,7 +1698,7 @@ $pub->execute();
               </div>
             </div>
 
-      </div>
+    </div>
     </div>
   </div>
 </div>
