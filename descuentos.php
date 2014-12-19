@@ -204,7 +204,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
           <ul class="nav nav-pills nav-justified" id="listamenu">
-          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
+          <li> <a href="<?php echo $host;?>"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
           </li>
 
             <!-- Menu -->
@@ -246,11 +246,11 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                   <div class="product-block">
                     <div class="image">
                       <div class="product-label product-sale"><span><?php echo $descuento;?></span></div>
-                      <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo $r['titulo1'];?>"></a> </div>
+                      <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo utf8_encode($r['titulo1']);?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
-                        <?php echo $r['titulo1'];?>
+                        <?php echo utf8_encode($r['titulo1']);?>
                         </a>
                       </div>
                       <div class="big-price"> 
@@ -263,7 +263,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                             <?php echo $r['precio_regular'];?>
                           </span> 
                       </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto.html">Comprar</a></div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host;?>/producto/<?php echo urls_amigables($r['titulo1']."-".$r['idpublicaciones']);?>">Comprar</a></div>
                       <div class="small-price">
                         <span class="price-new">
                           <span class="sym">$</span>

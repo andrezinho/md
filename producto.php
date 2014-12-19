@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '/app/start.php'; //Start para facebook -> ;) 
+require_once '/app/funciones.php';
 $db = Spdo::singleton();
 
 $url=$_GET["id"];
@@ -36,7 +37,15 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
         if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
         else{$logo=$host."/images/nologo.png";}
-        
+     
+$st = $db->prepare("SELECT p.* 
+                      FROM publicaciones as p 
+                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
+                           inner join local as l on l.idlocal = s.idlocal
+                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                      ORDER BY idpublicaciones desc limit 3");
+$st->execute();
+$lista= $st->rowCount();
 
  ?>
 <!DOCTYPE html>
@@ -91,7 +100,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 <!--[if IE 8]>
     <script type="text/javascript" src="<?php echo $host;?>/js/selectivizr.js"></script>
     <![endif]-->
-
+<script type="text/javascript" src="<?php echo $host;?>/js/mijs/publicaciones.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -295,7 +304,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
     <div class="row">
         
         <section id="contenido">
-              <div class="box-heading"><span><?php echo strtoupper($r['titulo2']);?></span></div>  
+              <div class="box-heading"><span><?php echo utf8_encode(strtoupper($r['titulo2']));?></span></div>  
           <section id="producto-detalle">        
             <article class="producto-image">
               <img src="<?php echo $img;?>" class="big-image" />
@@ -385,11 +394,11 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                 </h3>
                 <!-- detail mobile -->
               
-                              <?php echo $r['desc_publi'];?><br>
+                              <?php echo utf8_encode($r['desc_publi']);?><br>
                               
                               <h3>CONDICIONES COMERCIALES</h3>
 
-                              <?php echo $r['cc'];?>
+                              <?php echo utf8_encode($r['cc']);?>
 
                       </div>
                  </div>
@@ -481,98 +490,18 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                   <div class="box-content">
                         <div class="box-products slide carousel-fade" id="productc2">
                               <ol class="carousel-indicators">
-                                <li class="active" data-slide-to="0" data-target="#productc2"></li>
-                                <li class="" data-slide-to="1" data-target="#productc2"></li>
-                                <li class="" data-slide-to="2" data-target="#productc2"></li>
+                                <?php for ($i=0; $i<$lista ; $i++){ 
+                                        if ($i==0) {$activo="active";}
+                                        else{$activo="";}
+                                        echo '<li class="'.$activo.'" data-slide-to="'.$i.'" data-target="#productc2"></li>';
+                                }?>
                               </ol>
-                            <div class="carousel-inner" style="height:380px"> 
-            <!-- item -->
-                                  <div class="item active">
-                                        <div class="product-block">
-                                            <div class="image">
-                                                <div class="product-label product-sale"><span>-30%</span></div>
-                                                      <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a>
-                                                </div>
-                                                <div class="product-meta">
-                                                      <div class="name">
-                                                            <a href="<?php echo $host;?>/producto.php">
-                                                                  Parrila extrema + bebidas + show musical para 4  
-                                                            </a>
-                                                      </div>
-                                                      <div class="big-price"> 
-                                                          <span class="price-new">
-                                                                <span class="sym">$</span>
-                                                              96
-                                                          </span> 
-                                                      <span class="price-old">
-                                                          <span class="sym">$</span>
-                                                              119.50
-                                                      </span> 
-                                                </div>
-                                                <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="">Ver</a></div> 
-                                            </div>
-                                            <div class="meta-back"></div>
-                                        </div>
-                                  </div>
-            <!-- end: item --> 
-            <!-- item -->
-            <div class="item">
-              <div class="product-block">
-                <div class="image"> 
-                  <div class="product-label product-sale"><span>-30%</span></div>
-                <a class="img" href="producto.html"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
-                <div class="product-meta">
-                  <div class="name">
-                  <a href="<?php echo $host;?>/producto.php">
-                    Parrila extrema + bebidas + show musical para 5 aa
-                  </a>
-                  </div>
-                 <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="">Ver</a></div>
-                </div>
-                <div class="meta-back"></div>
-              </div>
-            </div>
-            <!-- end: item --> 
-            <!-- item -->
-            <div class="item">
-              <div class="product-block">
-                <div class="image"> 
-                  <div class="product-label product-sale"><span>-30%</span></div>
-                <a class="img" href="<?php echo $host;?>/producto.php"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
-                <div class="product-meta">
-                  <div class="name">
-                  <a href="producto.html">
-                  Parrila extrema + bebidas + show musical para 6 
-                  </a>
-                  </div>
-                 <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            96
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            119.50
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="">Comrpar</a></div>
-                </div>
-                <div class="meta-back"></div>
-              </div>
-            </div>
-            <!-- end: item --> 
-          </div>
-        </div>
+                            <div class="carousel-inner" id="items2" style="height:380px"> 
+                                
+                                <!-- Productos Especiales -->
+                  
+                            </div>
+                            </div>
         <div class="carousel-controls">
           <a class="carousel-control left" data-slide="prev" href="#productc2">
             <i class="fa fa-angle-left fa-fw"></i> 
@@ -584,29 +513,49 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         <div class="nav-bg"></div>
       </div>
     </div>
-           <div class="row clearfix f-space30"></div>
+    <div class="row clearfix f-space30"></div>
+           
+           <?php 
+           
+           $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
+                             c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                             e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
+                             l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
+                             l.mapa_google,l.latitud,l.longitud
+                      FROM publicaciones as p
+                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
+                              INNER JOIN local as l on l.idlocal=su.idlocal
+                              INNER JOIN empresa as e on e.idempresa=l.idempresa 
+                       WHERE l.idlocal=:idl and p.tipo<>1 order by idpublicaciones desc limit 3");
+         $pub->bindValue(':idl', $u['idlocal'] , PDO::PARAM_INT);
+         $pub->execute();
+           while($p=$pub->fetch()){
+           ?>
            <div class="product-block">
             <div class="image">
               <div class="product-label product-sale"><span>-30%</span></div>
-              <a class="img" href="<?php echo $host;?>/producto.php"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
+              <a class="img" href="<?php echo $host;?>/producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>"><img alt="product info" src="<?php echo $host;?>/panel/web/imagenes/home/small_<?php echo $p['imagen']?>.jpg" title="<?php echo utf8_encode($p['titulo1']);?>"></a> </div>
             <div class="product-meta">
               <div class="name">
-                <a href="producto.html">
-                Parrila extrema + bebidas + show musical para 4
+                <a href="<?php echo $host;?>/producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">
+                <?php echo utf8_encode($p['titulo1']); ?>
                 </a>
               </div>
 
               <div class="big-price"> 
                 <span class="price-new">
                   <span class="sym">$</span>
-                    96
+                   <?php echo $p['precio'] ?>
                   </span> 
                 <span class="price-old">
                   <span class="sym">$</span>
-                    119.50
+                    <?php echo $p['precio_regular'] ?>
                   </span> 
               </div>
-              <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="">Comprar</a></div>
+              <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host;?>/producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Comprar</a></div>
 
               <div class="small-price">
                 <span class="price-new">
@@ -630,62 +579,15 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                 <button class="btn btn-default btn-wishlist pull-left" title="">
                  <i class="fa fa-heart fa-fw"></i> 
                 </button>
-                <button class="btn btn-default btn-compare pull-left" title="View">Ver <b>></b></button>
+                <button class="btn btn-default btn-compare pull-left" title="View"><a href="<?php echo $host;?>/producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Ver</a> <b>></b></button>
               </div>
 
             </div>
             <div class="meta-back"></div>
           </div> 
-         <div class="row clearfix f-space30"></div>
-         <div class="product-block">
-            <div class="image">
-              <div class="product-label product-sale"><span>-30%</span></div>
-              <a class="img" href="<?php echo $host;?>/producto.php"><img alt="product info" src="<?php echo $host;?>/images/products/product1.jpg" title="product title"></a> </div>
-            <div class="product-meta">
-              <div class="name">
-                <a href="producto.html">
-                Parrila extrema + bebidas + show musical para 4
-                </a>
-              </div>
-
-              <div class="big-price"> 
-                <span class="price-new">
-                  <span class="sym">$</span>
-                    96
-                  </span> 
-                <span class="price-old">
-                  <span class="sym">$</span>
-                    119.50
-                  </span> 
-              </div>
-              <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="">Ver</a></div>
-
-              <div class="small-price">
-                <span class="price-new">
-                  <span class="sym">$</span>
-                  96
-                </span> 
-                <span class="price-old">
-                  <span class="sym">$</span>
-                  119.50
-                </span>
-              </div>
-              <div class="rating"> 
-                <i class="fa fa-star"></i> 
-                <i class="fa fa-star"></i> 
-                <i class="fa fa-star"></i> 
-                <i class="fa fa-star-half-o"></i> 
-                <i class="fa fa-star-o"></i> 
-              </div>
-              <div class="small-btns">
-                <button class="btn btn-default btn-wishlist pull-left" title="">
-                 <i class="fa fa-heart fa-fw"></i> 
-                </button>
-                <button class="btn btn-default btn-compare pull-left" title="View">Ver <b>></b></button>
-              </div>
-            </div>
-            <div class="meta-back"></div>
-          </div> 
+         <div class="row clearfix f-space30"></div>   
+           <?php } ?>
+    
         </article>
      </section>
   </div>

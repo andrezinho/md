@@ -1,3 +1,5 @@
+var host=window.location.host;
+host=host+"/md";
 $(document).ready(function(){
 	$.get("model/publicaciones.php","&",function(data){//alert(data);
 		publi="";
@@ -16,7 +18,7 @@ $(document).ready(function(){
 			publi +='<div class="big-price"><span class="price-new">';
 			publi +='<span class="sym">$</span>'+j.precio+'</span>';
 			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
-			publi +='<div class="big-btns"><a href="producto.html" class="btn btn-default btn-View pull-left" href="">Comprar</a></div>';
+			publi +='<div class="big-btns"><a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'" class="btn btn-default btn-View pull-left">Comprar</a></div>';
 			publi +='<div class="small-price"><span class="price-new">';
 			publi +='<span class="sym">$</span>'+j.precio+'</span>';
 			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
@@ -49,7 +51,7 @@ $(document).ready(function(){
 
 
 
-$.get("model/especial.php","&",function(data){
+$.get("http://"+host+"/model/especial.php","&",function(data){
     publi="";
 	$.each(data,function(i,j){
 		if(i==0){publi +='<div class="item active">';}
@@ -59,19 +61,20 @@ $.get("model/especial.php","&",function(data){
         if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>-'+j.descuento+'%</span></div>';}
         else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
         
-        publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="product info" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="product title"></a></div>';
+        publi +='<a class="img" href="http://'+host+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="product info" src="http://'+host+'/panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a></div>';
         publi +='<div class="product-meta">';
         publi +='<div class="name">';
-        publi +='<a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
+        publi +='<a href="http://'+host+'producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
         publi +='<div class="big-price">'; 
         publi +='<span class="price-new">';
         publi +='<span class="sym">$</span>'+j.precio+'</span> ';
         publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
         publi +='<div class="big-btns">';
-        publi +='<a class="btn btn-default btn-View pull-left" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">Ver</a></div></div>';
+        publi +='<a class="btn btn-default btn-View pull-left" href="http://'+host+'producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">Ver</a></div></div>';
         publi +='<div class="meta-back"></div></div></div>';
 		});
 $("#items").append(publi);
+$("#items2").append(publi);
 },'json');
 
 
@@ -86,3 +89,25 @@ function addwishlist(i)
     });
 }
 
+var amigable  = (function() {
+  var tildes = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç", 
+    conver = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc",
+        cuerpo  = {};
+ 
+  for (var i=0, j=tildes.length; i<j; i++ ) { 
+    cuerpo[tildes.charAt(i)] = conver.charAt(i);
+  }
+ 
+  return function(str) {
+    var salida = [];
+    for( var i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt( i );
+      if(cuerpo.hasOwnProperty(str.charAt(i))) {
+        salida.push(cuerpo[c]);
+      } else {
+        salida.push(c);
+      }
+    }
+    return salida.join('').replace(/[^-A-Za-z0-9]+/g, '-').toLowerCase();
+  }
+})();

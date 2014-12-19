@@ -1,12 +1,15 @@
 <?php 
+session_start();
 require_once '../lib/spdo.php';
 $db = Spdo::singleton();
 
 
-        $stmt = $db->prepare("SELECT * 
-                              FROM publicaciones
-                              WHERE estado<>0 and tipo=1
-                              ORDER BY idpublicaciones desc limit 3");
+        $stmt = $db->prepare("SELECT p.* 
+                      FROM publicaciones as p 
+                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
+                           inner join local as l on l.idlocal = s.idlocal
+                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                      ORDER BY idpublicaciones desc limit 3");
         //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -18,9 +21,9 @@ $db = Spdo::singleton();
             $menu[$cont] = array(
                                 'idtipo_descuento' => $valor['idtipo_descuento'],
                                 'idpublicaciones' => $valor['idpublicaciones'],
-                                'titulo1' => ucfirst($valor['titulo1']),
-                                'titulo2' => $valor['titulo2'],
-                                'descripcion' => $valor['descripcion'],
+                                'titulo1' => utf8_encode($valor['titulo1']),
+                                'titulo2' => utf8_encode($valor['titulo2']),
+                                'descripcion' => utf8_encode($valor['descripcion']),
                                 'precio_regular' => $valor['precio_regular'],
                                 'precio' => $valor['precio'],
                                 'descuento' => $valor['descuento'],
