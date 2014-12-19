@@ -25,7 +25,6 @@ function save()
   bval = bval && $( "#descuento" ).required();  
   
   var str = $("#frm").serialize();
-  
 
   var cont = $("#descripcion_ifr").contents().find("#tinymce").html(),
       cont2 = $("#cc_ifr").contents().find("#tinymce").html(),
@@ -93,7 +92,7 @@ function calc_descuento()
         x = 0,
         p = $("#precio").val(),
        pr = $("#precio_regular").val();
-  if(td=="Porcentaje")
+  if(td=="Porcentajes")
   {
     if(p!=""&&pr!="") 
     {

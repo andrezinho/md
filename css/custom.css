@@ -4881,3 +4881,7 @@ line-height: 20px;
 {
     
 }
+
+.table-list-md { }
+.table-list-md tr th { background: #EEEEEE;}
+.table-list-md tr th,.table-list-md tr td { padding: 10px; border:1px dotted #666; }
