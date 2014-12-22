@@ -9,16 +9,16 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 #   Entrada:  producto/NOMBRE/
 #   Salida: producto.php?id=NOMBRE
 
-RewriteRule ^producto/(\w+)/?$ producto.php?id=$1
-RewriteRule producto/(.*) producto.php?page=producto&id=$1
+RewriteRule ^producto/(\w+)/?$ producto.php?id=$1 [L]
+RewriteRule producto/(.*) producto.php?page=producto&id=$1 [L]
 RewriteRule  ^producto/([0-9]+)/[A-Z0-9_-]+$ producto.php?id=$1 [L]
-Rewriterule ^producto/(.+)/([0-9]+)/(.+)$ index.php?seccion=$1&producto=$2
+Rewriterule ^producto/(.+)/([0-9]+)/(.+)$ index.php?seccion=$1&producto=$2 [L]
 RewriteRule ^([a-zA-Z0-9-]*)/([0-9]+)\-([a-zA-Z0-9-]*)\.html(.*)$ producto.php?idpublicaciones=$2$4 [L]
 RewriteRule ^([0-9]+)\-([a-zA-Z0-9-]*)\.html(.*)$ producto.php?idpublicaciones=$1$3 [L]
 
-RewriteRule ^descuentos/(\w+)/?$ descuentos.php?id=$1
-RewriteRule descuentos/(.*) descuentos.php?page=descuentos&id=$1
+RewriteRule ^descuentos/(\w+)/?$ descuentos.php?id=$1 [L]
+RewriteRule descuentos/(.*) descuentos.php?page=descuentos&id=$1 [L]
 RewriteRule  ^descuentos/([0-9]+)/[A-Z0-9_-]+$ descuentos.php?id=$1 [L]
-Rewriterule ^descuentos/(.+)/([0-9]+)/(.+)$ descuentos.php?seccion=$1&descuentos=$2
+Rewriterule ^descuentos/(.+)/([0-9]+)/(.+)$ descuentos.php?seccion=$1&descuentos=$2 [L]
 RewriteRule ^([a-zA-Z0-9-]*)/([0-9]+)\-([a-zA-Z0-9-]*)\.html(.*)$ descuentos.php?idpublicaciones=$2$4 [L]
 RewriteRule ^([0-9]+)\-([a-zA-Z0-9-]*)\.html(.*)$ descuentos.php?idpublicaciones=$1$3 [L]

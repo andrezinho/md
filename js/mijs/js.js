@@ -3,7 +3,7 @@ host=host+"/md";
 $(document).ready(function(){
 
 //Suscripciones
-$("#frm-suscripcion").dialog({
+$("#frm-suscripcion").dialog({ 
       modal:true,
       autoOpen:false,
       width:'auto',
@@ -15,6 +15,7 @@ $("#frm-suscripcion").dialog({
                   'Confirmar':function(){PI.sending();}
                 }
      });
+//fin suscripciones
 $("#recibir_ofertas").click(function(){
   $.get('http://'+host+'/view/_suscripcion.php','',function(data){    
     $("#frm-suscripcion").empty().append(data);
@@ -22,7 +23,7 @@ $("#recibir_ofertas").click(function(){
     PI.onReady();
   })
    
-});
+}); 
 //Eventos cambio de ciudad
 $("#ciudades").change(function(){
     var c = $(this).val();
@@ -36,7 +37,7 @@ $("#datos").click(function(){
 	$("#cupones").css({color:"blue"});
 	$("#suscripciones").css({color:"blue"});
 
-	$.get('cuenta/datos.php',function(datos){
+	$.get('http://'+host+'/cuenta/datos.php',function(datos){
 		$(".formulario").show().html(datos);
 	});
 });
@@ -62,7 +63,7 @@ $("#suscripciones").click(function(){
 
 //formulario registro
 $("#registrar").click(function(){//alert("hola");
-$.get('cuenta/datos.php',function(datos){//alert(datos);
+$.get('http://'+host+'cuenta/datos.php',function(datos){//alert(datos);
 		$(".formulario").show().html(datos);
 	});
 
@@ -72,7 +73,7 @@ $.get('cuenta/datos.php',function(datos){//alert(datos);
 //window.location.protocol (http:)
 //window.location.pathname (md/)
 
-$.get('http://'+host+'/model/menu.php','&',function(data){ //alert(data);
+$.get('http://'+host+'/model/menu.php','&',function(data){ //alert("data");
   var menu = "";
    $.each(data,function(i,j){
    	 var idc=j.codigo;
@@ -81,7 +82,7 @@ $.get('http://'+host+'/model/menu.php','&',function(data){ //alert(data);
 		
 		$.each(j.enlaces,function(k,p){
 			
-			menu += "<span class='sublista'><a href='#'>"+p.texto+"</a></span>";
+			menu += "<span class='sublista'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"/"+amigable(p.texto)+"-s"+p.idsubcategoria+"'>"+p.texto+"</a></span>";
 			
 		});
 
@@ -90,8 +91,8 @@ $.get('http://'+host+'/model/menu.php','&',function(data){ //alert(data);
 	});
 
 
-   $("#listamenu").append(menu); //alert(menu);
-
+   $("#listamenu").append(menu); 
+   
    $('#listamenu li').hover(function(e) {
    	  var idcc=$(this).attr("id");
    	  idcc=idcc.split("-");

@@ -536,7 +536,15 @@ $lista= $st->rowCount();
            ?>
            <div class="product-block">
             <div class="image">
-              <div class="product-label product-sale"><span>-30%</span></div>
+
+            <?php if($p['idtipo_descuento']!=1){?>
+                <div class="product-label product-sale"><span><?php echo $p['descuento']?></span></div>
+            <?php } else{ ?>
+            <div class="product-label product-sale"><span><?php echo $p['descuento']?></span></div>
+            <?php } ?>
+              
+
+
               <a class="img" href="<?php echo $host;?>/producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>"><img alt="product info" src="<?php echo $host;?>/panel/web/imagenes/home/small_<?php echo $p['imagen']?>.jpg" title="<?php echo utf8_encode($p['titulo1']);?>"></a> </div>
             <div class="product-meta">
               <div class="name">

@@ -18,7 +18,7 @@ if(!isset($_SESSION['idciudad']))
 }
 
 $host="http://".$_SERVER['SERVER_NAME']."/md";
-$actual=dameURL();
+//$actual=dameURL();
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;

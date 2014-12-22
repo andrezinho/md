@@ -19,7 +19,7 @@ $db = Spdo::singleton();
           
            
             $menu[$cont] = array(
-                                'texto' => ucfirst($valor['descripcion']),
+                                'texto' => utf8_encode($valor['descripcion']),
                                 'codigo' => $valor['idcategoria'],
                                 'enlaces' => array()
                 );
@@ -27,7 +27,7 @@ $db = Spdo::singleton();
             foreach($hijos as $h)
             {
                             
-              $menu[$cont]['enlaces'][$cont2] = array('idsubcategoria'=>$h['idsubcategoria'],'texto' => ucfirst($h['descripcion']));
+              $menu[$cont]['enlaces'][$cont2] = array('idsubcategoria'=>$h['idsubcategoria'],'texto' => utf8_encode($h['descripcion']));
               $cont2 ++;
             }
             $cont ++;
