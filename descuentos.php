@@ -10,8 +10,10 @@ $str=explode("-", $url);
 
 $n=count($str);
 $id="";
-for($i=0; $i<$n; $i++){
-$id .=$str[$i]." ";
+
+for($i=0; $i<$n; $i++)
+{
+  $id .=$str[$i]." ";
 }
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
@@ -21,13 +23,10 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                       INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                       INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                       WHERE c.descripcion=:id");
-        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
+$stmt->bindValue(':id', $id , PDO::PARAM_STR);
+$stmt->execute();
+$nc= $stmt->rowCount();
 
-
-        //echo $nc;
-        
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
