@@ -216,15 +216,13 @@ $st->execute();
                   <!-- PUBLICACION  -->
               </div>
             </div>
-            <!-- end: Items Row --> 
-            <!-- Items Row -->
             
           </div>
         </div>
       </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 box-block sidebar">
-      <div class="box-heading"><span>Descuentos Especiales</span><a href="#" style="font-size:10px">[Ver Todos]</a></div>
+      <div class="box-heading"><span>Descuentos Especiales</span><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></div>
       <div class="box-content" >
         <div class="box-products slide carousel-fade" id="productc2">
           <ol class="carousel-indicators">
@@ -262,7 +260,8 @@ $st->execute();
 
 
       <?php while($c=$st->fetch()){
-         echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>';
+         echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
+         <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
      
           $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
@@ -302,7 +301,7 @@ $st->execute();
                   <div class="product-block">
                     <div class="image">
                         <?php if($p['idtipo_descuento']!=1){?>
-                        <div class="product-label product-sale"><span>-<?php echo $p['descuento']?>%</span></div>
+                        <div class="product-label product-sale"><span><?php echo $p['descuento']?></span></div>
                         <?php } else{ ?>
                         <div class="product-label product-sale"><span><?php echo $p['descuento']?></span></div>
                         <?php } ?>

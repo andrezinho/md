@@ -8,7 +8,7 @@ $(document).ready(function(){
 			publi +='<div class="product-block">';
 			publi +='<div class="image">';
 
-			if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>-'+j.descuento+'%</span></div>';}
+			if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
 			else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
 
 			publi +='<a class="img" href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="'+j.titulo1+'" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a> </div>';

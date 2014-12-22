@@ -1,31 +1,107 @@
 <?php
+session_start();
 require_once '/app/start.php'; //Start para facebook -> ;)
 require_once '/app/funciones.php';
 $db = Spdo::singleton();
 
 //$host="http://".$_SERVER['SERVER_NAME']."/md";
-
 $url=$_GET["id"];
-$str=explode("-", $url);
 
-$n=count($str);
-$id="";
+if($url=="especiales"){
 
-for($i=0; $i<$n; $i++)
-{
-  $id .=$str[$i]." ";
-}
+   $str=explode("-", $url);
+    $n=count($str);
+    $id=$str[$n-1];
+    $st="";
+    for($i=0; $i<$n; $i++){
+    $st .=$str[$i]." ";
+    }    
+
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion,p.precio,p.precio_regular,p.descuento,
+                             c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
                              p.imagen,p.idtipo_descuento
                       FROM publicaciones as p
                       INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                       INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      WHERE c.descripcion=:id");
-$stmt->bindValue(':id', $id , PDO::PARAM_STR);
-$stmt->execute();
-$nc= $stmt->rowCount();
+                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                      INNER JOIN local as l on l.idlocal=su.idlocal
+                      WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+        //$stmt->bindValue(':id', $st , PDO::PARAM_STR);
+        $stmt->execute();
+        $nc= $stmt->rowCount();
+
+
+
+}
+
+
+else{
+
+$str=explode("/", $url);
+$n = count($str);
+if($n>1&&$str[1]!="")
+{
+    
+    $str=explode("-", $url);
+    $n=count($str);
+    
+    $id=$str[$n-1];
+    $id=substr($id,1);
+    //$nn=count($id);
+    
+    
+    $st="";
+    for($i=0; $i<$n-1; $i++){
+    $st .=$str[$i]." ";
+    }    
+    
+    $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                             c.descripcion,p.precio,p.precio_regular,p.descuento,
+                             p.imagen,p.idtipo_descuento,s.descripcion as categoria
+                      FROM publicaciones as p
+                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                      INNER JOIN local as l on l.idlocal=su.idlocal
+                      WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+      
+        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
+        $stmt->execute();
+        $nc= $stmt->rowCount();
+        
+    
+    
+    
+}
+else{
+    
+    $str=explode("-", $url);
+    $n=count($str);
+    $id=$str[$n-1];
+    $st="";
+    for($i=0; $i<$n; $i++){
+    $st .=$str[$i]." ";
+    }    
+
+
+
+$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                             c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
+                             p.imagen,p.idtipo_descuento
+                      FROM publicaciones as p
+                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                      INNER JOIN local as l on l.idlocal=su.idlocal
+                      WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+        $stmt->bindValue(':id', $st , PDO::PARAM_STR);
+        $stmt->execute();
+        $nc= $stmt->rowCount();
+        
+}
+        //echo $nc;
+}        
 
 ?>
 <!DOCTYPE html>
@@ -34,9 +110,9 @@ $nc= $stmt->rowCount();
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta content="Muchos Descuentos" name="description">
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
 <!--<meta content="logoby.us" name="author">-->
-<title>Muchos Descuentos</title>
+<title><?php echo $st;?></title>
 
 <!-- Reset CSS -->
 <link href="<?php echo $host; ?>/css/normalize.css" rel="stylesheet" type="text/css"/>
@@ -85,10 +161,9 @@ $nc= $stmt->rowCount();
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
 
-<script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
-<script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
+<script src="<?php echo $host;?>/js/mijs/js.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/mijs/publicaciones.js" type="text/javascript"></script>
 
-<!--<base href="http://localhost/md/index.php" />-->
 </head>
 <body>
 <header>   
@@ -222,7 +297,7 @@ $nc= $stmt->rowCount();
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-      <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- <?php echo $id;?></b></span></div>
+      <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- <?php echo $st;?></b></span></div>
       <div class="box-content" id="item">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
@@ -230,21 +305,17 @@ $nc= $stmt->rowCount();
             <div class="item active">
               <div class="row box-product" > 
                 <!-- Product -->
-                
-
                 <?php while($r = $stmt->fetch()){
-
                 $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
                 $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
-                if($r['idtipo_descuento']!=1){$descuento="-".$r['descuento']."%";}
-                else{$descuento=$r['descuento'];} 
-                  ?>
-
+                //if($r['idtipo_descuento']!=1){$descuento=$r['descuento'];}
+                //else{$descuento=$r['descuento'];} 
+                ?>
 
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
-                      <div class="product-label product-sale"><span><?php echo $descuento;?></span></div>
+                      <div class="product-label product-sale"><span><?php echo $r['descuento'];?></span></div>
                       <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo utf8_encode($r['titulo1']);?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">
@@ -425,7 +496,7 @@ $nc= $stmt->rowCount();
 </footer>
 <!-- end: footer --> 
 
-
+<!--
 <script>
 
 (function($) {
@@ -462,6 +533,6 @@ $nc= $stmt->rowCount();
 
 
           
-        </script>
+        </script>-->
 </body>
 </html>
