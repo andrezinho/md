@@ -3,8 +3,8 @@
       $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
       return $url;
       }
-      function urls_amigables($url) {
- 
+      //echo dameURL();
+      function urls_amigables($url) { 
       // Tranformamos todo a minusculas
  
       $url = strtolower($url);

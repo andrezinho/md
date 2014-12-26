@@ -67,19 +67,14 @@ require_once '/app/funciones.php';
 <!--[if IE 8]>
     <script type="text/javascript" src="js/selectivizr.js"></script>
     <![endif]-->
-
 <script type="text/javascript" src="js/mijs/js.js"></script>
-
-
 <script type="text/javascript">
   $(document).ready(function(){
     $.get('cuenta/datos.php',function(datos){//alert(datos);
-    $(".formulario").show().html(datos);
+      $(".formulario").show().html(datos);
   });
   });
 </script>
-
-
 </head>
 <body>
 <header>   
