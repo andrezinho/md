@@ -85,7 +85,6 @@ else{
     }    
 
 
-
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                              c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
                              p.imagen,p.idtipo_descuento

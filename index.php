@@ -14,7 +14,6 @@ $lista= $stmt->rowCount();
 $st = $db->prepare("SELECT * FROM categoria ORDER BY orden asc");
 $st->execute();
 
-
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
