@@ -82,7 +82,7 @@ else{
     $st="";
     for($i=0; $i<$n; $i++){
     $st .=$str[$i]." ";
-    }    
+}    
 
 
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
@@ -124,6 +124,9 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 
 
 <link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
+<link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.min.css" rel="stylesheet" />
+<link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.structure.min.css" rel="stylesheet" />
+<link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.theme.min.css" rel="stylesheet" />
 
 <!-- Animations -->
 <link href="<?php echo $host; ?>/css/animate.css" rel="stylesheet" type="text/css"/>
@@ -141,7 +144,8 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 <!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
 
 <!-- Bootstrap core JavaScript -->
-<script src="<?php echo $host; ?>/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/jquery-ui-1.10.3.custom.min.js"></script>    
 <script src="<?php echo $host; ?>/js/bootstrap.min.js"></script>
 <script src="<?php echo $host; ?>/js/bootstrap-select.js"></script>
 
@@ -165,6 +169,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 
 </head>
 <body>
+<div id="frm-suscripcion"></div>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
   <div class="container">

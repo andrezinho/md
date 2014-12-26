@@ -29,7 +29,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
+$helper = new FacebookRedirectLoginHelper('http://www.muchosdescuentos.com/pe');
 
 try 
 {
@@ -47,8 +47,6 @@ try
 		$response = $request->execute();
 		$graphObjectClass = $response->getGraphObject(GraphUser::className());
 		$facebook_user = $graphObjectClass;
-
-
 
 		$db = Spdo::singleton();
 
@@ -122,10 +120,8 @@ try
 			            $stmt->execute();
 
             	}
-
-            	else{
-
-
+            	else
+            	{
 					 $stmt = $db->prepare("SELECT u.nrodocumento,u.idusuario,u.idperfil,
 		            							 CONCAT(u.nombres, ' ', u.apellidos) As nombres,
 		            							 u.nombres as nombre,

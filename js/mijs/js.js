@@ -1,20 +1,8 @@
 var host=window.location.host;
-host=host+"/md";
+host=host+'/md';
 $(document).ready(function(){
-
 //Suscripciones
-$("#frm-suscripcion").dialog({ 
-      modal:true,
-      autoOpen:false,
-      width:'auto',
-      height:'auto',
-      resizing:true,
-      title:"Suscripcion a Descuentos",
-      buttons: {
-                  'Cerrar': function(){ $(this).dialog('close');},
-                  'Confirmar':function(){PI.sending();}
-                }
-     });
+
 //fin suscripciones
 $("#recibir_ofertas").click(function(){
   $.get('http://'+host+'/view/_suscripcion.php','',function(data){    
@@ -94,33 +82,60 @@ $.get('http://'+host+'/model/menu.php','&',function(data){ //alert("data");
    $("#listamenu").append(menu); 
    
    $('#listamenu li').hover(function(e) {
+
    	  var idcc=$(this).attr("id");
-   	  idcc=idcc.split("-");
-   	  idcc=idcc[1];//alert(idcc);
 
-      var elemento = $(".menu-links");
-      var posicion = elemento.position();//alert( "left: " + posicion.left + ", top: " + posicion.top );  	
+      if (idcc === undefined) 
+      {
+          
+      } 
+      else
+      {
 
-      $('#submenu-'+idcc).show();
-        $("#submenu-"+idcc).offset({left: posicion.left});
-	     $("#submenu-"+idcc).mouseover(function(){
-	     	$("#categoria-"+idcc).css({background:"#B6090C"});
+     	  idcc=idcc.split("-");
+     	  idcc=idcc[1];//alert(idcc);
 
-	    });
+        var elemento = $(".menu-links");
+        var posicion = elemento.position();//alert( "left: " + posicion.left + ", top: " + posicion.top );  	
+
+        $('#submenu-'+idcc).show();
+          $("#submenu-"+idcc).offset({left: posicion.left});
+  	     $("#submenu-"+idcc).mouseover(function(){
+  	     	$("#categoria-"+idcc).css({background:"#B6090C"});
+
+  	    });        
+      }
 
      },
      function(e) {
 	     var idcc=$(this).attr("id");
-	   	 idcc=idcc.split("-");
-	   	 idcc=idcc[1];//alert(idcc);
-	     $('#submenu-'+idcc).hide();
-
-		     $("#categoria-"+idcc).css({background:"#DE1215"});
-
-	     });
+       if (idcc === undefined) 
+       { 
+          
+       } 
+       else
+       {
+  	   	 idcc=idcc.split("-");
+  	   	 idcc=idcc[1];
+  	     $('#submenu-'+idcc).hide();
+  		     $("#categoria-"+idcc).css({background:"#DE1215"});
+       }
+  	 });
+       
 
 },'json');	
-
+$("#frm-suscripcion").dialog({ 
+      modal:true,
+      autoOpen:false,
+      width:'auto',
+      height:'auto',
+      resizing:true,
+      title:"Suscripcion a Descuentos",
+      buttons: {
+                  'Cerrar': function(){ $(this).dialog('close');},
+                  'Confirmar':function(){PI.sending();}
+                }
+     });
 
 });
 
