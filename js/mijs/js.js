@@ -139,6 +139,40 @@ $("#frm-suscripcion").dialog({
 
 });
 
+//funcion actualizar registro
+function update(){
+  bval = true;        
+  bval = bval && $( "#nombres" ).required();        
+  bval = bval && $( "#apellidos" ).required();        
+  bval = bval && $("#tipodoc").required();
+  bval = bval && $("#ndoc").required();
+  bval = bval && $("#telefono").required();
+  
+   var str = $("#frm").serialize();
+                      if ( bval ) 
+                      {
+                          $.post('model/updateuser.php',str,function(data)
+                          {
+                            if(data.res==1)
+                            {
+                              $(".conface").css({display:"none"});
+                              $("#frm").css({display:"none"});
+                              $(".mdatos").css({display:"none"});
+                              $(".formulario").css({display:"none"});
+                              $("#bienvenido").css({display:"none"});
+                              $(".micuenta").css({display:"none"});
+                              $(".enlaces").css({display:"none"});
+                              $("#actualizar").css({display:"block"});
+                              //if(history.forward(1)){location.replace(history.forward(1));}
+                            }
+                            else
+                            {
+                              alert(data.msg);
+                            }
+                            
+                          },'json');
+                      }
+}
 //funcion guardar registro
 function save()
 {
@@ -193,6 +227,7 @@ function save()
                               $("#frm").css({display:"none"});
                               $(".mdatos").css({display:"none"});
                               $(".formulario").css({display:"none"});
+                              $("#actualizar").css({display:"none"});
                               $("#bienvenido").css({display:"block"});
                               //if(history.forward(1)){location.replace(history.forward(1));}
                             }

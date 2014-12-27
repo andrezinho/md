@@ -29,7 +29,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://www.muchosdescuentos.com/pe');
+$helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
 
 try 
 {
