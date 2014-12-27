@@ -116,7 +116,8 @@ function validar_email()
 </style>
 
    <h3 style="margin-left:5em;" class="mdatos">Mis Datos</h3>
-   <form id="frm"> 
+   <form id="frm">
+       
    <table id="form-datos" border="0">
     <tr> 
      <td><b>*</b>Nombres</td>
@@ -203,13 +204,14 @@ function validar_email()
      <tr>
      <td>Email</td>
      <td>
-        email@email.com
+        <?php echo $_SESSION['email']; ?>
+         <input type="hidden" id="mail" name="mail" value="<?php echo $_SESSION['email']; ?>">
      </td>
      </tr>
 
       <tr>
      <td colspan="2" align="center">
-    <input type="button" value="Actualizar" class="update">
+    <input type="button" value="Actualizar" class="update" Onclick="update()">
      </td>
      </tr>
      <?php } 

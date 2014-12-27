@@ -150,7 +150,7 @@ require_once 'head.php'; //Start para facebook -> x)
 <?php } 
      else{ ?>
 
-<h3>Mi Cuenta</h3>
+<h3 class="micuenta">Mi Cuenta</h3>
 <hr>
 <article class="enlaces">
     <p><b><a href="#" id="datos">Mis Datos</a></b></p>
@@ -164,13 +164,21 @@ require_once 'head.php'; //Start para facebook -> x)
   <aside class="formulario">
 
   </aside>
+
   <aside id="bienvenido">
     <span style='font-weight:bold;color:#000;text-align:center'>
     <h3>Bienvenido a MuchosDescuentos</h3> Te has registrado correctamente.
     </span>
     <hr>
     <p>Ya puedes Iniciar Sesi&oacute;n.</p> 
-    </aside>
+  </aside>
+
+ <aside id="actualizar" style="display: none;">
+    <span style='font-weight:bold;color:#000;text-align:center'>
+        <center><h3>MuchosDescuentos</h3> Tus datos se actualizar&oacute;n correctamente.</center>
+    </span>
+    <hr>
+  </aside>
 
 </div>
 
