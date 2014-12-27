@@ -102,6 +102,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         //echo $nc;
 }        
 
+
 ?>
 
 <body>
@@ -114,15 +115,28 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         <div class="topheadrow">
           <a href="<?php echo $host; ?>/index.php"><img src="<?php echo $host; ?>/images/logo.png" /></a>
           <ul class="nav nav-pills pull-right">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Lima <i class="fa fa-angle-down fa-fw"></i></a>              
-              <ul class="dropdown-menu" role="menu">
-                  <li><a href="#a">LIMA</a></li>                
-                  <li><a href="#a">TRUJILLO</a></li>                
-              </ul>
-            </li>            
-            <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
+              <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
+                <?php                   
+                  $sql = "SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
+                  $stmt2 = $db->prepare($sql);
+                  $stmt2->execute();                  
+                  foreach($stmt2->fetchAll() as $r2)
+                  {
+                     $s = "";
+                     if($r2[0]==$_SESSION['idciudad'])
+                     {
+                       $s = "selected";
+                     }
+                     ?>
+                     <option value="<?php echo $r2[0] ?>" <?php echo $s; ?>><?php echo $r2[1]; ?></option>
+                     <?php
+                  }
+                ?>
+              </select>
+            </li>           
+            <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
+            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 

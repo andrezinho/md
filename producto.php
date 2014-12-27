@@ -1,11 +1,8 @@
 <?php
 session_start();
-require '/app/start.php'; //Start para facebook -> ;) 
-require_once '/app/funciones.php';
+require_once 'head.php';
 $db = Spdo::singleton();
-
 $url=$_GET["id"];
-
 $id=explode("-",$url);
 $n=count($id);
 
@@ -15,8 +12,6 @@ for($s=0; $s<($n-1); $s++)
   $titulo .=$id[$s]." ";
 }
 $id=$id[$n-1];
-
-
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
                              p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
@@ -47,94 +42,20 @@ $st = $db->prepare("SELECT p.*
 $st->execute();
 $lista= $st->rowCount();
 
- ?>
-<!DOCTYPE html>
-<html class="noIE" lang="en-US">
-<head>
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-<meta content="Flatroshop online shopping point" name="description">
-<meta content="logoby.us" name="author">
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<title>Muchos Descuentos - Detalle</title>
-<!-- Reset CSS -->
-<link href="<?php echo $host;?>/css/normalize.css" rel="stylesheet" type="text/css"/>
-<!-- Bootstrap core CSS -->
-<link href="<?php echo $host;?>/css/bootstrap.css" rel="stylesheet">
-<!-- Iview Slider CSS -->
-<link href="<?php echo $host;?>/css/iview.css" rel="stylesheet">
-<!--  Responsive 3D Menu  -->
-<link href="<?php echo $host;?>/css/menu3d.css" rel="stylesheet"/>
-<!-- Animations -->
-<link href="<?php echo $host;?>/css/animate.css" rel="stylesheet" type="text/css"/>
-<!-- Custom styles for this template -->
-<link href="<?php echo $host;?>/css/custom.css" rel="stylesheet" type="text/css" />
 
-<!-- Style Switcher -->
-<link href="<?php echo $host;?>/css/style-switch.css" rel="stylesheet" type="text/css"/>
-
-<!-- Color -->
-<link href="<?php echo $host;?>/css/skin/color.css" id="colorstyle" rel="stylesheet">
-
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]> <script src="<?php echo $host;?>/js/html5shiv.js"></script> <script src="<?php echo $host;?>/js/respond.min.js"></script> <![endif]-->
-
-<!-- Bootstrap core JavaScript -->
-
-<script src="<?php echo $host;?>/js/jquery-1.10.2.min.js"></script>
-<script src="<?php echo $host;?>/js/bootstrap.min.js"></script>
-<script src="<?php echo $host;?>/js/bootstrap-select.js"></script>
-
-<!-- Custom Scripts -->
-<script src="<?php echo $host;?>/js/scripts.js"></script>
-
-<!-- MegaMenu -->
-<script src="<?php echo $host;?>/js/menu3d.js" type="text/javascript"></script>
-
-<!-- iView Slider -->
-<script src="<?php echo $host;?>/js/raphael-min.js" type="text/javascript"></script>
-<script src="<?php echo $host;?>/js/jquery.easing.js" type="text/javascript"></script>
-<script src="<?php echo $host;?>/js/iview.js" type="text/javascript"></script>
-<script src="<?php echo $host;?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
-
-<!--[if IE 8]>
-    <script type="text/javascript" src="<?php echo $host;?>/js/selectivizr.js"></script>
-    <![endif]-->
-<script type="text/javascript" src="<?php echo $host;?>/js/mijs/publicaciones.js"></script>
-</head>
+?>
 <body>
-<!-- Header -->
-<header> 
-  <!-- Top Heading Bar -->
+<header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
   <div class="container">
     <div class="row">
-
       <div class="col-md-12">
-
         <div class="topheadrow">
-
             <a href="<?php echo $host;?>/index.php"><img src="<?php echo $host;?>/images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
-
-
-
-          <ul class="nav nav-pills pull-right">
-
-
-            <!-- 
-              <li class="dropdown">
-               <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Inicio</a>
-            </li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Nombre de la Categoria</a>
-            </li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Sub Categoria</a>
-            </li>
-            -->
-            <!-- <li style="border-left:0"> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li> -->
-          
+            <ul class="nav nav-pills pull-right">          
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Tef: (01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
             </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>
+            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown"> <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> Iniciar Sesión</span></a>
               <div class="loginbox dropdown-menu"> 
@@ -232,12 +153,13 @@ $lista= $st->rowCount();
                                         WHERE l.idempresa=:ide");
                   $stmt->bindValue(':ide', $r['idempresa'] , PDO::PARAM_INT);
                   $stmt->execute();
-                  $u=$stmt->fetch();
+                  //$u=$stmt->fetch();
+
                 ?>
 
                     <select class="web-list list-local" style="max-width:140px;">
                     
-                    <?php while($x = $stmt->fetch()){ ?> 
+                    <?php foreach($stmt->fetchAll() as $x){ ?> 
 
                       <option value="<?php echo $x['idubigeo'];?>"><?php echo $x['descripcion'];?></option>
                     
@@ -250,8 +172,7 @@ $lista= $st->rowCount();
                 <div style="padding:5px 0px 5px 5px">
                     <div style="height: 40px; padding: 13px 0 0">
                         <a href="#" style="color:#333;" data-toggle="tooltip"  title="Recibir Descuentos de Shoes Center"><i class="fa fa-envelope fa-fw" style="color:#333"></i>&nbsp;</a>                        
-                    </div>                    
-                    <!-- <input type="button" value="Quiero Recibir Descuentos" class="btn-deseo" style="background:#C73B2C !important; color:#fff !important; width:auto;" /> -->
+                    </div>                                      
                 </div>
             </div>
             <div style="width:auto; float:left; border-right: 0">
@@ -380,8 +301,9 @@ $lista= $st->rowCount();
              <!-- Nav tabs -->
             <ul class="nav nav-tabs blog-tabs nav-justified">
               <li class="active"><a href="#detalle-producto" data-toggle="tab">Detalles de la Oferta</a></li>
+              <li><a href="#tags" data-toggle="tab">Condiciones Comerciales</a> </li>
               <li><a href="#reviews" data-toggle="tab">Local</a></li>
-              <li><a href="#tags" data-toggle="tab">Acerca de Shoes Center</a> </li>
+              
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -396,9 +318,7 @@ $lista= $st->rowCount();
               
                               <?php echo utf8_encode($r['desc_publi']);?><br>
                               
-                              <h3>CONDICIONES COMERCIALES</h3>
-
-                              <?php echo utf8_encode($r['cc']);?>
+                              
 
                       </div>
                  </div>
@@ -462,7 +382,9 @@ $lista= $st->rowCount();
                       </div> <!-- fin table responsive -->
                    </div> <!-- fin tab-pane-->
                     <div class="tab-pane" id="tags">
-                   
+                    <h3>CONDICIONES COMERCIALES</h3>
+
+                              <?php echo utf8_encode($r['cc']);?>
                    </div>
             </div> <!-- fin tab-content -->
             <div class="clearfix f-space30"></div>
@@ -679,13 +601,7 @@ $lista= $st->rowCount();
 (function($) {
   "use strict";
   //Mega Menu
- $('#menuMega').menu3d();
-             
-              //Help/Contact Number/Quick Message
-      $('.quickbox').carousel({
-        interval: 10000
-      });
-      
+
       //SPECIALS
       $('#productc2').carousel({
         interval: 4000
@@ -695,21 +611,7 @@ $lista= $st->rowCount();
         interval: 4000
       }); 
       
-      //Zoom Product
-      $("#product-image").elevateZoom({
-                          zoomType : "inner",
-                          cursor : "crosshair",
-                          easing: true,
-                           gallery: "thumbs",
-                           galleryActiveClass: "active",
-                          loadingIcon : true
-                        }); 
-      $("#product-image").bind("click", function(e) {  
-  var ez =   $('#product-image').data('elevateZoom');
-  ez.closeAll(); //NEW: This function force hides the lens, tint and window 
-  //$.fancybox(ez.getGalleryList());     
-  return false;
-});
+      
 })(jQuery);
 
  </script>

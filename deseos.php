@@ -1,6 +1,6 @@
 <?php
-require_once '/app/start.php'; //Start para facebook -> ;)
-require_once '/app/funciones.php';
+session_start();
+require_once 'head.php'; //Start para facebook -> ;)
 $db = Spdo::singleton();
 $stmt = $db->prepare("SELECT * 
                       FROM publicaciones
@@ -10,51 +10,6 @@ $stmt->execute();
 $lista= $stmt->rowCount();
 
 ?>
-<!DOCTYPE html>
-<html class="noIE" lang="es">
-<head>
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
-<meta content="Muchos Descuentos" name="description">
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<title>Muchos Descuentos - Lista de Deseos</title>
-
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/iView.css" rel="stylesheet">
-<link href="css/micss.css" rel="stylesheet"/>
-<link type="text/css" href="css/jquery-ui.min.css" rel="stylesheet" />
-<link type="text/css" href="css/jquery-ui.structure.min.css" rel="stylesheet" />
-<link type="text/css" href="css/jquery-ui.theme.min.css" rel="stylesheet" />
-<!-- Animations -->
-
-
-<!-- Custom styles for this template -->
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
-<!-- Style Switcher -->
-<link href="css/style-switch.css" rel="stylesheet" type="text/css"/>
-<!-- Color -->
-<link href="css/skin/color.css" id="colorstyle" rel="stylesheet">
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
-<!-- Bootstrap core JavaScript -->
-
-<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>    
-<script src="js/bootstrap.min.js"></script>
-
-<!-- iView Slider -->
-<script src="js/raphael-min.js" type="text/javascript"></script>
-<script src="js/jquery.easing.js" type="text/javascript"></script>
-<script src="js/iView.js" type="text/javascript"></script>
-<script src="js/retina-1.1.0.min.js" type="text/javascript"></script>
-<script>
-  !window.jQuery && document.write("<script src='js/jquery.min.js'><\/script>")
-</script>
-<!--[if IE 8]>
-    <script type="text/javascript" src="js/selectivizr.js"></script>
-<![endif]-->
-<script type="text/javascript" src="js/utilitarios.js"></script>
-<script type="text/javascript" src="js/mijs/js.js"></script>
 <script type="text/javascript">
   $("document").ready(function(){
      $(".quit-wish").click(function(){
@@ -68,7 +23,6 @@ $lista= $stmt->rowCount();
     });
   }
 </script>
-</head>
 <body>
 <div id="frm-suscripcion"></div>
 <header>   
@@ -101,7 +55,7 @@ $lista= $stmt->rowCount();
             </li>       
 
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="#"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
