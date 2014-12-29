@@ -1216,7 +1216,9 @@ a.color3:hover {
 	color: #ffffff;
 	display: inline-block;
 	font-size: 15px;
-	
+	height: auto;
+	min-height: 30px;
+	line-height: 20px;
 	padding: 0px 20px;
     font-weight:bold;
     margin-top: 8px;

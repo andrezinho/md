@@ -13,9 +13,7 @@ $lista= $stmt->rowCount();
 $st = $db->prepare("SELECT * FROM categoria ORDER BY orden asc");
 $st->execute();
 
-
 ?>
-
 <body>
 <div id="frm-suscripcion"></div>
 <header>   
@@ -175,7 +173,7 @@ $st->execute();
       </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 box-block sidebar">
-      <div class="box-heading"><span>Descuentos Especiales</span><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></div>
+      <div class="box-heading"><span>% Especiales</span><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></div>
       <div class="box-content" >
         <div class="box-products slide carousel-fade" id="productc2">
           <ol class="carousel-indicators">
