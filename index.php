@@ -112,9 +112,9 @@ $st->execute();
     <div class="row clearfix">      
       <div class="pull-right" style="float:right; diaplay:inline-block; width:410px;margin-bottom: 6px; ">
         <div class="searchbar" style="float:left; width:220px;">
-          <form action="#">                  
+          <form action="resultados.php" method="get">                  
             <div style="background: red; float: left; ">
-              <input class="searchinput" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
+              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
             </div>
             <div class="searchbox">
               <button class="fa fa-search fa-fw" type="submit"></button>

@@ -1,107 +1,8 @@
 <?php
-session_start();
 require_once 'head.php'; //Start para facebook -> ;)
-
 $db = Spdo::singleton();
-
-//$host="http://".$_SERVER['SERVER_NAME']."/md";
-$url=$_GET["id"];
-
-if($url=="especiales"){
-
-   $str=explode("-", $url);
-    $n=count($str);
-    $id=$str[$n-1];
-    $st="";
-    for($i=0; $i<$n; $i++){
-    $st .=$str[$i]." ";
-    }    
-
-
-$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                             p.imagen,p.idtipo_descuento
-                      FROM publicaciones as p
-                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                      INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
-        //$stmt->bindValue(':id', $st , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-
-
-
-}
-
-
-else{
-
-$str=explode("/", $url);
-$n = count($str);
-if($n>1&&$str[1]!="")
-{
-    
-    $str=explode("-", $url);
-    $n=count($str);
-    
-    $id=$str[$n-1];
-    $id=substr($id,1);
-    //$nn=count($id);
-    
-    
-    $st="";
-    for($i=0; $i<$n-1; $i++){
-    $st .=$str[$i]." ";
-    }    
-    
-    $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion,p.precio,p.precio_regular,p.descuento,
-                             p.imagen,p.idtipo_descuento,s.descripcion as categoria
-                      FROM publicaciones as p
-                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                      INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
-      
-        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-        
-    
-    
-    
-}
-else{
-    
-    $str=explode("-", $url);
-    $n=count($str);
-    $id=$str[$n-1];
-    $st="";
-    for($i=0; $i<$n; $i++){
-    $st .=$str[$i]." ";
-}    
-
-
-$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                             p.imagen,p.idtipo_descuento
-                      FROM publicaciones as p
-                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                      INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
-        $stmt->bindValue(':id', $st , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-        
-}
-        //echo $nc;
-}        
-
+$bus = new Buscador();
+$buscame = $bus->buscar();
 
 ?>
 
@@ -115,28 +16,15 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
         <div class="topheadrow">
           <a href="<?php echo $host; ?>/index.php"><img src="<?php echo $host; ?>/images/logo.png" /></a>
           <ul class="nav nav-pills pull-right">
-            <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
-              <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
-                <?php                   
-                  $sql = "SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
-                  $stmt2 = $db->prepare($sql);
-                  $stmt2->execute();                  
-                  foreach($stmt2->fetchAll() as $r2)
-                  {
-                     $s = "";
-                     if($r2[0]==$_SESSION['idciudad'])
-                     {
-                       $s = "selected";
-                     }
-                     ?>
-                     <option value="<?php echo $r2[0] ?>" <?php echo $s; ?>><?php echo $r2[1]; ?></option>
-                     <?php
-                  }
-                ?>
-              </select>
-            </li>           
-            <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Lima <i class="fa fa-angle-down fa-fw"></i></a>              
+              <ul class="dropdown-menu" role="menu">
+                  <li><a href="#a">LIMA</a></li>                
+                  <li><a href="#a">TRUJILLO</a></li>                
+              </ul>
+            </li>            
+            <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
+            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
@@ -259,43 +147,46 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
             <div class="item active">
               <div class="row box-product" > 
                 <!-- Product -->
-                <?php while($r = $stmt->fetch()){
-                $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
-                $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
-                //if($r['idtipo_descuento']!=1){$descuento=$r['descuento'];}
-                //else{$descuento=$r['descuento'];} 
+                <?php //while($r = $stmt->fetch()){
+                if(count($buscame)==0){echo "<center><h2>No hay resultados para su búsqueda...</h2></center>";}
+                else{
+                    foreach($buscame as $r)
+                    {
+                    $link = $host."/producto/".urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);
+                    $img  = $host."/panel/web/imagenes/home/small_".$r["imagen"].".jpg";
+                    
                 ?>
 
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="product-block">
                     <div class="image">
-                      <div class="product-label product-sale"><span><?php echo $r['descuento'];?></span></div>
+                      <div class="product-label product-sale"><span><?php echo $r["descuento"];?></span></div>
                       <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo utf8_encode($r['titulo1']);?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">
                         <a href="producto.html">
-                        <?php echo utf8_encode($r['titulo1']);?>
+                        <?php echo utf8_encode($r["titulo1"]);?>
                         </a>
                       </div>
                       <div class="big-price"> 
                         <span class="price-new">
                           <span class="sym">$</span>
-                           <?php echo $r['precio'];?>
+                           <?php echo $r["precio"];?>
                           </span> 
                         <span class="price-old">
                           <span class="sym">$</span>
-                            <?php echo $r['precio_regular'];?>
+                            <?php echo $r["precio_regular"];?>
                           </span> 
                       </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host;?>/producto/<?php echo urls_amigables($r['titulo1']."-".$r['idpublicaciones']);?>">Comprar</a></div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host;?>/producto/<?php echo urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);?>">Comprar</a></div>
                       <div class="small-price">
                         <span class="price-new">
                           <span class="sym">$</span>
-                          <?php echo $r['precio'];?>
+                          <?php echo $r["precio"];?>
                         </span> 
                         <span class="price-old">
                           <span class="sym">$</span>
-                          <?php echo $r['precio_regular'];?>
+                          <?php echo $r["precio_regular"];?>
                         </span>
                       </div>
                       <div class="rating"> 
@@ -321,7 +212,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 
 
 
-                <?php }?>
+                <?php } }?>
 
 
 
