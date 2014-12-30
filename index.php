@@ -1,6 +1,5 @@
 <?php
-require_once 'head.php';
-$db = Spdo::singleton();
+include 'head.php';
 $stmt = $db->prepare("SELECT p.* 
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
@@ -101,7 +100,6 @@ $st->execute();
                     </div>
                 </li>
                 <?php endif; ?>
-                 
           </ul>
         </div>
       </div>
@@ -157,7 +155,7 @@ $st->execute();
 <div class="container">
   <div class="row" >
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
-        <div class="box-heading"><span>Descuentos del d&iacute;a</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+        <div class="box-heading"><span>Descuentos del d&iacute;a</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
       <div class="box-content">
         <div class="box-products slide" id="productc1">          
           <div class="carousel-inner"> 
@@ -213,139 +211,67 @@ $st->execute();
       <?php while($c=$st->fetch()){
          echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
          <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
-     
-          $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                             c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
-                             e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
-                             l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
-                             l.mapa_google,l.latitud,l.longitud
-                      FROM publicaciones as p
-                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
-                              INNER JOIN local as l on l.idlocal=su.idlocal
-                              INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by idpublicaciones desc limit 8");
+         if(!isset($_SESSION['idusuario']))
+         {
+           $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
+                               c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
+                               p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                               e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
+                               l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
+                               l.mapa_google,l.latitud,l.longitud,0 as deseo
+                        FROM publicaciones as p
+                                INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                                INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                                INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
+                                INNER JOIN local as l on l.idlocal=su.idlocal
+                                INNER JOIN empresa as e on e.idempresa=l.idempresa 
+                         WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                         order by idpublicaciones desc limit 8";
+          }
+         else
+         {
+            $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
+                               c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
+                               p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                               e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
+                               l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
+                               l.mapa_google,l.latitud,l.longitud,coalesce(d.idpublicaciones,0) as deseo
+                        FROM publicaciones as p
+                                INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                                INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                                INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
+                                INNER JOIN local as l on l.idlocal=su.idlocal
+                                INNER JOIN empresa as e on e.idempresa=l.idempresa 
+                                left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
+                         WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                         order by idpublicaciones desc limit 8";
+         }
+         $pub = $db->prepare($sql_q);
          $pub->bindValue(':idc', $c['idcategoria'] , PDO::PARAM_INT);
          $pub->execute();
-     
-        
     ?> 
-     
-
-        
-   
-      
-
       <div class="box-content">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
             <!-- Items Row -->
             <div class="item active">
               <div class="row box-product"> 
-                
-
-                 <?php  while($p=$pub->fetch()){?>
-                <!-- Product -->
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                        <?php if($p['idtipo_descuento']!=1){?>
-                        <div class="product-label product-sale"><span><?php echo $p['descuento']?></span></div>
-                        <?php } else{ ?>
-                        <div class="product-label product-sale"><span><?php echo $p['descuento']?></span></div>
-                        <?php } ?>
-                      <a class="img" href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>"><img alt="product info" src="panel/web/imagenes/home/small_<?php echo $p['imagen']?>.jpg" title="<?php echo utf8_encode($p['titulo1']);?>"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">
-                        <?php echo utf8_encode($p['titulo1'])?>
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                            <?php echo $p['precio']?>
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            <?php echo $p['precio_regular']?>
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          <?php echo $p['precio']?>
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          <?php echo $p['precio_regular']?>
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Ver</a> <b>&GT;</b></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> <!-- aqui. -->
-                <div class="row clearfix f-space30"></div>
-                </div>
-                  <?php }?>
-                
-                
+                 <?php  
+                  while($p=$pub->fetch())
+                  {
+                    $o = oferta($p);
+                    echo $o;
+                  }
+                 ?>                
               </div>
             </div>
-           
           </div>
         </div>
-          <!--<div class="row clearfix f-space30"></div>-->
         </div>
-
-        
       <?php } ?>
-       
-      
-   </div><!-- fin col -->
-
-   </div> <!-- fin row -->
-
-    </div> <!-- fin container -->
-<!--  
-
-            
-    </div>
-
+   </div>
+   </div>
   </div>
-</div>
-</div>
-
-
-          
-        </div>
-       
-       
-          
-          
-        </div>
-      </div>
-     
-  </div>
-</div>-->
-<!-- end: Widgets -->
 <div class="row clearfix f-space30"></div>
 <!-- footer -->
 
@@ -428,41 +354,7 @@ $st->execute();
         </div>
       </div>
     </div>
-  </div>
-  
+  </div>  
 </footer>
-<!-- end: footer --> 
-<script type="text/javascript">
-(function($) {
-  "use strict";
-    $('#menuMega').menu3d();
-    $('#iView').iView({
-        pauseTime: 10000,
-        pauseOnHoView: true,
-        directionNavHoViewOpacity: 0.6,
-        timer: "360Bar",
-        timerBg: '#2da5da',
-        timerColor: '#fff',
-        timerOpacity: 0.9,
-        timerDiameter: 20,
-        timerPadding: 1,
-touchNav: true,
-        timerStroke: 2,
-        timerBarStrokeColor: '#fff'
-    });       
-    $('.quickbox').carousel({
-        interval: 10000
-    });
-   $('#monthly-deals').carousel({
-        interval: 3000
-    });
-    $('#productc2').carousel({
-        interval: 4000
-    });
-    $('#tweets').carousel({
-        interval: 5000
-    });
-})(jQuery);
-</script>
 </body>
 </html>

@@ -82,12 +82,7 @@ $("#items2").append(publi);
 });
 
 
-function addwishlist(i)
-{
-    $.post('model/addwish.php','i='+i,function(r){
-        $("#fa-heart-"+i).css("color","#FCD209");
-    });
-}
+
 
 var amigable  = (function() {
   var tildes = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç", 

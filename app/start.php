@@ -17,7 +17,7 @@ if(!isset($_SESSION['idciudad']))
 	$_SESSION['idciudad'] = $row->idciudad;
 }
 
-$host="http://".$_SERVER['SERVER_NAME']."/md";
+
 //$actual=dameURL();
 
 use Facebook\FacebookSession;
