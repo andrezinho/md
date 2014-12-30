@@ -913,6 +913,7 @@ a.color3:hover {
 .menu3dmega.skin-blue-dark .dropdown-menu a {
 	color: #ffffff !important;
 }
+.submenu { position: absolute; left: 0; }
 .menu-links {
 	padding: 0px;
 

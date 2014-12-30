@@ -176,11 +176,13 @@ else
                     INNER JOIN local as l on l.idlocal=su.idlocal
                     left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                     WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
-          $stmt = $db->prepare($sql_vq);        
+          
+        }
+
+        $stmt = $db->prepare($sql_vq);        
           $stmt->bindValue(':id', $id , PDO::PARAM_STR);
           $stmt->execute();
           $nc= $stmt->rowCount();
-        }
       }
   }
 }
