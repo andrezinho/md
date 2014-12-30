@@ -11,7 +11,7 @@ require_once '/app/funciones.php';
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <title>Muchos Descuentos</title>
 
-<link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet">
+<link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
 <link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
 <link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
 <link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.min.css" rel="stylesheet" />
@@ -24,6 +24,7 @@ require_once '/app/funciones.php';
 <link href="<?php echo $host; ?>/css/style-switch.css" rel="stylesheet" type="text/css"/>
 <!-- Color -->
 <link href="<?php echo $host; ?>/css/skin/color.css" id="colorstyle" rel="stylesheet">
+
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
 <!-- Bootstrap core JavaScript -->
@@ -46,4 +47,5 @@ require_once '/app/funciones.php';
 <script type="text/javascript" src="<?php echo $host; ?>/js/utilitarios.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
+
 </head>

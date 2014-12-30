@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'head.php'; //Start para facebook -> ;)
+$url=$_GET["id"];
 $db = Spdo::singleton();
 $stmt = $db->prepare("SELECT * 
                       FROM publicaciones
@@ -18,7 +19,7 @@ $lista= $stmt->rowCount();
   });
   function quitwishlist(i)
   {    
-    $.post('model/deletewish.php','i='+i,function(r){            
+    $.post('http://'+host+'/model/deletewish.php','i='+i,function(r){            
        location.reload();
     });
   }
@@ -31,7 +32,7 @@ $lista= $stmt->rowCount();
     <div class="row">
       <div class="col-md-12">
         <div class="topheadrow">
-          <a href="index.php"><img src="images/logo.png" /></a>
+          <a href="<?php echo $host;?>"><img src="<?php echo $host;?>/images/logo.png" /></a>
           <ul class="nav nav-pills pull-right">            
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
@@ -149,7 +150,7 @@ $lista= $stmt->rowCount();
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
           <ul class="nav nav-pills nav-justified" id="listamenu">
-          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
+          <li> <a href="<?php echo $host;?>"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
           </li>
           </ul>
         </div>

@@ -4,88 +4,10 @@ require_once 'head.php'; //Start para facebook -> ;)
 
 $db = Spdo::singleton();
 
-//$host="http://".$_SERVER['SERVER_NAME']."/md";
 $url=$_GET["id"];
 
-if($url=="especiales"){
-
-   $str=explode("-", $url);
-    $n=count($str);
-    $id=$str[$n-1];
-    $st="";
-    for($i=0; $i<$n; $i++){
-    $st .=$str[$i]." ";
-    }    
-
-
-$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                             p.imagen,p.idtipo_descuento
-                      FROM publicaciones as p
-                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                      INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
-        //$stmt->bindValue(':id', $st , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-
-
-
-}
-
-
-else{
-
-$str=explode("/", $url);
-$n = count($str);
-if($n>1&&$str[1]!="")
-{
-    
-    $str=explode("-", $url);
-    $n=count($str);
-    
-    $id=$str[$n-1];
-    $id=substr($id,1);
-    //$nn=count($id);
-    
-    
-    $st="";
-    for($i=0; $i<$n-1; $i++){
-    $st .=$str[$i]." ";
-    }    
-    
+if($url==""){
     $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                             c.descripcion,p.precio,p.precio_regular,p.descuento,
-                             p.imagen,p.idtipo_descuento,s.descripcion as categoria
-                      FROM publicaciones as p
-                      INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                      INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                      INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                      INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
-      
-        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-        
-    
-    
-    
-}
-else{
-    
-    $str=explode("-", $url);
-    $n=count($str);
-    $id=$str[$n-1];
-    $st="";
-    for($i=0; $i<$n; $i++){
-    $st .=$str[$i]." ";
-}    
-
-
-$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                              c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
                              p.imagen,p.idtipo_descuento
                       FROM publicaciones as p
@@ -93,16 +15,89 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                       INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                       INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                       INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
-        $stmt->bindValue(':id', $st , PDO::PARAM_STR);
+                      WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
         $stmt->execute();
         $nc= $stmt->rowCount();
-        
+        $st="Descuentos del dia";
 }
-        //echo $nc;
-}        
+else{
+        if($url=="especiales")
+        {
+            $str=explode("-", $url);
+            $n=count($str);
+            $id=$str[$n-1];
+            $st="";
+            for($i=0; $i<$n; $i++){ $st .=$str[$i]." "; }    
 
+            $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                    c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
+                                    p.imagen,p.idtipo_descuento
+                            FROM publicaciones as p
+                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                            INNER JOIN local as l on l.idlocal=su.idlocal
+                            WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+                $stmt->execute();
+                $nc= $stmt->rowCount();
 
+        }
+
+        else{
+
+        $str=explode("/", $url);
+        $n = count($str);
+            if($n>1&&$str[1]!="")
+            {
+                $str=explode("-", $url);
+                $n=count($str);
+
+                $id=$str[$n-1];
+                $id=substr($id,1);
+                $st="";
+
+                for($i=0; $i<$n-1; $i++){ $st .=$str[$i]." "; }    
+
+                    $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                        c.descripcion,p.precio,p.precio_regular,p.descuento,
+                                        p.imagen,p.idtipo_descuento,s.descripcion as categoria
+                                FROM publicaciones as p
+                                INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                                INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                                INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                                INNER JOIN local as l on l.idlocal=su.idlocal
+                                WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+
+                    $stmt->bindValue(':id', $id , PDO::PARAM_STR);
+                    $stmt->execute();
+                    $nc= $stmt->rowCount(); 
+            }
+            else{
+
+                $str=explode("-", $url);
+                $n=count($str);
+                $id=$str[$n-1];
+                $st="";
+                for($i=0; $i<$n; $i++){ $st .=$str[$i]." "; }    
+
+                $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                    c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
+                                    p.imagen,p.idtipo_descuento
+                            FROM publicaciones as p
+                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                            INNER JOIN local as l on l.idlocal=su.idlocal
+                            WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+                $stmt->bindValue(':id', $st , PDO::PARAM_STR);
+                $stmt->execute();
+                $nc= $stmt->rowCount();
+
+                }
+                //echo $nc;
+        }        
+
+}
 ?>
 
 <body>

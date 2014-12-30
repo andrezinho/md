@@ -1,6 +1,6 @@
 <?php
 require_once 'head.php';
-$db = Spdo::singleton();
+
 $stmt = $db->prepare("SELECT p.* 
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
@@ -46,7 +46,7 @@ $st->execute();
             </li>       
 
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
@@ -157,7 +157,7 @@ $st->execute();
 <div class="container">
   <div class="row" >
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
-        <div class="box-heading"><span>Descuentos del d&iacute;a</span><span class="view-all"><a href="#">[Ver Todos]</a></span></div>
+        <div class="box-heading"><span>Descuentos del d&iacute;a</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
       <div class="box-content">
         <div class="box-products slide" id="productc1">          
           <div class="carousel-inner"> 
@@ -233,10 +233,6 @@ $st->execute();
         
     ?> 
      
-
-        
-   
-      
 
       <div class="box-content">
         <div class="box-products slide" id="productc3">
@@ -323,28 +319,9 @@ $st->execute();
 
    </div> <!-- fin row -->
 
-    </div> <!-- fin container -->
-<!--  
-
-            
-    </div>
-
-  </div>
-</div>
-</div>
+</div> <!-- fin container -->
 
 
-          
-        </div>
-       
-       
-          
-          
-        </div>
-      </div>
-     
-  </div>
-</div>-->
 <!-- end: Widgets -->
 <div class="row clearfix f-space30"></div>
 <!-- footer -->
@@ -367,6 +344,7 @@ $st->execute();
 </section>
 
 <footer class="footer">
+
 <!--<section class="footer-img"></section>-->
 <section id="fmenu">
   <ul>
@@ -432,37 +410,6 @@ $st->execute();
   
 </footer>
 <!-- end: footer --> 
-<script type="text/javascript">
-(function($) {
-  "use strict";
-    $('#menuMega').menu3d();
-    $('#iView').iView({
-        pauseTime: 10000,
-        pauseOnHoView: true,
-        directionNavHoViewOpacity: 0.6,
-        timer: "360Bar",
-        timerBg: '#2da5da',
-        timerColor: '#fff',
-        timerOpacity: 0.9,
-        timerDiameter: 20,
-        timerPadding: 1,
-touchNav: true,
-        timerStroke: 2,
-        timerBarStrokeColor: '#fff'
-    });       
-    $('.quickbox').carousel({
-        interval: 10000
-    });
-   $('#monthly-deals').carousel({
-        interval: 3000
-    });
-    $('#productc2').carousel({
-        interval: 4000
-    });
-    $('#tweets').carousel({
-        interval: 5000
-    });
-})(jQuery);
-</script>
+
 </body>
 </html>

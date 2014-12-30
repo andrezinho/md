@@ -58,5 +58,6 @@ class Buscador extends Spdo
     }
 }
 
-
+$db=Spdo::singleton();
+$host="http://".$_SERVER['SERVER_NAME']."/md";
 ?>
