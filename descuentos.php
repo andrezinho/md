@@ -2,6 +2,7 @@
 session_start();
 require_once 'head.php'; 
 $db = Spdo::singleton();
+
 $url=$_GET["id"];
 
 if($url=="")
@@ -168,21 +169,22 @@ else
           $sql_vq = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                        c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
                                        p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo
-                                FROM publicaciones as p
-                                INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                                INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                                INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                                INNER JOIN local as l on l.idlocal=su.idlocal
-                                left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                                WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                     FROM publicaciones as p
+                    INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                    INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                    INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                    INNER JOIN local as l on l.idlocal=su.idlocal
+                    left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
+                    WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+          $stmt = $db->prepare($sql_vq);        
+          $stmt->bindValue(':id', $id , PDO::PARAM_STR);
+          $stmt->execute();
+          $nc= $stmt->rowCount();
         }
-        $stmt = $db->prepare($sql_vq);
-        $stmt->bindValue(':id', $st , PDO::PARAM_STR);
-        $stmt->execute();
-        $nc= $stmt->rowCount();          
       }
   }
 }
+
 ?>
 <body>
 <div id="frm-suscripcion"></div>

@@ -17,7 +17,6 @@ if(!isset($_SESSION['idciudad']))
 	$_SESSION['idciudad'] = $row->idciudad;
 }
 
-
 //$actual=dameURL();
 
 use Facebook\FacebookSession;

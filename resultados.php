@@ -139,7 +139,16 @@ $buscame = $bus->buscar();
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-      <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- <?php echo $st;?></b></span></div>
+      <div class="box-heading"><span>Mostrando 
+                                    <?php if(count($buscame)!=0)
+                                          { $c=0; 
+                                            foreach($buscame as $q)
+                                              {$c++;$st=$q['categoria'];}
+                                            echo $c; 
+                                          }
+                                    ?> descuentos <b style="font-size:16px; color:#FCD209">- <?php echo $st;?></b>
+                                </span>
+      </div>
       <div class="box-content" id="item">
         <div class="box-products slide" id="productc3">
           <div class="carousel-inner"> 
@@ -164,7 +173,7 @@ $buscame = $bus->buscar();
                       <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo utf8_encode($r['titulo1']);?>"></a> </div>
                     <div class="product-meta">
                       <div class="name">
-                        <a href="producto.html">
+                        <a href="<?php echo $host;?>/producto/<?php echo urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);?>">
                         <?php echo utf8_encode($r["titulo1"]);?>
                         </a>
                       </div>
