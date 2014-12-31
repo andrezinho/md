@@ -1,5 +1,5 @@
 <?php
-include 'head.php';
+require_once 'head.php';
 $stmt = $db->prepare("SELECT p.* 
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion

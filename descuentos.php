@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'head.php'; 
-$db = Spdo::singleton();
+//$db = Spdo::singleton();
 
 $url=$_GET["id"];
 
@@ -371,28 +371,7 @@ else
 
 <!-- footer -->
 
-
-<section class="pages">
-      <div class="holder">
-        <a class="jp-previous jp-disabled">← previous</a>
-        <a class="jp-current">1</a>
-        <span class="jp-hidden">...</span>
-        <a>2</a>
-        <a>3</a>
-        <a>4</a>
-        <a>5</a>
-        <a class="jp-hidden">6</a>
-        <a class="jp-hidden">7</a>
-        <a class="jp-hidden">8</a>
-        <a class="jp-hidden">9</a>
-        <span>...</span>
-        <a>10</a>
-        <a class="jp-next">next →</a>
-    </div>
-</section>
-
-
-
+<!-- Paginacion -->
 
 
 

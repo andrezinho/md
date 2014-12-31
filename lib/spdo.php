@@ -1,5 +1,4 @@
 <?php
-$host="http://".$_SERVER['SERVER_NAME']."/md";
 class Spdo extends PDO 
 {
     private static $instance = null;
