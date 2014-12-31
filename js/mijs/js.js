@@ -58,52 +58,42 @@ $.get('http://'+host+'cuenta/datos.php',function(datos){//alert(datos);
 });
 
 //menu y submenu
-//window.location.protocol (http:)
-//window.location.pathname (md/)
 
-$.get('http://'+host+'/model/menu.php','&',function(data){ //alert("data");
+$.get('http://'+host+'/model/menu.php','&',function(data){
   var menu = "";
    $.each(data,function(i,j){
    	 var idc=j.codigo;
-	 menu += "<li id='categoria-"+idc+"'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"'><span class='hidden-sm'>"+j.texto+"</span><i class='fa fa-angle-down fa-fw'></i></a>";
-	 menu += "<nav id='submenu-"+idc+"' class='submenu'>";
-		
-		$.each(j.enlaces,function(k,p){
-			
-			menu += "<span class='sublista'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"/"+amigable(p.texto)+"-s"+p.idsubcategoria+"'>"+p.texto+"</a></span>";
-			
-		});
-
+	   menu += "<li id='categoria-"+idc+"'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"'><span class='hidden-sm'>"+j.texto+"</span><i class='fa fa-angle-down fa-fw'></i></a>";
+	   menu += "<nav id='submenu-"+idc+"' class='submenu'>";		
+		 $.each(j.enlaces,function(k,p)
+     {			
+			 menu += "<span class='sublista'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"/"+amigable(p.texto)+"-s"+p.idsubcategoria+"'>"+p.texto+"</a></span>";			
+		 });
 	 menu += "</nav>";
 	 menu += "</li>";
 	});
 
-
-   $("#listamenu").append(menu); 
-   
-   $('#listamenu li').hover(function(e) {
-
+  $("#listamenu").append(menu);    
+  
+  $('#listamenu li').hover(function(e) {
    	  var idcc=$(this).attr("id");
-
       if (idcc === undefined) 
       {
-          
-      } 
+           
+      }
       else
       {
-
      	  idcc=idcc.split("-");
-     	  idcc=idcc[1];//alert(idcc);
-
+     	  idcc=idcc[1];
         var elemento = $(".menu-links");
-        var posicion = elemento.position();//alert( "left: " + posicion.left + ", top: " + posicion.top );  	
+        var posicion = elemento.position();
 
         $('#submenu-'+idcc).show();
-          $("#submenu-"+idcc).offset({left: posicion.left});
-  	     $("#submenu-"+idcc).mouseover(function(){
-  	     	$("#categoria-"+idcc).css({background:"#B6090C"});
-
-  	    });        
+        var posicion = elemento.position();
+        $("#submenu-"+idcc).offset({left: posicion.left});  	   
+        $("#submenu-"+idcc).mouseover(function(){
+           $("#categoria-"+idcc).css({background:"#B6090C"});
+        });        
       }
 
      },
@@ -112,18 +102,17 @@ $.get('http://'+host+'/model/menu.php','&',function(data){ //alert("data");
        if (idcc === undefined) 
        { 
           
-       } 
+       }
        else
        {
   	   	 idcc=idcc.split("-");
   	   	 idcc=idcc[1];
   	     $('#submenu-'+idcc).hide();
-  		     $("#categoria-"+idcc).css({background:"#DE1215"});
+  		   $("#categoria-"+idcc).css({background:"#DE1215"});
        }
   	 });
-       
-
 },'json');	
+
 $("#frm-suscripcion").dialog({ 
       modal:true,
       autoOpen:false,
