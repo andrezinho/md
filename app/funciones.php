@@ -83,7 +83,7 @@ function oferta($r)
                             '.$r['precio_regular'].'
                           </span> 
                       </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="'.$host.'/producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'">Comprar</a></div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="'.$host.'/ficha-compra.php?p='.$r['idpublicaciones'].'">Comprar</a></div>
                       <div class="small-price">
                         <span class="price-new">
                           <span class="sym">S/.</span>

@@ -41,8 +41,6 @@ $st = $db->prepare("SELECT p.*
                       ORDER BY idpublicaciones desc limit 3");
 $st->execute();
 $lista= $st->rowCount();
-
-
 ?>
 <body>
 <header>   
@@ -135,9 +133,9 @@ $lista= $st->rowCount();
       <div style="width: 846px; display: inline-block; background: #EEEEEE">
             <div class="product-details-head" style="float:left; width:200px; border-right: 1px solid #fafafa;">
                 <div class="short-info-det-name-empresa">                    
-                  <div class="name-empresa">
+                  <div class="name-empresa" >
                     <img src="<?php echo $logo;?>" class="logo-empresa">  
-                    <b><?php echo $r['empresa'];?></b>
+                    <b><?php echo $r['empresa'];?> Rosa Ortencia</b>
                   </div>
                 <div class="frase-empresa"><?php //echo frase ?></div>
                 </div>
@@ -156,22 +154,22 @@ $lista= $st->rowCount();
                   //$u=$stmt->fetch();
 
                 ?>
-
                     <select class="web-list list-local" style="max-width:140px;">
-                    
-                    <?php foreach($stmt->fetchAll() as $x){ ?> 
-
-                      <option value="<?php echo $x['idubigeo'];?>"><?php echo $x['descripcion'];?></option>
-                    
-                    <?php }?>
-                    
+                    <?php 
+                      foreach($stmt->fetchAll() as $x)
+                      { 
+                    ?> 
+                      <option value="<?php echo $x['idubigeo'];?>"><?php echo $x['descripcion'];?></option>                    
+                    <?php 
+                      }
+                    ?>                    
                     </select>
                </div>
             </div>                      
             <div style="width:auto; float:left; border-right: 1px solid #fafafa; border-right: 0;">                                
                 <div style="padding:5px 0px 5px 5px">
                     <div style="height: 40px; padding: 13px 0 0">
-                        <a href="#" style="color:#333;" data-toggle="tooltip"  title="Recibir Descuentos de Shoes Center"><i class="fa fa-envelope fa-fw" style="color:#333"></i>&nbsp;</a>                        
+                        <a href="#" style="color:#333;" data-toggle="tooltip"  title="Recibir Descuentos de esta Empresa"><i class="fa fa-envelope fa-fw" style="color:#333"></i>&nbsp;</a>                        
                     </div>                                      
                 </div>
             </div>
@@ -236,11 +234,11 @@ $lista= $st->rowCount();
                         <div class="precio-empresa"><b>Precio S/.</b><b class="c-precio"><?php echo $r['precio']; ?></b></div>
                             <div class="product-btns-detalle">
                                 <div class="product-big-btns">
-                                    <button class="btn-comprar" data-toggle="tooltip" title="Comprar">COMPRAR</button>
-                                    <button class="btn btn-wishlist-det" data-toggle="tooltip" title="Agregar a mis deseos"> <i class="fa fa-heart fa-fw"></i> </button>
+                                    <button class="btn-comprar" data-toggle="tooltip" title="Comprar" style="margin-left:25px">COMPRAR</button>
+                                    <!-- <button class="btn btn-wishlist-det" data-toggle="tooltip" title="Agregar a mis deseos"> <i class="fa fa-heart fa-fw"></i> </button> -->
                                 </div>
                             </div>
-                            <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza el: <b><?php echo $r['hora_fin'];?></b></div>
+                            <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza en: <b><?php echo $r['hora_fin'];?></b></div>
                     </div>
                 </div>
                 <div class="product-details">

@@ -4888,3 +4888,14 @@ line-height: 20px;
 .table-list-md { }
 .table-list-md tr th { background: #EEEEEE;}
 .table-list-md tr th,.table-list-md tr td { padding: 10px; border:1px dotted #666; }
+
+.box-pay {	
+	width: 377px;
+	min-height: 200px;
+	float: left;
+	background: #fafafa;
+	margin-left: 2px;
+}
+
+.box-pay-p { padding: 15px; }
+.box-pay-title { background: #666; color: #FFF; padding: 5px 10px; font-size:16px;}

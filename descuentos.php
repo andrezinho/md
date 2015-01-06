@@ -1,45 +1,43 @@
 <?php
 session_start();
 require_once 'head.php'; 
-//$db = Spdo::singleton();
-
 $url=$_GET["id"];
 
 if($url=="")
 {
     if(!isset($_SESSION['idusuario']))
-        {
-          $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                   c.descripcion,p.precio,p.precio_regular,p.descuento,
-                                   p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                   0 as deseo
-                            FROM publicaciones as p
-                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                            INNER JOIN local as l on l.idlocal=su.idlocal
-                            WHERE p.fecha_inicio = CURDATE() AND p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
-        }
-        else
-        {
-          $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                   c.descripcion,p.precio,p.precio_regular,p.descuento,
-                                   p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                   coalesce(d.idpublicaciones,0) as deseo
-                            FROM publicaciones as p
-                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                            INNER JOIN local as l on l.idlocal=su.idlocal
-                            left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                            WHERE p.fecha_inicio = CURDATE() AND p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
-        }
+    {
+      $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                               c.descripcion,p.precio,p.precio_regular,p.descuento,
+                               p.imagen,p.idtipo_descuento,s.descripcion as categoria,
+                               0 as deseo
+                        FROM publicaciones as p
+                        INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                        INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                        INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                        INNER JOIN local as l on l.idlocal=su.idlocal
+                        WHERE p.fecha_inicio = CURDATE() AND p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+    }
+    else
+    {
+      $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                               c.descripcion,p.precio,p.precio_regular,p.descuento,
+                               p.imagen,p.idtipo_descuento,s.descripcion as categoria,
+                               coalesce(d.idpublicaciones,0) as deseo
+                        FROM publicaciones as p
+                        INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                        INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                        INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                        INNER JOIN local as l on l.idlocal=su.idlocal
+                        left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
+                        WHERE p.fecha_inicio = CURDATE() AND p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+    }
 
-        $stmt = $db->prepare($sql_c);                
-        $stmt->bindValue(':id', $id , PDO::PARAM_STR);        
-        $stmt->execute();
-        $nc= $stmt->rowCount();
-        $st = "Descuentos del Dia";
+    $stmt = $db->prepare($sql_c);                
+    $stmt->bindValue(':id', $id , PDO::PARAM_STR);        
+    $stmt->execute();
+    $nc= $stmt->rowCount();
+    $st = "Descuentos del Dia";
 }
 else
 {
