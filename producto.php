@@ -203,8 +203,8 @@ $lista= $st->rowCount();
       </div>
         <div id="buscador" class="product-details-head">
            <div class="searchbar-details">
-              <form action="#">
-                  <input name="input_seach" class="searchinput" id="" placeholder="Buscar..."  />
+              <form action="<?php echo $host?>/resultados.php" method="get">
+                  <input name="search" class="searchinput" id="search" placeholder="Buscar..." type="search"  />
                   <div class="searchbox pull-left">
                     <button class="fa fa-search fa-fw" type="submit" style="margin-top:3px;"></button>
                   </div>
