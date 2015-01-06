@@ -219,9 +219,7 @@ $lista= $st->rowCount();
 <!-- end: Header -->
 <div class="row clearfix f-space20"></div>
 <div class="container">
-
-    <div class="row">
-        
+    <div class="row">        
         <section id="contenido">
               <div class="box-heading"><span><?php echo utf8_encode(strtoupper($r['titulo2']));?></span></div>  
           <section id="producto-detalle">        
@@ -234,8 +232,7 @@ $lista= $st->rowCount();
                         <div class="precio-empresa"><b>Precio S/.</b><b class="c-precio"><?php echo $r['precio']; ?></b></div>
                             <div class="product-btns-detalle">
                                 <div class="product-big-btns">
-                                    <button class="btn-comprar" data-toggle="tooltip" title="Comprar" style="margin-left:25px">COMPRAR</button>
-                                    <!-- <button class="btn btn-wishlist-det" data-toggle="tooltip" title="Agregar a mis deseos"> <i class="fa fa-heart fa-fw"></i> </button> -->
+                                    <a href="../ficha-compra.php?p=<?php echo $r['idpublicaciones'] ?>" class="btn-comprar" data-toggle="tooltip" title="Comprar" style="margin-left:25px; padding:15px 0 0 0">COMPRAR</a>                                    
                                 </div>
                             </div>
                             <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza en: <b><?php echo $r['hora_fin'];?></b></div>
@@ -283,17 +280,14 @@ $lista= $st->rowCount();
                    <i class="fa fa-star-o" style="color:red"></i> 
                  </div>
                 </div>
-              </div>
+              </div>              
               <div class="product-details">
-                 
                   <div class="short-info-det"  style="padding:9px 2.5px;color:#000; ">
                     <div style="font-size:11px;">Enviar a un Amigo:</div>
                     <input type="text" name="deseo-descuento" class="input-deseo" placeholder="tucorreo@midominio.com" style="border:1px solid #999;"/>
                     <input type="button" value="Enviar" class="btn-deseo" style="background:#C73B2C !important; color:#fff !important;" />
                   </div>
-                  
               </div>
-
             </article>
             <div class="row clearfix f-space30"></div>
              <!-- Nav tabs -->
