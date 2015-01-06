@@ -1,4 +1,5 @@
 # Activar RewriteEngine
+DirectoryIndex index.php
 RewriteOptions inherit
 <ifmodule mod_rewrite.c>
 Options +FollowSymlinks

@@ -1,6 +1,7 @@
 <?php 
 require_once '/app/start.php'; //Start para facebook -> ;)
 require_once '/app/funciones.php';
+
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
@@ -39,10 +40,10 @@ require_once '/app/funciones.php';
 <script src="<?php echo $host; ?>/js/iView.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
 <script>
-  !window.jQuery && document.write("<script src='js/jquery.min.js'><\/script>")
+  !window.jQuery && document.write("<script src='<?php echo $host; ?>/js/jquery.min.js'><\/script>")
 </script>
 <!--[if IE 8]>
-    <script type="text/javascript" src="js/selectivizr.js"></script>
+    <script type="text/javascript" src="<?php echo $host; ?>/js/selectivizr.js"></script>
 <![endif]-->
 <script type="text/javascript" src="<?php echo $host; ?>/js/utilitarios.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
