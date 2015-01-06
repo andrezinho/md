@@ -18,7 +18,7 @@ $(document).ready(function(){
 			publi +='<div class="big-price"><span class="price-new">';
 			publi +='<span class="sym">$</span>'+j.precio+'</span>';
 			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
-			publi +='<div class="big-btns"><a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'" class="btn btn-default btn-View pull-left">Comprar</a></div>';
+			publi +='<div class="big-btns"><a href="ficha-compra.php?p='+j.idpublicaciones+'" class="btn btn-default btn-View pull-left">Comprar</a></div>';
 			publi +='<div class="small-price"><span class="price-new">';
 			publi +='<span class="sym">$</span>'+j.precio+'</span>';
 			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
