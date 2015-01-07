@@ -151,7 +151,7 @@ $lista= $st->rowCount();
                                         WHERE l.idempresa=:ide");
                   $stmt->bindValue(':ide', $r['idempresa'] , PDO::PARAM_INT);
                   $stmt->execute();
-                  //$u=$stmt->fetch();
+                  $u=$stmt->fetch();
 
                 ?>
                     <select class="web-list list-local" style="max-width:140px;">
@@ -488,11 +488,11 @@ $lista= $st->rowCount();
               <div class="small-price">
                 <span class="price-new">
                   <span class="sym">$</span>
-                  96
+                  <?php echo $p['precio'] ?>
                 </span> 
                 <span class="price-old">
                   <span class="sym">$</span>
-                  119.50
+                  <?php echo $p['precio_regular'] ?>
                 </span>
               </div>
               <div class="rating"> 
