@@ -34,7 +34,12 @@ else{$logo=$host."/images/nologo.png";}
 ?>
 <script type="text/javascript">
   $(document).ready(function(){
-
+      var lh=0;
+      $(".box-pay").each(function(i,j){
+          var h=parseInt($(j).css("height"));
+          if(h>lh) lh=h;
+      });
+      $('.box-pay').css("height",lh+'px');
   });
 </script>
 <body>
