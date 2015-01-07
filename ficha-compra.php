@@ -9,7 +9,6 @@ $stmt = $db->prepare("SELECT *
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
 $lista= $stmt->rowCount();
-
 $id = $_GET['p'];
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
@@ -35,7 +34,12 @@ else{$logo=$host."/images/nologo.png";}
 ?>
 <script type="text/javascript">
   $(document).ready(function(){
-
+      var lh=0;
+      $(".box-pay").each(function(i,j){
+          var h=parseInt($(j).css("height"));
+          if(h>lh) lh=h;
+      });
+      $('.box-pay').css("height",lh+'px');
   });
 </script>
 <body>
@@ -177,7 +181,7 @@ else{$logo=$host."/images/nologo.png";}
 <!-- Products -->
 <div class="container"> 
   <div style="min-height:350px;">
-    <h2>Proceso de Compra</h2>
+    <h2 style="margin:10px 0">Proceso de Compra</h2>
     <div class="box-pay">
       <div class="box-pay-p">
         <div class="box-pay-title" style="background:#B3B3B3">Datos Personales</div>
@@ -264,7 +268,6 @@ else{$logo=$host."/images/nologo.png";}
             </tr>
           </table>
         </div>
-
         <div style="background:#dadada;margin-top:20px; padding:10px; ">
           <table>
             <tr>
@@ -275,22 +278,15 @@ else{$logo=$host."/images/nologo.png";}
             </tr>            
           </table>
         </div>        
-
-        
-                <div class="product-details" >
-                    <div class="short-info-det">
-                    <div class="product-btns-detalle">
-                            <div class="product-big-btns" style="background:#FFF;">
-                                <button class="btn-comprar" data-toggle="tooltip" title="Comprar" style="width:100%">COMPRAR</button>
-                                <!-- <button class="btn btn-wishlist-det" data-toggle="tooltip" title="Agregar a mis deseos"> <i class="fa fa-heart fa-fw"></i> </button> -->
-                            </div>
-                    </div>
-                    </div>
+        <div class="product-details" >
+            <div class="short-info-det">
+            <div class="product-btns-detalle">
+                <div class="product-big-btns" style="background:#FFF;">
+                    <button class="btn-comprar" data-toggle="tooltip" title="Pagar" style="width:100%">PAGAR</button>                    
                 </div>
-
-
-
-
+            </div>
+            </div>
+        </div>
         </div>
       </div>
     </div>
