@@ -25,13 +25,14 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
                        WHERE idpublicaciones=:id and l.idubigeo='".$_SESSION['idciudad']."'");
-        $stmt->bindValue(':id', $id , PDO::PARAM_STR);
-        $stmt->execute();
-        $r = $stmt->fetch();
-        $ahorro=$r['precio_regular']-$r['precio'];
-        $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
-        if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
-        else{$logo=$host."/images/nologo.png";}
+
+$stmt->bindValue(':id', $id , PDO::PARAM_STR);
+$stmt->execute();
+$r = $stmt->fetch();
+$ahorro=$r['precio_regular']-$r['precio'];
+$img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
+if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
+else{$logo=$host."/images/nologo.png";}
      
 $st = $db->prepare("SELECT p.* 
                       FROM publicaciones as p 
