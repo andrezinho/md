@@ -75,7 +75,7 @@ $st->execute();
                   </div>
                   <button class="btn medium color1 pull-right" type="submit">Entrar</button>
                </form>
-               <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
+               <a href="<?php echo $host?>/recuperar">¿Olvidaste tu contrase&nacute;a?</a>
               </div>
             </li>
               <?php else: ?>

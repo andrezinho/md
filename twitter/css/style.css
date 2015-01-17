@@ -1,0 +1,38 @@
+/* 
+    Document   : style
+    Author     : JV Software
+    Description:
+        Hoja de estilo para tutorial 7.
+*/
+
+body {
+    font-size: 14px;
+    font-family: Arial,Helvetica,sans-serif;
+    background: #EFF9FF;
+}
+img {
+    border: 0;
+}
+#wrapper {
+    margin: 10px auto;
+    width: 900px;
+}
+#header {
+    text-align: center;
+    height: 100px;
+    background: #BFE8FF; 
+}
+#header h1 {
+    line-height: 100px;
+}
+#navegacion {
+    height: 25px;
+    background: #2693CF;
+    padding:5px 10px;
+    line-height: 25px;
+    color: #fff;
+}
+#contenido {
+    background: #fff;
+    padding: 10px;
+}

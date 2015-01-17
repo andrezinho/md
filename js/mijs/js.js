@@ -133,9 +133,9 @@ function update(){
   bval = true;        
   bval = bval && $( "#nombres" ).required();        
   bval = bval && $( "#apellidos" ).required();        
-  bval = bval && $("#tipodoc").required();
-  bval = bval && $("#ndoc").required();
-  bval = bval && $("#telefono").required();
+  //bval = bval && $("#tipodoc").required();
+  //bval = bval && $("#ndoc").required();
+  //bval = bval && $("#telefono").required();
   
    var str = $("#frm").serialize();
                       if ( bval ) 
@@ -192,12 +192,12 @@ function save()
                     $("#resultado_contra").html("<span style='color:red;' id='nodisponible'>Las contraseñas no coinciden.</span>");
                     bval=false;
                   };
-                  bval = bval && $("#ndoc").required();
+                  //bval = bval && $("#ndoc").required();
                   
                 //  bval=ndoc();
                  // if(bval){bval=true;}else{bval=false}
-                  bval = bval && $("#ndoc").required();
-                  bval = bval && $("#telefono").required();
+                  //bval = bval && $("#ndoc").required();
+                  //bval = bval && $("#telefono").required();
 
 
 
