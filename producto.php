@@ -43,6 +43,10 @@ $st->execute();
 $lista= $st->rowCount();
 ?>
 
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
+<script src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <body>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">

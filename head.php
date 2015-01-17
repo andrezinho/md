@@ -50,8 +50,6 @@ require_once '/app/funciones.php';
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
 
 <!-- timer -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
-<script src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
+
 <!--<script src= "/bower_components/jquery.countdown/dist/jquery.countdown.js" ></script>-->
 </head>
