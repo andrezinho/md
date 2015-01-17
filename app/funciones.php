@@ -115,6 +115,7 @@ function oferta($r)
 }
 function login($helper,$config)
 {
+    $host="http://".$_SERVER['SERVER_NAME']."/md/";
     if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email']))
     {
        $html = '<li class="dropdown">
@@ -136,7 +137,7 @@ function login($helper,$config)
                   <span>Login:</span>
                   <span><a href="cuenta.php" id="registrar">Registrar</a></span>
                  </div>
-                 <form id="frmlogin" method="post"  action="panel/web/process.php">
+                 <form id="frmlogin" method="post"  action="'.$host.'panel/web/process.php">
                     <div class="form-group"> <i class="fa fa-user fa-fw"></i>
                       <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
                     </div>

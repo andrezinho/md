@@ -42,9 +42,6 @@ $st = $db->prepare("SELECT p.*
 $st->execute();
 $lista= $st->rowCount();
 ?>
-
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
 <script src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <body>
