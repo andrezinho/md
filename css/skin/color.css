@@ -611,10 +611,10 @@ a.color3:hover {
 /*boton ver*/
 .product-block .product-meta .small-btns .btn-compare {
   border-right: 0;
-  background-color: #FCD209;
+  background-color: #C53C2C;
 }
 .product-block .product-meta .small-btns .btn-compare:hover {
-  background-color: #FCD209;
+  background-color: #D84C3D;
 }
 .product-block .product-meta .small-btns .btn-wishlist {
   border-right: 0;
@@ -643,11 +643,11 @@ a.color3:hover {
   background-color: #feaa37;
 }
 .product-sale {
-  background-color: #FCD209;
+  background-color: #FFFFFF;
   opacity:0.9;
-  filter:alpha(opacity=90);
+  filter:alpha(opacity=99);
 }
-.product-sale span { font-size: 20px;}
+.product-sale span { font-size: 20px; }
 .product-hot {
   background-color: #333333;
 }

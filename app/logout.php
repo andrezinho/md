@@ -1,5 +1,12 @@
 <?php
 	session_start();
 	session_destroy();
-	header('Location: ../index.php');
+	if(isset($_GET['url_ref']))
+	{
+		header('Location: '.$_GET['url_ref']);
+	}
+	else
+	{
+		header('Location: ../index.php');		
+	}
 ?>

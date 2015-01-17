@@ -22,12 +22,13 @@ $(document).ready(function(){
 			publi +='<div class="small-price"><span class="price-new">';
 			publi +='<span class="sym">$</span>'+j.precio+'</span>';
 			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
-			publi +='<div class="rating">';
+			/*publi +='<div class="rating">';
             publi +='<i class="fa fa-star"></i>';
             publi +='<i class="fa fa-star"></i>';
             publi +='<i class="fa fa-star"></i>';
             publi +='<i class="fa fa-star-half-o"></i>';
             publi +='<i class="fa fa-star-o"></i></div>';
+            */
             publi +='<div class="small-btns">';
             
             if(j.deseo==0)

@@ -78,6 +78,12 @@
         <br/>
         <label for="interbank" class="labels" style="width:130px;">InterBank:</label>
         <input type="text" id="interbank"  name="interbank" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->interbank; ?>" onkeypress="return permite(event,'num_car');"  />
+        <br/>
+        <label for="continental" class="labels" style="width:130px;">Continental:</label>
+        <input type="text" id="continental"  name="continental" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->continental; ?>" onkeypress="return permite(event,'num_car');"  />
+        <br/>
+        <label for="nacion" class="labels" style="width:130px;">Banco de la Nacion:</label>
+        <input type="text" id="nacion"  name="nacion" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->nacion; ?>" onkeypress="return permite(event,'num_car');"  />
     </div>
 
     <div id="tabs-2">       

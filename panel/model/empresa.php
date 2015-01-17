@@ -37,8 +37,13 @@ class empresa extends Main
                                                         youtube,
                                                         website,
                                                         estado,
-                                                        nombre_contacto)
-                                    values(:p1,:p2,:p3,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12)");
+                                                        nombre_contacto,
+                                                        bcp,
+                                                        scotiabank,
+                                                        interbank,
+                                                        continental,
+                                                        nacion)
+                                    values(:p1,:p2,:p3,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17)");
         
         $stmt->bindParam(':p1', $_P['ruc'] , PDO::PARAM_INT);
         $stmt->bindParam(':p2', $_P['razon_social'] , PDO::PARAM_STR);
@@ -51,6 +56,11 @@ class empresa extends Main
         $stmt->bindParam(':p10', $_P['website'] , PDO::PARAM_STR);
         $stmt->bindParam(':p11', $_P['activo'] , PDO::PARAM_INT);
         $stmt->bindParam(':p12', $_P['nombre_contacto'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p13', $_P['bcp'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p14', $_P['scotiabank'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p15', $_P['interbank'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p16', $_P['continental'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p17', $_P['nacion'] , PDO::PARAM_STR);
         
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
@@ -70,7 +80,12 @@ class empresa extends Main
                                     youtube=:p9,
                                     website=:p10,
                                     estado=:p11,
-                                    nombre_contacto=:p12
+                                    nombre_contacto=:p12,
+                                    bcp=:p13,
+                                    scotiabank=:p14,
+                                    interbank=:p15,
+                                    continental=:p16,
+                                    nacion=:p17
                        where idempresa = :idempresa";
         $stmt = $this->db->prepare($sql);
               
@@ -85,6 +100,11 @@ class empresa extends Main
         $stmt->bindParam(':p10', $_P['website'] , PDO::PARAM_STR);
         $stmt->bindParam(':p11', $_P['activo'] , PDO::PARAM_INT);
         $stmt->bindParam(':p12', $_P['nombre_contacto'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p13', $_P['bcp'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p14', $_P['scotiabank'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p15', $_P['interbank'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p16', $_P['continental'] , PDO::PARAM_STR);
+        $stmt->bindParam(':p17', $_P['nacion'] , PDO::PARAM_STR);
 
         $stmt->bindParam(':idempresa', $_P['idempresa'] , PDO::PARAM_INT);
 

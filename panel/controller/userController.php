@@ -35,7 +35,8 @@ class UserController extends Controller {
             }
             else
             {
-                header('location:../../index.php');                
+                $url = $_POST['url_ref'];
+                header('location:'.$url);                
             }
         }
         else

@@ -1,34 +1,26 @@
 <?php 
-      function dameURL()
-      {
-            $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-            return $url;
-      }
+function dameURL()
+{
+    $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    return $url;
+}
       //echo dameURL();
       function urls_amigables($url) { 
-      // Tranformamos todo a minusculas
- 
+      // Tranformamos todo a minusculas 
       $url = strtolower($url);
  
-      //Rememplazamos caracteres especiales latinos
- 
+      //Rememplazamos caracteres especiales latinos 
       $find = array('á', 'é', 'í', 'ó', 'ú', 'ñ');
- 
       $repl = array('a', 'e', 'i', 'o', 'u', 'n');
- 
       $url = str_replace ($find, $repl, $url);
  
-      // Añadimos los guiones
- 
+      // Añadimos los guiones 
       $find = array(' ', '&', '\r\n', '\n', '+');
       $url = str_replace ($find, '-', $url);
  
-      // Eliminamos y Reemplazamos demás caracteres especiales
- 
+      // Eliminamos y Reemplazamos demás caracteres especiales 
       $find = array('/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/');
- 
-      $repl = array('', '-', '');
- 
+      $repl = array('', '-', ''); 
       $url = preg_replace ($find, $repl, $url);
  
       return $url;
@@ -57,7 +49,7 @@ function limpiar($valor)
 
 function oferta($r)
 {
-      $host="http://".$_SERVER['SERVER_NAME']."/md";
+      $host="http://".$_SERVER['SERVER_NAME']."/md/";
       $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
       $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
 
@@ -94,23 +86,19 @@ function oferta($r)
                           '.$r['precio_regular'].'
                         </span>
                       </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>';
+                      ';
              $html .= '<div class="small-btns">';
              
-             if($r['deseo']==0) {
+             if($r['deseo']==0) 
+             {
                   $html .='<button id="btn-wishlist-'.$r['idpublicaciones'].'" class="btn btn-default btn-wishlist pull-left" title="">
                         <i class="fa fa-heart fa-fw" id="fa-heart-'.$r['idpublicaciones'].'"></i>';
-                       } 
-            else {
+             } 
+            else 
+            {
                    $html .= '<button class="btn btn-default btn-wishlist pull-left" title="">
                         <i class="fa fa-heart fa-fw" style="color:#FCD209"></i> ';
-                  } 
+             } 
                   $html .= '</button>
                         <button class="btn btn-default btn-compare pull-left" title="Ver">
                           <a href="producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'">Ver</a> <b>&GT;</b>
@@ -125,5 +113,67 @@ function oferta($r)
                 </div>';
   return $html;
 }
+function login($helper,$config)
+{
+    if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email']))
+    {
+       $html = '<li class="dropdown">
+                <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
+                  <i class="fa fa-user fa-fw"></i>
+                    <span class="hidden-xs"> Iniciar Sesión</span>              
+                </a>              
+                <div class="loginbox dropdown-menu" id="box-login"> 
+                  Conectarse con:<br>
+                    <div class="social-icons">
+                      <ul>
+                        <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
+                        <li class="icon twitter"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
+                        <li class="icon facebook" id="icon_facebook"><a href="'.$helper->getLoginUrl($config['scopes']).'"><i class="fa fa-facebook fa-fw"></i></a></li>
+                      </ul>
+                    </div>               
+                 <br><br>
+                 <div id="log-in"><hr> 
+                  <span>Login:</span>
+                  <span><a href="cuenta.php" id="registrar">Registrar</a></span>
+                 </div>
+                 <form id="frmlogin" method="post"  action="panel/web/process.php">
+                    <div class="form-group"> <i class="fa fa-user fa-fw"></i>
+                      <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
+                    </div>
+                    <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
+                      <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
+                    </div>
+                    <input type="hidden" name="url_ref" id="url_ref" value="http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'" />
+                    <button class="btn medium color1 pull-right" type="submit">Entrar</button>
+                 </form>
+                 <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
+                </div>
+              </li>';
+    }
+    else
+    {
+      $html= '<li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
+            '.$_SESSION['name'].'
+            </a>
+              <div class="loginbox dropdown-menu">                     
+                <ul>';
+                if($_SESSION['id_perfil']!=4) 
+                { 
+                  $html .= '<li><a href="panel/">Panel Admin</a></li>';
+                } 
+                else 
+                { 
+                  $html .= '<li><a href="cuenta.php">Mis Datos</a></li>';
+                }
 
+                $html .= '<li><a href="#">Mis Cupones</a></li>
+                          <li><a href="#">Mis Suscripciones</a></li>
+                          <li><a href="app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
+                          </ul>               
+                          </div>
+                          </li>';
+      }
+      return $html;
+}
 ?>

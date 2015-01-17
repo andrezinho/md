@@ -26,60 +26,8 @@ require_once 'head.php'; //Start para facebook -> x)
               </ul>
             </li>            
             <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
-            <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
-                <i class="fa fa-user fa-fw"></i>
-                  <span class="hidden-xs"> Iniciar Sesión</span>              
-              </a>              
-              <div class="loginbox dropdown-menu"> 
-                Conectarse con:<br>
-                  <div class="social-icons">
-                    <ul>
-                      <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                      <li class="icon twitter"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
-                      <li class="icon facebook" id="icon_facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>"><i class="fa fa-facebook fa-fw"></i></a></li>
-                    </ul>
-                  </div>               
-               <br><br>
-               <div id="log-in"><hr> 
-                <span>Login:</span>
-                <span><a href="#">Registrar</a></span>
-               </div>
-               <form id="frmlogin" method="post"  action="panel/web/process.php">
-                  <div class="form-group"> <i class="fa fa-user fa-fw"></i>
-                    <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
-                  </div>
-                  <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                    <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
-                  </div>
-                  <button class="btn medium color1 pull-right" type="submit">Entrar</button>
-               </form>
-               <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
-              </div>
-            </li>
-              <?php else: ?>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
-                  <?php echo $_SESSION['name'];?>
-                  </a>
-                    <div class="loginbox dropdown-menu"> 
-                    
-                      <ul>
-                      <?php if($_SESSION['id_perfil']!=4) { ?>
-                      <li><a href="panel/">Panel Admin</a></li>
-                      <?php } 
-                      else { ?>
-                        <li><a href="#">Mis Datos</a></li>
-                      <?php } ?>
-                      <li><a href="#">Mis Cupones</a></li>
-                      <li><a href="#">Mis Suscripciones</a></li>
-                      <li><a href="app/logout.php">Salir</a></li>
-                      </ul>               
-                    </div>
-                </li>
-                <?php endif; ?>
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php echo login($helper,$config); ?>
             </ul>
         </div>
       </div>
@@ -251,44 +199,5 @@ require_once 'head.php'; //Start para facebook -> x)
   
 </footer>
 <!-- end: footer --> 
-
-
-<script>
-
-(function($) {
-  "use strict";
- $('#menuMega').menu3d();
-                $('#iView').iView({
-                    pauseTime: 10000,
-                    pauseOnHoView: true,
-                    directionNavHoViewOpacity: 0.6,
-                    timer: "360Bar",
-                    timerBg: '#2da5da',
-                    timerColor: '#fff',
-                    timerOpacity: 0.9,
-                    timerDiameter: 20,
-                    timerPadding: 1,
-          touchNav: true,
-                    timerStroke: 2,
-                    timerBarStrokeColor: '#fff'
-                });
-        
-                $('.quickbox').carousel({
-                    interval: 10000
-                });
-               $('#monthly-deals').carousel({
-                    interval: 3000
-                });
-                $('#productc2').carousel({
-                    interval: 4000
-                });
-                $('#tweets').carousel({
-                    interval: 5000
-                });
-})(jQuery);
-
-
-          
-        </script>
 </body>
 </html>

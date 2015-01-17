@@ -217,62 +217,8 @@ else
               </select>
             </li>           
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
-            <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
-                <i class="fa fa-user fa-fw"></i>
-                  <span class="hidden-xs"> Iniciar Sesión</span>              
-              </a>              
-              <div class="loginbox dropdown-menu"> 
-                Conectarse con:<br>
-                  <div class="social-icons">
-                    <ul>
-                      <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                      <li class="icon twitter"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
-                      <li class="icon facebook" id="icon_facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>"><i class="fa fa-facebook fa-fw"></i></a></li>
-                    </ul>
-                  </div>               
-               <br><br>
-               <div id="log-in"><hr> 
-                <span>Login:</span>
-                <span><a href="cuenta.php" id="registrar">Registrar</a></span>
-               </div>
-               <form id="frmlogin" method="post"  action="panel/web/process.php">
-                  <div class="form-group"> <i class="fa fa-user fa-fw"></i>
-                    <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
-                  </div>
-                  <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                    <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
-                  </div>
-                  <button class="btn medium color1 pull-right" type="submit">Entrar</button>
-               </form>
-               <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
-              </div>
-            </li>
-              <?php else: ?>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
-                  <?php echo $_SESSION['name'];?>
-                  </a>
-
-                    <div class="loginbox dropdown-menu"> 
-                    
-                      <ul>
-                      <?php if($_SESSION['id_perfil']!=4) { ?>
-                      <li><a href="<?php echo $host;?>/panel/">Panel Admin</a></li>
-                      <?php } 
-                      else { ?>
-                        <li><a href="<?php echo $host;?>/cuenta.php">Mis Datos</a></li>
-                      <?php } ?>
-                      <li><a href="#">Mis Cupones</a></li>
-                      <li><a href="#">Mis Suscripciones</a></li>
-                      <li><a href="<?php echo $host;?>/app/logout.php">Salir</a></li>
-                      </ul>               
-                    </div>
-                </li>
-                <?php endif; ?>
-            
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php echo login($helper,$config); ?>            
           </ul>
         </div>
       </div>

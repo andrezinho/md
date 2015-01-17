@@ -8,7 +8,7 @@ $n=count($id);
 
 $titulo="";
 for($s=0; $s<($n-1); $s++) 
-{ 
+{
   $titulo .=$id[$s]." ";
 }
 $id=$id[$n-1];
@@ -55,71 +55,18 @@ $lista= $st->rowCount();
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Tef: (01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
             </li>
             <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
-            <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
-            <li class="dropdown"> <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> <i class="fa fa-user fa-fw"></i> <span class="hidden-xs"> Iniciar Sesión</span></a>
-              <div class="loginbox dropdown-menu"> 
-                Conectarse con:<br>
-                  <div class="social-icons">
-                    <ul>
-                      <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                      <li class="icon twitter"><a href="#a"><i class="fa fa-twitter fa-fw"></i></a></li>
-                      <li class="icon facebook" id="icon_facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>"><i class="fa fa-facebook fa-fw"></i></a></li>
-                    </ul>
-                  </div>
-               <!-- <span class="form-header">Login</span>-->
-               <br><br>
-               <div><hr> Login:</div>
-                
-                <form>
-                  <div class="form-group"> <i class="fa fa-user fa-fw"></i>
-                    <input class="form-control" id="InputUserName" placeholder="Username" type="text" data-validation="required">
-                  </div>
-                  <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                    <input class="form-control" id="InputPassword" placeholder="Password" type="password" data-validation="required">
-                  </div>
-                  <button class="btn medium color1 pull-right" type="submit">Entrar</button>
-                </form>
-                <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
-              </div>
-            </li>
-            <?php else: ?>
-              <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
-                  <?php echo $_SESSION['name'];?>
-                  </a>
-
-                    <div class="loginbox dropdown-menu"> 
-                    
-                      <ul>
-                      <?php if($_SESSION['id_perfil']!=4) { ?>
-                      <li><a href="panel/">Panel Admin</a></li>
-                      <?php } 
-                      else { ?>
-                        <li><a href="cuenta.php">Mis Datos</a></li>
-                      <?php } ?>
-                      <li><a href="#">Mis Cupones</a></li>
-                      <li><a href="#">Mis Suscripciones</a></li>
-                      <li><a href="<?php echo $host ?>/app/logout.php">Salir</a></li>
-                      </ul>               
-                    </div>
-                </li>
-                <?php endif; ?>
+            <?php echo login($helper,$config); ?>
           </ul>
-
           <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
-                <div class="social-icons-r" style="margin-top:3px">                    
-                  <ul>
-                  <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                  <li class="icon twitter"><a href="#a"><i class="fa fa-twitter fa-fw"></i></a></li>
-                  <li class="icon facebook"><a href="https://www.facebook.com/MuchosDescuentos?fref=ts" target="_blank"><i class="fa fa-facebook fa-fw"></i></a></li>
-                </ul>
-                </div>
+            <div class="social-icons-r" style="margin-top:3px">                    
+              <ul>
+              <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
+              <li class="icon twitter"><a href="#a"><i class="fa fa-twitter fa-fw"></i></a></li>
+              <li class="icon facebook"><a href="https://www.facebook.com/MuchosDescuentos?fref=ts" target="_blank"><i class="fa fa-facebook fa-fw"></i></a></li>
+            </ul>
             </div>
-
-
-
+          </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ $(function()
 {   $( "#tabs" ).tabs({collapsible: true });
     $( "#ruc" ).focus();
     $("#div_activo").buttonset();
+    $("#fecha_inicio,#fecha_fin").datepicker({dateFormat:'dd/mm/yy',changeMonth:true,changeYear:true});
     $("#idcategoria,#idsubcategoria,#idtipo_descuento").css("width","200px");
     $("#idcategoria").change(function(){
       loadSubCategorias($(this).val());

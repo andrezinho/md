@@ -26,22 +26,17 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 $stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $stmt->execute();
 $rr = $stmt->fetch();
-
+//print_r($_SESSION);
 $ahorro=$rr['precio_regular']-$rr['precio'];
-$img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
+$img=$host."/panel/web/imagenes/".$rr['imagen'].".jpg";
 if($rr['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$rr['logo'];}
 else{$logo=$host."/images/nologo.png";}
 ?>
-<script type="text/javascript">
-  $(document).ready(function(){
-      var lh=0;
-      $(".box-pay").each(function(i,j){
-          var h=parseInt($(j).css("height"));
-          if(h>lh) lh=h;
-      });
-      $('.box-pay').css("height",lh+'px');
-  });
-</script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/compra.js"></script>
+<style type="text/css">
+  input {border:1px solid #dadada; height: 28px}
+  .box-msg-result { font-size:10px; color:red;font-style: italic;}
+</style>
 <body>
 <div id="frm-suscripcion"></div>
 <header>   
@@ -52,7 +47,7 @@ else{$logo=$host."/images/nologo.png";}
         <div class="topheadrow">
           <a href="<?php echo $host;?>"><img src="<?php echo $host;?>/images/logo.png" /></a>
           <ul class="nav nav-pills pull-right">            
-            <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
+            <li style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
                 <?php                   
                   $sql = "SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
@@ -74,62 +69,8 @@ else{$logo=$host."/images/nologo.png";}
             </li>       
 
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
-            <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
-                <i class="fa fa-user fa-fw"></i>
-                  <span class="hidden-xs"> Iniciar Sesión</span>              
-              </a>              
-              <div class="loginbox dropdown-menu"> 
-                Conectarse con:<br>
-                  <div class="social-icons">
-                    <ul>
-                      <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                      <li class="icon twitter"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
-                      <li class="icon facebook" id="icon_facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>"><i class="fa fa-facebook fa-fw"></i></a></li>
-                    </ul>
-                  </div>               
-               <br><br>
-               <div id="log-in"><hr> 
-                <span>Login:</span>
-                <span><a href="cuenta.php" id="registrar">Registrar</a></span>
-               </div>
-               <form id="frmlogin" method="post"  action="panel/web/process.php">
-                  <div class="form-group"> <i class="fa fa-user fa-fw"></i>
-                    <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
-                  </div>
-                  <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
-                    <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
-                  </div>
-                  <button class="btn medium color1 pull-right" type="submit">Entrar</button>
-               </form>
-               <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
-              </div>
-            </li>
-              <?php else: ?>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a"><i class="fa fa-user fa-fw"></i>
-                  <?php echo $_SESSION['name'];?>
-                  </a>
-
-                    <div class="loginbox dropdown-menu"> 
-                    
-                      <ul>
-                      <?php if($_SESSION['id_perfil']!=4) { ?>
-                      <li><a href="panel/">Panel Admin</a></li>
-                      <?php } 
-                      else { ?>
-                        <li><a href="cuenta.php">Mis Datos</a></li>
-                      <?php } ?>
-                      <li><a href="#">Mis Cupones</a></li>
-                      <li><a href="#">Mis Suscripciones</a></li>
-                      <li><a href="app/logout.php">Salir</a></li>
-                      </ul>               
-                    </div>
-                </li>
-                <?php endif; ?>
-                 
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php echo login($helper,$config); ?>
           </ul>
         </div>
       </div>
@@ -180,13 +121,124 @@ else{$logo=$host."/images/nologo.png";}
 <!-- end: Header --> 
 <!-- Products -->
 <div class="container"> 
-  <div style="min-height:350px;">
-    <h2 style="margin:10px 0">Proceso de Compra</h2>
+  <div style="min-height:350px;" id="box-compra-all">
+    <h2 style="margin:10px 0; ">Proceso de Compra</h2>
     <div class="box-pay">
       <div class="box-pay-p">
         <div class="box-pay-title" style="background:#B3B3B3">Datos Personales</div>
         <div style="margin:20px 0">
-          <table>
+        <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
+          <div style="padding:3px;">
+            <div style="color:red;display:none" id="box-msg-session-required">
+              Para poder confirmar la compra primero debes <b>Inciar Sesion</b> con tu cuenta de usuario o mediante Facebook.
+            </div>
+            <br/>
+            <span style="font-size:16px;">¿No tienes cuenta? Puedes registrarte desde aqui:</span>
+            <br/><br/>
+            <div style="text-align:center">
+            <!--
+            <div class="searchbar" >                       
+              <div style="padding-top:10px;display:inline-block">Conectarse con:</div>
+              <div class="social-icons" style="float:right;">                    
+                    <ul >
+                      
+                      <li class="icon facebook"><a href="<?php echo $helper->getLoginUrl($config['scopes']); ?>" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>
+                    </ul>
+              </div>
+            </div>
+            -->
+            </div>
+            <div>
+              <form id="frm" name="frm">
+                 <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['p'] ?>" />
+                 <table border="0">
+                  <tr> 
+                   <td>*Nombres</td>
+                   <td>
+                    <input type="text" id="nombres" name="nombres" value="" placeholder="Tu nombre" autofocus="autofocus" title="Ingrese el Nombre" style="width:100%"><span class="item-required"></span>
+                    <div id="nombres-resultado" class="box-msg-result"></div>
+                   </td>
+                   </tr>
+
+                   <tr>
+                   <td><b>*</b>Apellidos</td>
+                   <td>
+                  <input type="text" id="apellidos" name="apellidos" value="<?php echo $_SESSION['apellido'];?>" placeholder="Tu Apellido" autofocus="autofocus" title="Ingrese sus Apellidos" style="width:100%"><span class="item-required"></span>
+                  <div id="apellidos-resultado" class="box-msg-result"></div>
+                   </td>
+                   </tr>
+                  
+                 
+                   <tr>
+                   <td><b>*</b>Email</td>
+                   <td>
+                  <input type="text" id="email" name="email" value="" placeholder="Tu Email"  autofocus="autofocus" title="Ingrese su Email" style="width:100%">                  
+                  <div id="email-resultado" class="box-msg-result"></div>
+                   </td>
+                   </tr>
+
+                   <tr>
+                   <td><b>*</b>Contraseña</td>
+                   <td>
+                    <input type="password" id="passw" name="passw" value="" placeholder="Tu Password"  autofocus="autofocus" title="Ingrese su Contraseña" style="width:100%">
+                    <span class="item-required" class="box-msg-result"></span>
+                   </td>
+                   </tr>
+
+                   <tr>
+                   <td><b>*</b>Repetir Contraseña</td>
+                   <td>
+                  <input type="password" id="rpassw" name="rpassw" value="" placeholder="Repetir Contraseña"  autofocus="autofocus" title="password" style="width:100%">                  
+                  <div id="resultado_contra"></div>
+                  <div id="resultado-rpassw" class="box-msg-result"></div>
+                   </td>
+                   </tr>
+
+                
+                   <tr>
+                   <td><b>*</b>Tipo Documento</td>
+                   <td>
+                    <select id="tipodoc" name="tipodoc" class="ui-widget-content ui-corner-all" style="height:30px">
+                        <option value="1" selected>DNI</option>
+                        <option value="2">RUC</option>
+                        <option value="3">PASAPORTE</option>        
+                        <option value="4">CARNET DE EXTRANJERIA</option>
+                    </select>
+                   </td>
+                   </tr>
+
+                   <tr>
+                   <td><b>*</b>Nro. Documento</td>
+                   <td>
+                   <input type="text" id="ndoc" name="ndoc" value="" placeholder=""  autofocus="autofocus" title="Ingrese su Numero Documento" style="width:100%">                  
+                   <div id="ndoc-rpassw" class="box-msg-result"></div>
+                   </td>
+                   </tr>
+
+                   <tr>
+                     <td><b>*</b>Genero</td>
+                     <td>
+                      <input type="radio" name="sexo" value="1" checked  id="sexo1" style="height:15px"/>
+                        <label for="sexo1">Masculino</label>                    
+                     </td>
+                   </tr>
+
+                   <tr>
+                     <td>&nbsp;</td>
+                     <td>
+                      <input type="radio" name="sexo" value="0" id="sexo2" style="height:15px" /> <label for="sexo2">Femenino</label>
+                     </td>
+                   </tr>
+                   
+                 </table>
+                 </form>  
+            </div>
+            
+          </div>
+          <?php else: ?>
+          <form id="frm" name="frm">
+            <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['p'] ?>" />
+            <table>
             <tr>
               <td>Nombres</td>
               <td>: <?php echo $_SESSION['name']; ?></td>
@@ -209,6 +261,8 @@ else{$logo=$host."/images/nologo.png";}
             </tr>
 
           </table>
+          </form>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -240,38 +294,19 @@ else{$logo=$host."/images/nologo.png";}
         <div class="box-pay-title" style="background:#666666">Medio de Pago</div>
         <div style="margin:20px 0">
         <div style="">
-          <table cellpadding="0">
+          <table cellpadding="0">           
             <tr>
-              <td><input type="radio" name="medio_pago" value="1"/></td>
-              <td><img src="images/visa.jpg" style="width:70px"></td>              
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td style="vertical-align: text-top;">
-                Paga con Tarjeta de Crédito Visa
+              <td><input type="radio" name="medio_pago" value="1" checked="" /></td>
+              <td >
+                Depósito en Cuenta Bancaria
               </td>
             </tr>
           </table>
-        </div>        
-
-        <div style="margin-top:5px">
-          <table cellpadding="0">
-            <tr>
-              <td><input type="radio" name="medio_pago" value="2"/></td>
-              <td style="padding:0"><img src="images/master_card.jpg" style="width:70px"></td>              
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td style="vertical-align: text-top;">
-                Paga con Tarjeta de Crédito Master Card
-              </td>
-            </tr>
-          </table>
-        </div>
+        </div>            
         <div style="background:#dadada;margin-top:20px; padding:10px; ">
           <table>
             <tr>
-              <td><input type="radio" name="acepto_terminos" value="1" checked="" /></td>
+              <td><input type="checkbox" name="acepto_terminos" id="acepto_terminos" value="1" /></td>
               <td>
                 Acepto los <a href="#" style="color:blue">Términos y Condiciones</a>, y <a href="#" style="color:blue">Políticas de Privacidad</a>
               </td>              
@@ -282,7 +317,7 @@ else{$logo=$host."/images/nologo.png";}
             <div class="short-info-det">
             <div class="product-btns-detalle">
                 <div class="product-big-btns" style="background:#FFF;">
-                    <button class="btn-comprar" data-toggle="tooltip" title="Pagar" style="width:100%">PAGAR</button>                    
+                    <button id="btn-conf-compra" class="btn-comprar" data-toggle="tooltip" title="Pagar" style="width:100%">CONFIRMAR COMPRA</button>                    
                 </div>
             </div>
             </div>
