@@ -241,7 +241,7 @@ if(isset($_POST['nombres'])&&isset($_POST['email']))
         $stmt_c->execute();
         $db->commit();
 
-        send_email($email,$name,$token,$host)
+        send_email($email,$name,$token,$host);
 
         print_r(json_encode(array('res'=>'1','msg'=>'Se ha Registrado Correctamente.','tipo'=>'trans','token'=>$token)));            
     }

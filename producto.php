@@ -200,15 +200,15 @@ $lista= $st->rowCount();
                             <p>Descuento</p>
                             <p>Ahorro</p>
                             <div class="limpia"></div>
-                            <p class="p1">S/. <?php echo $r['precio_regular'];?></p>
-                            <p class="p2"><?php echo $r['descuento'];?></p>
-                            <p class="p3">S/. <?php echo $ahorro;?></p>
+                            <p class="p1" style="font-size:15px">S/. <?php echo $r['precio_regular'];?></p>
+                            <p class="p2" style="font-size:15px"><?php echo $r['descuento'];?></p>
+                            <p class="p3" style="font-size:15px">S/. <?php echo $ahorro;?></p>
                         </div>
                     </div>
                 </div>
               <div class="product-details">
-                <div class="short-info-det">                   
-                      <div class="short-info-opt" style="height: 40px">                           
+                <div class="short-info-det" style="padding:15px 0px">                   
+                      <div class="short-info-opt" style="height: 0px">                           
                           <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.php" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
                           <!-- <div  class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.html" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div> -->
                           <script src="https://apis.google.com/js/platform.js" async defer>
@@ -226,14 +226,14 @@ $lista= $st->rowCount();
                           <div class="g-plusone" data-size="medium" data-annotation="none"></div>
                       </div>
                 </div>
-                <div class="short-info-det" style="padding:5px 13px">
-                 <div class="rating"> Califica: 
+                <div class="short-info-det" >
+                 <!-- <div class="rating"> Califica: 
                    <i class="fa fa-star fa-star-o" style="color:red"></i> 
                    <i class="fa fa-star" style="color:red"></i> 
                    <i class="fa fa-star" style="color:red"></i> 
                    <i class="fa fa-star-half-o" style="color:red"></i> 
                    <i class="fa fa-star-o" style="color:red"></i> 
-                 </div>
+                 </div> -->
                 </div>
               </div>              
               <div class="product-details">
