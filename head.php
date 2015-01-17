@@ -9,7 +9,7 @@ require_once '/app/funciones.php';
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta content="Muchos Descuentos" name="description">
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
 <title>Muchos Descuentos</title>
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
@@ -49,4 +49,9 @@ require_once '/app/funciones.php';
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
 
+<!-- timer -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
+<script src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
+<!--<script src= "/bower_components/jquery.countdown/dist/jquery.countdown.js" ></script>-->
 </head>

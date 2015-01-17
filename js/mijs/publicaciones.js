@@ -1,7 +1,7 @@
 var host=window.location.host;
 host=host+"/md";
 $(document).ready(function(){
-	$.get("model/publicaciones.php","&",function(data){//alert(data);
+	$.get("http://"+host+"/model/publicaciones.php","&",function(data){
 		publi="";
 		$.each(data,function(i,j){ 
 			publi +='<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" >';
@@ -46,7 +46,7 @@ $(document).ready(function(){
             publi +='<div class="meta-back"></div></div>';
             publi +='</div> ';
 		});
-       $("#publicacion").append(publi);
+       $("#publicacion").append(publi); 
        $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});
 	},'json');
 

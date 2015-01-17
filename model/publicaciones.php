@@ -46,8 +46,8 @@ $db = Spdo::singleton();
                             'hora_inicio' => $valor['hora_inicio'],
                             'hora_fin' => $valor['hora_fin'],
                             'imagen' => $valor['imagen'],
-                            'enlaces' => array(),
-                            'deseo' => $valor['deseo']
+                            'deseo' => $valor['deseo'],
+                            'enlaces' => array()
             );
         $cont ++;
     }

@@ -60,7 +60,22 @@ article.enlaces a:active{
  label.gen{
  	margin-left: -9em;	
  }
-
+article.recuperar span,input#mail{
+	margin-left: 2em;
+}
+input#mail{
+	width: 30%;
+	border: 1px solid #999;
+	color: #000 !important;
+}
+input#enviar{
+	color: #fff !important;
+	width: 20%;
+	background: #C73B2C !important;
+}
+article.recuperar p{
+	font-size: 20px !important;
+}
  #ciudad{
  	display: none;
  	margin-left: 2em;

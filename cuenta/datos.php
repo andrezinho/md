@@ -4,9 +4,7 @@ $(document).ready(function(){
     //solo numeros
      $('#ndoc').validanumeros('0123456789');   
 
-$("#tipodoc").change(function(){
-    ndoc();
-});
+    $("#tipodoc").change(function(){ ndoc();});
 //################################COMPROBAR EMAIL#######################################################
 
 var consulta;

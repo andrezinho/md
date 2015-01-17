@@ -13,8 +13,7 @@ for($s=0; $s<($n-1); $s++)
 }
 $id=$id[$n-1];
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google,l.latitud,l.longitud
@@ -43,6 +42,7 @@ $st = $db->prepare("SELECT p.*
 $st->execute();
 $lista= $st->rowCount();
 ?>
+
 <body>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
@@ -182,10 +182,14 @@ $lista= $st->rowCount();
                         <div class="precio-empresa"><b>Precio S/.</b><b class="c-precio"><?php echo $r['precio']; ?></b></div>
                             <div class="product-btns-detalle">
                                 <div class="product-big-btns">
-                                    <a href="../ficha-compra.php?p=<?php echo $r['idpublicaciones'] ?>" class="btn-comprar" data-toggle="tooltip" title="Comprar" style="width:100%; padding:15px 0 0 0">COMPRAR</a>                                    
+                                    <a href="../ficha-compra.php?p=<?php echo $r['idpublicaciones'] ?>" id="comprar" class="btn-comprar" data-toggle="tooltip" title="Comprar" style="width:100%; padding:15px 0 0 0">COMPRAR</a>                                    
                                 </div>
                             </div>
-                            <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza en: <b><?php echo $r['hora_fin'];?></b></div>
+                            <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza en: 
+                            <input type="hidden" name="idp" id="idp" value="<?php echo $r['idpublicaciones'];?>">
+                            <div id="note"></div>
+
+                            </div>
                     </div>
                 </div>
                 <div class="product-details">
