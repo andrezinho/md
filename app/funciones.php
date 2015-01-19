@@ -161,16 +161,16 @@ function login($helper,$config)
                 <ul>';
                 if($_SESSION['id_perfil']!=4) 
                 { 
-                  $html .= '<li><a href="panel/">Panel Admin</a></li>';
+                  $html .= '<li><a href="'.$host.'panel/">Panel Admin</a></li>';
                 } 
                 else 
                 { 
-                  $html .= '<li><a href="cuenta.php">Mis Datos</a></li>';
+                  $html .= '<li><a href="'.$host.'cuenta.php">Mis Datos</a></li>';
                 }
 
-                $html .= '<li><a href="#">Mis Cupones</a></li>
+                $html .= '<li><a href="'.$host.'mis-cupones.php">Mis Cupones</a></li>
                           <li><a href="#">Mis Suscripciones</a></li>
-                          <li><a href="app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
+                          <li><a href="'.$host.'app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
                           </ul>               
                           </div>
                           </li>';

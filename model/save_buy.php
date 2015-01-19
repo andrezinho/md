@@ -286,7 +286,7 @@ function send_email($email,$name,$tk,$host)
     
     $html = '<div style="background: #FAFAFA; padding: 30px;">
                 <div>
-                    <img src="http://www.muchosdescuentos.com/img/logo.png"/>
+                    <img src="http://www.muchosdescuentos.com/images/logo.png"/>
                 </div>
                 <h2 style="font-size:20px; color: #666666;">
                     &iexcl;Gracias por tu Preferencia!

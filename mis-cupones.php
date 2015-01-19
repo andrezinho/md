@@ -114,66 +114,73 @@ $lista= $stmt->rowCount();
       Agregar tus deseos primero debes <b>Inciar Sesion</b> con tu cuenta de usuario o mediante Facebook.
     </div>
   <?php else: ?>    
-    <h2>Lista de deseos</h2>
+    <h2>Mis Cupones</h2>
     <div>
       <table class="table-list-md" style="width:100%">
         <tr>
           <th>Item</th>          
+          <th>Codigo de Reserva</th> 
           <th>Titulo</th>
           <th>Precio S/.</th>
-          <th>Precio Real S/.</th>
-          <th>Ahorro S/.</th>          
-          <th>&nbsp;</th>
-          <th>&nbsp;</th>
+          <th>Fecha Compra</th>
+          <th>Hora de Compra</th>          
+          <th>Ver</th>          
         </tr>
         <?php 
-        $sql = "SELECT p.*,coalesce(d.idpublicaciones,0) as deseo,td.nombre as tipo_descuento 
-                FROM publicaciones as p inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion inner join 
-                local as l on l.idlocal = s.idlocal inner join deseos as d on d.idpublicaciones = p.idpublicaciones 
-                inner join tipo_descuento as td on td.idtipo_descuento = p.idtipo_descuento
-                WHERE p.estado<>0 and d.idusuario = ".$_SESSION['idusuario']."
-                ORDER BY idpublicaciones desc ";
-        $stmt = $db->prepare($sql);
+        $sql = "SELECT  c.idcupon,
+                        c.token,
+                        c.numero,
+                        c.fecha,
+                        c.hora,
+                        c.costo_descuento,
+                        u.nombres,
+                        u.apellidos,
+                        u.nrodocumento,
+                        p.idpublicaciones,
+                        p.fecha_fin,                        
+                        e.razon_social,
+                        l.direccion,  
+                        l.telefono1,
+                        l.telefono2,
+                        l.email,
+                        e.website,
+                        e.bcp,
+                        e.scotiabank,
+                        e.interbank,
+                        e.continental,
+                        e.nacion,
+                        p.titulo2,
+                        p.cc,
+                        ub.descripcion as ciudad
+                FROM cupon as c inner join publicaciones as p on c.idpublicaciones = p.idpublicaciones
+                inner join usuario as u on c.idcliente = u.idusuario
+                inner join suscripcion as s on p.idsuscripcion = s.idsuscripcion
+                inner join local as l on l.idlocal = s.idlocal
+                inner join empresa as e on e.idempresa = l.idempresa
+                inner join ubigeo as ub on ub.idubigeo = l.idubigeo
+                where c.idcliente = ".$_SESSION['idusuario'];
+
+        $stmt = $db->prepare($sql);            
         $stmt->execute();
         $c = 0;
+
         foreach($stmt->fetchAll() as $r)
         {
           $c +=1;
           ?>
           <tr>
             <td align="center"><?php echo $c; ?></td>
-            <td><?php echo utf8_encode($r['titulo1']); ?></td>
-            <td align="right"><?php echo number_format($r['precio'],2); ?></td>
-            <td align="right" style="text-decoration:line-through;">            
-              <?php 
-                if($r['tipo_descuento']=="Porcentajes")
-                {
-                   echo number_format($r['precio_regular'],2); 
-                }
-              ?>
-            </td>
-            <td align="right">
-              <?php
-                if($r['tipo_descuento']=="Porcentajes")
-                {
-                  echo number_format($r['precio_regular']-$r['precio'],2); 
-                }
-                else
-                {
-                  echo $r['tipo_descuento'];
-                }
-              ?>
-            </td>
+            <td><?php echo utf8_encode($r['numero']); ?></td>
+            <td><?php echo utf8_encode($r['titulo2']); ?></td>
+            <td align="right"><?php echo number_format($r['costo_descuento'],2); ?></td>            
+            <td align="center"><?php echo $r['fecha'] ?></td>
+            <td align="center"><?php echo $r['hora'] ?></td>
             <td align="center">
-              <button class="btn btn-default btn-compare pull-left" title="Ver" style="background:green"><a href="<?php echo $host; ?>/producto/<?php echo urls_amigables($r['titulo1']."-".$r['idpublicaciones']);?>">Ver</a></button>
-            <td align="center">
-              <button class="btn btn-default btn-compare pull-left" title="Quitar" style="background:red"><a href="#" id="quit-<?php echo $r['idpublicaciones'] ?>" class="quit-wish">Quitar <b>X</b></a></button>
-            </td>
-
+              <button class="btn btn-default btn-compare pull-left" title="Ver" style="background:green"><a href="<?php echo $host; ?>/cupones/print_cupon.php?token=<?php echo $r['token']; ?>" target="_blank">Ver</a></button>
+            </td>            
           </tr>
           <?php
-        }
-        
+          }
         ?>
       </table>
     </div>
