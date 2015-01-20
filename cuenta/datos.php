@@ -231,7 +231,7 @@ function validar_email()
      <td>&nbsp;</td>
      <td>
      <input type="checkbox" id="terminos" name="terminos" checked  class="cterm" title="Debes aceptar los t&eacute;rminos y condiciones" />
-     <p class="term">He leído y estoy de acuerdo <br>con los <a href="#" style="color:blue"> términos y condiciones</a></p>
+     <p class="term">He le&iacute;do y estoy de acuerdo <br>con los <a href="#" style="color:blue"> términos y condiciones</a></p>
      <div id="resultado_terminos"></div>
      
      </td>
