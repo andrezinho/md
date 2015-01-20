@@ -101,7 +101,7 @@ $st->execute();
 <div class="container">
   <div class="row" >
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
-        <div class="box-heading"><span>Descuentos del d&iacute;a</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
+        <div class="box-heading"><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
       <div class="box-content">
         <div class="box-products slide" id="productc1">          
           <div class="carousel-inner"> 

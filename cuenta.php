@@ -175,7 +175,8 @@ require_once 'head.php'; //Start para facebook -> x)
             <li><a href="#" style="color:#333 !important;">Empresa 2</a></li>
             <li><a href="#" style="color:#333 !important;">Empresa 3</a></li>
             <li><a href="#" style="color:#333 !important;">Empresa 4</a></li>
-            <li><a href="#" style="color:#333 !important;">Empresa 5</a></li>                        
+            <li><a href="#" style="color:#333 !important;">Empresa 5</a></li>
+            <li><a href="#" style="color:#333 !important;">Empresa 6</a></li>                        
       </div>
       <div class="col-sm-3 col-xs-12 getintouch">
         <h4 class="title">CONT&Aacute;CTENOS</h4>
