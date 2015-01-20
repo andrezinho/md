@@ -3,6 +3,7 @@ session_start();
 require_once 'head.php';
 $db = Spdo::singleton();
 $url=$_GET["id"];
+$enlace=$host."/producto/".$url;
 $id=explode("-",$url);
 $n=count($id);
 
@@ -32,7 +33,7 @@ $ahorro=$r['precio_regular']-$r['precio'];
 $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
 if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
 else{$logo=$host."/images/nologo.png";}
-     
+
 $st = $db->prepare("SELECT p.* 
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
@@ -124,6 +125,7 @@ $lista= $st->rowCount();
                     </div>                                      
                 </div>
             </div>
+            
             <div style="width:auto; float:left; border-right: 0">
                 <div style="padding:5px 0px 5px 0px">
                     <div>
@@ -131,20 +133,33 @@ $lista= $st->rowCount();
                     </div>                    
                 </div>
             </div>
-            <div style="width:auto; float:left; border-right: 1px solid #fafafa; padding:0 10px 0 0 ">                                
+            <div style="width:auto; float:left; border-right: 1px solid #fafafa; padding:0 10px 0 0; display:inline-block ">                                
                 <div style="padding:5px 0px 5px 0px">
                     <div>
                         <input type="button" value="Suscribirse" class="btn-deseo" style="background:#C73B2C !important; color:#fff !important; width:auto;" /> 
                     </div>
                 </div>
             </div>
-            <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
-                <div class="social-icons" style="">                    
+            <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">
+
+                <div class="social-icons" style="">
+                                   
                       <ul >
-                        <li class="icon youtube" ><a href="<?php echo $r['youtube'];?>" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>                  
-                        <li class="icon twitter"><a href="<?php echo $r['twitter'];?>" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>
-                        <li class="icon facebook"><a href="<?php echo $r['facebook'];?>" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>
-                      </ul>
+                      <?php if($r["youtube"]!="")
+                             {
+                              echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                             }
+
+                      if($r["twitter"]!=""){
+                        echo '<li class="icon twitter"><a href="'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                      }
+                      
+                      if($r["facebook"]!=""){
+                        echo '<li class="icon facebook"><a href="'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                      }
+                      ?>
+                      </ul>                      
+                    
                 </div>
             </div>
             <!-- <div style="width:85px; float:right; padding: 17px 0 0"></div> -->
@@ -209,12 +224,12 @@ $lista= $st->rowCount();
               <div class="product-details">
                 <div class="short-info-det" style="padding:15px 0px">                   
                       <div class="short-info-opt" style="height: 0px">                           
-                          <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.php" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                          <div style="float:left;" class="fb-like" data-href="<?php echo $enlace;?>" data-width="50" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
                           <!-- <div  class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.html" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div> -->
                           <script src="https://apis.google.com/js/platform.js" async defer>
                             {lang: 'es'}
                           </script>                          
-                          <a href="http://www.muchosdescuentos.com/peru/producto.html" class="twitter-share-button"
+                          <a href="<?Php echo $enlace;?>" class="twitter-share-button"
                             data-dnt="true"
                             data-count="none"
                             data-via="twitterdev">
