@@ -16,12 +16,12 @@ $(document).ready(function(){
 			publi +='<div class="name">';
 			publi +='<a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
 			publi +='<div class="big-price"><span class="price-new">';
-			publi +='<span class="sym">$</span>'+j.precio+'</span>';
-			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
+			publi +='<span class="sym">S/. </span>'+j.precio+'</span>';
+			publi +='<span class="price-old"><span class="sym">S/. </span>'+j.precio_regular+'</span></div>';
 			publi +='<div class="big-btns"><a href="ficha-compra.php?p='+j.idpublicaciones+'" class="btn btn-default btn-View pull-left">Comprar</a></div>';
 			publi +='<div class="small-price"><span class="price-new">';
-			publi +='<span class="sym">$</span>'+j.precio+'</span>';
-			publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
+			publi +='<span class="sym">S/. </span>'+j.precio+'</span>';
+			publi +='<span class="price-old"><span class="sym">S/. </span>'+j.precio_regular+'</span></div>';
 			
             /*publi +='<div class="rating">';
             publi +='<i class="fa fa-star"></i>';

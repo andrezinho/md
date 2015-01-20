@@ -11,6 +11,7 @@ function save()
   bval = bval && $( "#razon_social" ).required();          
   bval = bval && $( "#razon_comercial" ).required();          
   bval = bval && $( "#nombre_contacto" ).required();          
+  bval = bval && $( "#dominio" ).required();  
   bval = bval && $( "#website" ).required();
   
   var str = $("#frm").serialize();
