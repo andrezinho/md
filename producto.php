@@ -436,11 +436,11 @@ $lista= $st->rowCount();
 
               <div class="big-price"> 
                 <span class="price-new">
-                  <span class="sym">$</span>
+                  <span class="sym">S/.</span>
                    <?php echo $p['precio'] ?>
                   </span> 
                 <span class="price-old">
-                  <span class="sym">$</span>
+                  <span class="sym">S/.</span>
                     <?php echo $p['precio_regular'] ?>
                   </span> 
               </div>
@@ -448,14 +448,15 @@ $lista= $st->rowCount();
 
               <div class="small-price">
                 <span class="price-new">
-                  <span class="sym">$</span>
+                  <span class="sym">S/.</span>
                   <?php echo $p['precio'] ?>
                 </span> 
                 <span class="price-old">
-                  <span class="sym">$</span>
+                  <span class="sym">S/.</span>
                   <?php echo $p['precio_regular'] ?>
                 </span>
               </div>
+              <!--
               <div class="rating"> 
                 <i class="fa fa-star"></i> 
                 <i class="fa fa-star"></i> 
@@ -463,7 +464,7 @@ $lista= $st->rowCount();
                 <i class="fa fa-star-half-o"></i> 
                 <i class="fa fa-star-o"></i> 
               </div>
-
+              -->
               <div class="small-btns">
                 <button class="btn btn-default btn-wishlist pull-left" title="">
                  <i class="fa fa-heart fa-fw"></i> 

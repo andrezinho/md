@@ -117,9 +117,9 @@ require_once 'head.php'; //Start para facebook -> x)
 <article class="enlaces">
     <p><b><a href="#" id="datos">Mis Datos</a></b></p>
     <!--<p><b><a href="#" id="direccion">Mis Direcci&oacute;n</a></b></p>-->
-    <p><b><a href="#" id="cupones">Mis Cupones</a></b></p>
+    <!--<p><b><a href="#" id="cupones">Mis Cupones</a></b></p>-->
     <!--<p><b><a href="#" id="creditos">Mis Cr&eacute;ditos</a></b></p>-->
-    <p><b><a href="#" id="suscripciones">Mis Suscripciones</a></b></p>
+    <!--<p><b><a href="#" id="suscripciones">Mis Suscripciones</a></b></p>-->
   </article>
 <?php } ?>
 

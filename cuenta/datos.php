@@ -1,4 +1,6 @@
-<?php session_start();?>
+<?php session_start();
+    require_once "../lib/spdo.php";
+?>
 <script type="text/javascript">
 $(document).ready(function(){
     //solo numeros
@@ -196,7 +198,30 @@ function validar_email()
     <span class="item-required"></span>
      </td>
      </tr>
-
+     <tr>
+     <td>Ciudad por omisión</td>
+     <td>
+     <?php
+     $stc=$db->prepare("SELECT c.idciudad,u.descripcion
+                        FROM ciudad as c inner join ubigeo as u on u.idubigeo = c.idciudad ");
+     $stc->execute();
+     //$r = $stc->fetch();
+     ?>
+    <select name="city" id="city">
+    <option value="0">...</option>
+        <?php foreach($stc->fetchAll() as $c){
+            $s="";
+            if($_SESSION["idciudad"]==$c['idciudad']){
+                $s="selected";
+            }
+            echo '<option value="'.$c['idciudad'].'" '.$s.'>'.$c['descripcion'].'</option>';
+        }?>
+        
+        
+    </select>
+      
+     </td>
+     </tr>
      <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])){ ?>
      <tr><td colspan="2"><hr></td></tr>
      <tr>

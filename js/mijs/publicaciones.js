@@ -70,8 +70,8 @@ $.get("http://"+host+"/model/especial.php","&",function(data){
         publi +='<a href="http://'+host+'producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
         publi +='<div class="big-price">'; 
         publi +='<span class="price-new">';
-        publi +='<span class="sym">$</span>'+j.precio+'</span> ';
-        publi +='<span class="price-old"><span class="sym">$</span>'+j.precio_regular+'</span></div>';
+        publi +='<span class="sym">S/.</span>'+j.precio+'</span> ';
+        publi +='<span class="price-old"><span class="sym">S/.</span>'+j.precio_regular+'</span></div>';
         publi +='<div class="big-btns">';
         publi +='<a class="btn btn-default btn-View pull-left" href="http://'+host+'producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">Ver</a></div></div>';
         publi +='<div class="meta-back"></div></div></div>';
