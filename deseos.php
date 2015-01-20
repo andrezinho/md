@@ -39,7 +39,7 @@ $lista= $stmt->rowCount();
                 <?php                   
                   $sql = "SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
                   $stmt = $db->prepare($sql);
-                  $stmt->execute();                  
+                  $stmt->execute();
                   foreach($stmt->fetchAll() as $r)
                   {
                      $s = "";
@@ -53,8 +53,7 @@ $lista= $stmt->rowCount();
                   }
                 ?>
               </select>
-            </li>       
-
+            </li>
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
             <li> <a href="#"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php echo login($helper,$config); ?>     
@@ -111,7 +110,7 @@ $lista= $stmt->rowCount();
   <div style="min-height:350px;">
    <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
     <div id="box-msg-session-required" class="ui-widget-content" style="padding:50px 20px; text-align:center ">
-      Agregar tus deseos primero debes <b>Inciar Sesion</b> con tu cuenta de usuario o mediante Facebook.
+     Para agregar tus <b>Deseos</b> primero debes <b>Inciar Sesion</b> con tu cuenta de usuario o mediante Facebook.
     </div>
   <?php else: ?>    
     <h2>Lista de deseos</h2>

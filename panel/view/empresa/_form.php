@@ -34,6 +34,9 @@
         <label for="nombre_contacto" class="labels" style="width:130px;">Nombres de Contacto:</label>
         <input type="text" id="nombre_contacto"  name="nombre_contacto" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->nombre_contacto; ?>" onkeypress="return permite(event,'num_car');"  /><span class="item-required">*</span>
         <br/>
+        <label for="dominio" class="labels" style="width:130px;">Dominio (URL):</label>
+        <input type="text" id="dominio"  name="dominio" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->dominio; ?>" onkeypress="return permite(event,'num_car');"  maxlenght="100" /><span class="item-required">*</span>
+        <br/>
 
         <label for="telefono" class="labels" style="width:130px;">Telefonos:</label>
         <input type="text" id="telefonos"  name="telefonos" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->telefonos; ?>" onkeypress="return permite(event,'num_car');"  />
@@ -71,19 +74,22 @@
         </p>
         <div style="width:700px;"></div>
         <label for="bcp" class="labels" style="width:130px;">BCP:</label>
-        <input type="text" id="bcp"  name="bcp" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->bcp; ?>" onkeypress="return permite(event,'num_car');"  />
+        <input type="text" id="bcp"  name="bcp" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->bcp; ?>" onkeypress="return permite(event,'num_car');"  />
         <br/>
         <label for="scotiabank" class="labels" style="width:130px;">ScotiaBank:</label>
-        <input type="text" id="scotiabank"  name="scotiabank" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->scotiabank; ?>" onkeypress="return permite(event,'num_car');"  />
+        <input type="text" id="scotiabank"  name="scotiabank" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->scotiabank; ?>" onkeypress="return permite(event,'num_car');"  />
         <br/>
         <label for="interbank" class="labels" style="width:130px;">InterBank:</label>
-        <input type="text" id="interbank"  name="interbank" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->interbank; ?>" onkeypress="return permite(event,'num_car');"  />
+        <input type="text" id="interbank"  name="interbank" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->interbank; ?>" onkeypress="return permite(event,'num_car');"  />
         <br/>
         <label for="continental" class="labels" style="width:130px;">Continental:</label>
-        <input type="text" id="continental"  name="continental" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->continental; ?>" onkeypress="return permite(event,'num_car');"  />
+        <input type="text" id="continental"  name="continental" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->continental; ?>" onkeypress="return permite(event,'num_car');"  />
         <br/>
         <label for="nacion" class="labels" style="width:130px;">Banco de la Nacion:</label>
-        <input type="text" id="nacion"  name="nacion" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php echo $obj->nacion; ?>" onkeypress="return permite(event,'num_car');"  />
+        <input type="text" id="nacion"  name="nacion" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->nacion; ?>" onkeypress="return permite(event,'num_car');"  />
+        <br/>
+        <label for="otros" class="labels" style="width:130px;">Otras Entidades:</label>
+        <input type="text" id="otros"  name="otros" class="text ui-widget-content ui-corner-all" style=" width: 450px; text-align: left;" value="<?php echo $obj->otros; ?>" onkeypress="return permite(event,'num_car');"  />
     </div>
 
     <div id="tabs-2">       

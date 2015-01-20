@@ -25,6 +25,7 @@ $sql = "SELECT c.idcupon,
 		        e.interbank,
 		        e.continental,
 		        e.nacion,
+		        e.otros,
 		        p.titulo2,
 		        p.cc,
 		        ub.descripcion as ciudad
@@ -123,6 +124,11 @@ if($r->nombres!="")
 			<?php if($r->nacion!="") { ?>
 			<tr>
 				<td>BANCO DE LA NACION</td><td><?php echo $r->nacion; ?></td>
+			</tr>
+			<?php } ?>
+			<?php if($r->otros!="") { ?>
+			<tr>
+				<td colspan="2"><?php echo $r->otros; ?></td>
 			</tr>
 			<?php } ?>
 		</table>	

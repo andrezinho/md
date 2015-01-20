@@ -118,28 +118,50 @@ $lista= $st->rowCount();
                 -->
                <!-- </div>
             </div>  -->                    
-            <div style="width:auto; float:left; border-right: 1px solid #fafafa; border-right: 0;">                                
-                <div style="padding:5px 0px 5px 5px">
-                    <div style="height: 40px; padding: 13px 0 0">
-                        <a href="#" style="color:#333;" data-toggle="tooltip"  title="Recibir Descuentos de esta Empresa"><i class="fa fa-envelope fa-fw" style="color:#333"></i>&nbsp;</a>                        
-                    </div>                                      
+            <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
+                <div class="social-icons" style="">                    
+                      <ul >
+                        <?php if($r["youtube"]!="")
+                            {
+                             echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                            }
+
+                             if($r["twitter"]!=""){
+                               echo '<li class="icon twitter"><a href="'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                             }
+                             
+                             if($r["facebook"]!=""){
+                               echo '<li class="icon facebook"><a href="'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                             }
+                             ?>
+                      </ul>
                 </div>
             </div>
+
             
             <div style="width:auto; float:left; border-right: 0">
-                <div style="padding:5px 0px 5px 0px">
-                    <div>
-                        <input type="text" name="deseo-descuento" class="input-deseo" placeholder="tucorreo@midominio.com" style="border:1px solid #999; width: 100%"/>
-                    </div>                    
-                </div>
-            </div>
-            <div style="width:auto; float:left; border-right: 1px solid #fafafa; padding:0 10px 0 0; display:inline-block ">                                
+
+                        
+            <div style="width:auto; float:right; border-right: 1px solid #fafafa; padding:0 10px 0 0 ">                                
+
                 <div style="padding:5px 0px 5px 0px">
                     <div>
                         <input type="button" value="Suscribirse" class="btn-deseo" style="background:#C73B2C !important; color:#fff !important; width:auto;" /> 
                     </div>
                 </div>
             </div>
+
+            <div style="width:auto; float:left; border-right: 1px solid #fafafa; padding:0 10px 0 0; display:inline-block ">                                
+
+            <div style="width:auto; float:right; border-right: 0">
+
+                <div style="padding:5px 0px 5px 0px">
+                    <div>
+                        <input type="text" name="deseo-descuento" class="input-deseo" placeholder="tucorreo@midominio.com" style="border:1px solid #999; width: 100%"/>
+                    </div>                    
+                </div>
+            </div>
+
             <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">
 
                 <div class="social-icons" style="">
@@ -160,8 +182,16 @@ $lista= $st->rowCount();
                       ?>
                       </ul>                      
                     
+
+            <div style="width:auto; float:right; border-right: 1px solid #fafafa; border-right: 0;">                                
+                <div style="padding:5px 0px 5px 5px">
+                    <div style="height: 40px; padding: 13px 0 0">
+                        <a href="#" style="color:#333;" data-toggle="tooltip"  title="Recibir Descuentos de esta Empresa"><i class="fa fa-envelope fa-fw" style="color:#333"></i>&nbsp;</a>                        
+                    </div>                                      
+
                 </div>
             </div>
+            
             <!-- <div style="width:85px; float:right; padding: 17px 0 0"></div> -->
           
       </div>

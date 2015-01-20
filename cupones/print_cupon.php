@@ -129,25 +129,47 @@ class PDF extends FPDF
         $this->Ln(2);
         $this->SetDrawColor(191, 191, 191);
         $w = 30;
-        $this->SetFillColor(231, 231, 231);
-        $this->Cell($w, 5,utf8_decode("BCP"), 1, 0, 'L', true);
-        $this->Cell($w+130, 5,utf8_decode($r->bcp), 1, 1, 'L', true);
 
-        $this->SetFillColor(255, 255, 255);
-        $this->Cell($w, 5,utf8_decode("SCOTIABANK"), 1, 0, 'L', true);
-        $this->Cell($w+130, 5,utf8_decode($r->scotiabank), 1, 1, 'L', true);
+        if($r->bcp!="")
+        {
+            $this->SetFillColor(231, 231, 231);
+            $this->Cell($w, 5,utf8_decode("BCP"), 1, 0, 'L', true);
+            $this->Cell($w+130, 5,utf8_decode($r->bcp), 1, 1, 'L', true);            
+        }
 
-        $this->SetFillColor(231, 231, 231);
-        $this->Cell($w, 5,utf8_decode("INTERBANK"), 1, 0, 'L', true);
-        $this->Cell($w+130, 5,utf8_decode($r->interbank), 1, 1, 'L', true);
+        if($r->scotiabank!="")
+        {
+            $this->SetFillColor(255, 255, 255);
+            $this->Cell($w, 5,utf8_decode("SCOTIABANK"), 1, 0, 'L', true);
+            $this->Cell($w+130, 5,utf8_decode($r->scotiabank), 1, 1, 'L', true);            
+        }
 
-        $this->SetFillColor(255, 255, 255);
-        $this->Cell($w, 5,utf8_decode("CONTINENTAL"), 1, 0, 'L', true);
-        $this->Cell($w+130, 5,utf8_decode($r->continental), 1, 1, 'L', true);
+        if($r->interbank!="")
+        {
+            $this->SetFillColor(231, 231, 231);
+            $this->Cell($w, 5,utf8_decode("INTERBANK"), 1, 0, 'L', true);
+            $this->Cell($w+130, 5,utf8_decode($r->interbank), 1, 1, 'L', true);            
+        }
 
-        $this->SetFillColor(231, 231, 231);
-        $this->Cell($w, 5,utf8_decode("NACION"), 1, 0, 'L', true);
-        $this->Cell($w+130, 5,utf8_decode($r->nacion), 1, 1, 'L', true);
+        if($r->continental!="")
+        {
+            $this->SetFillColor(255, 255, 255);
+            $this->Cell($w, 5,utf8_decode("CONTINENTAL"), 1, 0, 'L', true);
+            $this->Cell($w+130, 5,utf8_decode($r->continental), 1, 1, 'L', true);            
+        }
+
+        if($r->nacion!="")
+        {
+            $this->SetFillColor(231, 231, 231);
+            $this->Cell($w, 5,utf8_decode("NACION"), 1, 0, 'L', true);
+            $this->Cell($w+130, 5,utf8_decode($r->nacion), 1, 1, 'L', true);            
+        }
+
+        if($r->otros!="")
+        {
+             $this->SetFillColor(255, 255, 255);            
+            $this->Cell(0, 5,utf8_decode($r->otros), 1, 1, 'L', true);            
+        }
 
         $this->Ln(5);
         $this->SetDrawColor(255, 255, 255);
@@ -187,6 +209,7 @@ $sql = "SELECT c.idcupon,
                 e.scotiabank,
                 e.interbank,
                 e.continental,
+                e.otros,
                 e.nacion,
                 p.titulo2,
                 p.cc,

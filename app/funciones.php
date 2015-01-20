@@ -163,10 +163,9 @@ function login($helper,$config)
                 { 
                   $html .= '<li><a href="'.$host.'panel/">Panel Admin</a></li>';
                 } 
-                else 
-                { 
-                  $html .= '<li><a href="'.$host.'cuenta.php">Mis Datos</a></li>';
-                }
+
+                $html .= '<li><a href="'.$host.'cuenta.php">Mis Datos</a></li>';
+                
 
                 $html .= '<li><a href="'.$host.'mis-cupones.php">Mis Cupones</a></li>
                           <li><a href="#">Mis Suscripciones</a></li>
