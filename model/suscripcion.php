@@ -31,7 +31,7 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL))
         catch(PDOException $e) 
         {
             $db->rollBack();
-            print_r(json_encode(array('res'=>'2','msg'=>'Ha ocurrido un error, intentelo nuevamente.')));
+            print_r(json_encode(array('res'=>'2','msg'=>'Ha ocurrido un error, intentelo nuevamente. '.$e->getMessage())));
         }
     }
     else

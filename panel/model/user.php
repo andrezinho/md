@@ -15,11 +15,14 @@ class User extends Main {
                                                     l.descripcion as local,
                                                     l.idlocal,
                                                     s.idsuscripcion,
-                                                    s.estado as suscripcion_estado
+                                                    s.estado as suscripcion_estado,
+                                                    u.idubigeo,
+                                                    ub.descripcion as ciudad
                                             from usuario as u inner join perfil as p on p.idperfil = u.idperfil
                                             left outer join local as l on l.idlocal = u.idlocal
                                             left outer join empresa as e on e.idempresa = l.idempresa
                                             left outer join suscripcion as s on s.idlocal = l.idlocal
+                                            left outer join ubigeo as ub on ub.idubigeo = u.idubigeo
                                         where  u.email = :user AND u.passw = :password ");
         $statement->bindParam (":user", $_POST['usuario'] , PDO::PARAM_STR);
         $statement->bindParam (":password", $_POST['password'] , PDO::PARAM_STR);

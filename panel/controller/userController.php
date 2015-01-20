@@ -28,6 +28,11 @@ class UserController extends Controller {
             $_SESSION['idsuscripcion'] = $obj->idsuscripcion;
             $_SESSION['suscripcion_estado'] = $obj->suscripcion_estado;
 
+            if($obj->idubigeo!="000000")
+            {
+                $_SESSION['idciudad'] = $obj->idubigeo;
+                $_SESSION['ciudad'] = $obj->ciudad;
+            }
             
             if($_POST['type']=='p')
             {

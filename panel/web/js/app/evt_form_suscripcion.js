@@ -48,7 +48,33 @@ function save()
   bval = bval && $("#idempresa").required();
   bval = bval && $("#idlocal").required();
   bval = bval && $("#fecha_inicio").required();
+  var fech1 = $("#fecha_inicio").val();
+  if(!validarFormatoFecha(fech1))
+  {
+    bval=false;
+    alert("El formato de Fecha de Inicio es incorrecto: dd/mm/yyyy");
+    return 0;
+  }  
   bval = bval && $("#fecha_fin").required();
+  var fech2 = $("#fecha_fin").val();
+
+  if(!validarFormatoFecha(fech2))
+  {
+    bval=false;
+    alert("El formato de Fecha de Fin es incorrecto: dd/mm/yyyy");
+    return 0;
+  }
+
+  fech1=ffecha(fech1);
+  fech2=ffecha(fech2);
+
+  if((Date.parse(fech1)) > (Date.parse(fech2)))
+  {
+    bval = false;
+    alert("La fecha inicial no puede ser mayor que la fecha final");
+    return 0;
+  }
+
   if(!$("#infinito").is(':checked'))
   {
       bval = bval && $("#max_publi").required();
@@ -123,4 +149,11 @@ function validarFormatoFecha(campo) {
       } else {
             return false;
       }
+}
+
+function ffecha(fecha)
+{  
+  f=fecha.split("/");
+  return f[2]+"-"+f[1]+"-"+f[0];
+
 }
