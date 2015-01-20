@@ -119,7 +119,7 @@ $lista= $st->rowCount();
             </div>  -->                    
             <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
                 <div class="social-icons" style="">                    
-                      <ul >
+                      <ul > 
                         <?php if($r["youtube"]!="")
                             {
                              echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
@@ -136,7 +136,7 @@ $lista= $st->rowCount();
                       </ul>
                 </div>
             </div>
-                        
+
             <div style="width:auto; float:right; border-right: 1px solid #fafafa; padding:0 10px 0 0 ">                                
                 <div style="padding:5px 0px 5px 0px">
                     <div>
