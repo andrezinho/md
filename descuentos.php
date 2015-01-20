@@ -5,72 +5,72 @@ $url=$_GET["id"];
 
 if($url=="")
 {
-    if(!isset($_SESSION['idusuario']))
-    {
-      $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                               c.descripcion,p.precio,p.precio_regular,p.descuento,
-                               p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                               0 as deseo
-                        FROM publicaciones as p
-                        INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                        INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                        INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                        INNER JOIN local as l on l.idlocal=su.idlocal
-                        WHERE p.fecha_inicio = CURDATE() AND p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
-    }
-    else
-    {
-      $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                               c.descripcion,p.precio,p.precio_regular,p.descuento,
-                               p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                               coalesce(d.idpublicaciones,0) as deseo
-                        FROM publicaciones as p
-                        INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                        INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                        INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                        INNER JOIN local as l on l.idlocal=su.idlocal
-                        left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                        WHERE p.fecha_inicio = CURDATE() AND p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
-    }
+          if(!isset($_SESSION['idusuario']))
+          {
+            $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                     c.descripcion,p.precio,p.precio_regular,p.descuento,
+                                     p.imagen,p.idtipo_descuento,s.descripcion as categoria,
+                                     0 as deseo
+                              FROM publicaciones as p
+                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                              INNER JOIN local as l on l.idlocal=su.idlocal
+                              WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+          }
+          else
+          {
+            $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                     c.descripcion,p.precio,p.precio_regular,p.descuento,
+                                     p.imagen,p.idtipo_descuento,s.descripcion as categoria,
+                                     coalesce(d.idpublicaciones,0) as deseo
+                              FROM publicaciones as p
+                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                              INNER JOIN local as l on l.idlocal=su.idlocal
+                              left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
+                              WHERE l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+          }
 
     $stmt = $db->prepare($sql_c);                
     $stmt->bindValue(':id', $id , PDO::PARAM_STR);        
     $stmt->execute();
     $nc= $stmt->rowCount();
-    $st = "Descuentos del Dia";
+    $st = "Descuentos Recientes";
 }
 else
 {
-  if($url=="especiales")
-  {
-
-     $str=explode("-", $url);
-      $n=count($str);
-      $id=$str[$n-1];
-      $st="";
-      for($i=0; $i<$n; $i++)
+      if($url=="especiales")
       {
-        $st .=$str[$i]." ";
-      } 
 
-      if(!isset($_SESSION['idusuario']))
-      { 
-        $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                   c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                                   p.imagen,p.idtipo_descuento,0 as deseo
-                            FROM publicaciones as p
-                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                            INNER JOIN local as l on l.idlocal=su.idlocal
-                            WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";        
+             $str=explode("-", $url);
+              $n=count($str);
+              $id=$str[$n-1];
+              $st="";
+              for($i=0; $i<$n; $i++)
+              {
+                $st .=$str[$i]." ";
+              } 
+
+              if(!isset($_SESSION['idusuario']))
+                { 
+                  $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                           c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
+                                           p.imagen,p.idtipo_descuento,0 as deseo
+                                    FROM publicaciones as p
+                                    INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                                    INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                                    INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                                    INNER JOIN local as l on l.idlocal=su.idlocal
+                                    WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";        
         
-      }
-      else
-      {
-        $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                   c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                                   p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo
+                }
+                else
+                {
+                  $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                             c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
+                                             p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo
                             FROM publicaciones as p
                             INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                             INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -78,10 +78,10 @@ else
                             INNER JOIN local as l on l.idlocal=su.idlocal
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                             WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";        
-      }
-      $stmt = $db->prepare($sql_qa);
-      $stmt->execute();
-      $nc= $stmt->rowCount();
+                }
+                $stmt = $db->prepare($sql_qa);
+                $stmt->execute();
+                $nc= $stmt->rowCount();
   }
 
   else
@@ -149,7 +149,7 @@ else
         {
           $st .=$str[$i]." ";
         }    
-
+        //echo $st;
         if(!isset($_SESSION['idusuario']))
         { 
           $sql_vq = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
@@ -177,8 +177,8 @@ else
           
         }
 
-        $stmt = $db->prepare($sql_vq);        
-          $stmt->bindValue(':id', $id , PDO::PARAM_STR);
+          $stmt = $db->prepare($sql_vq);        
+          $stmt->bindValue(':id', $st , PDO::PARAM_STR);
           $stmt->execute();
           $nc= $stmt->rowCount();
       }
