@@ -197,7 +197,7 @@ function validar_email()
      </td>
      </tr>
 
-     <?php if (isset($_SESSION['facebook'])&&isset($_SESSION['email'])){ ?>
+     <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])){ ?>
      <tr><td colspan="2"><hr></td></tr>
      <tr>
      <td>Email</td>
