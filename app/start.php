@@ -82,8 +82,13 @@ try
 			            							 u.apellidos as apellido,
 			            							 u.email,
 			            							 u.idface,
-			            							 p.descripcion as perfil
-			            					 from usuario as u inner join perfil as p on p.idperfil = u.idperfil where u.idface=:c ");
+			            							 p.descripcion as perfil,	
+			            							 u.idubigeo,
+			            							 ub.descripcion as ciudad
+
+			            					 from usuario as u inner join perfil as p on p.idperfil = u.idperfil 
+			            					 		left outer join ubigeo as ub on ub.idubigeo = u.idubigeo
+			            					 where u.idface=:c ");
 						$stmt->bindParam(':c',$id_face,PDO::PARAM_STR);
 						$stmt->execute();
 						$r = $stmt->fetchObject();
@@ -98,6 +103,11 @@ try
 			            $_SESSION['apellido'] = utf8_encode($r->apellido);
 			            $_SESSION['id_perfil'] = $r->idperfil;
 			            $_SESSION['perfil'] = $r->perfil;
+			            if($r->idubigeo!="000000")
+			            {
+			            	$_SESSION['idciudad'] = $r->idubigeo;
+			            	$_SESSION['ciudad']= $r->ciudad;
+			            }
 
 			            $db->commit();            
 			        }

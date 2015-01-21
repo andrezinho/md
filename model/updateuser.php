@@ -33,7 +33,7 @@ $idc           =   $_POST['city'];
             
             $stmt->execute();
             //sesiones
-
+            $_SESSION['idciudad']=$_POST['city'];
             $db->commit();
 
             print_r(json_encode(array('res'=>'1','msg'=>'Se ha Actualizado Correctamente.')));            
