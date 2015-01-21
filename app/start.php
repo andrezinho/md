@@ -147,7 +147,7 @@ try
 					 $stmt->execute();
 					 $r = $stmt->fetchObject();
 
-					 $_SESSION['idface']   =$r->idface;
+					$_SESSION['idface']   =$r->idface;
 					$_SESSION['idusuario'] = $r->idusuario;
 		            $_SESSION['dni'] = $r->nrodocumento;
 		            $_SESSION['email'] = $r->email;
