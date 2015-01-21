@@ -12,9 +12,15 @@ require_once '/app/funciones.php';
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
 <title>Muchos Descuentos</title>
 
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
 <link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
 <link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
+
+<link href="<?php echo $host; ?>/css/suscripcion.css" rel="stylesheet"/>
+
 <link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.min.css" rel="stylesheet" />
 <link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.structure.min.css" rel="stylesheet" />
 <link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.theme.min.css" rel="stylesheet" />

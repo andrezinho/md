@@ -1,0 +1,71 @@
+#box-suscripcion {  background: #fafafa; 
+                    position: absolute;
+                    width: 461px;
+                    height: 297px;
+                    top:50%;
+                    left:50%;                            
+                    margin-left:-241px;                            
+                    margin-top:-150px; 
+                    box-shadow: 5px 5px 5px #888888;
+                    z-index: 99999;
+                 }
+.text-head-sucripcion { 
+                        font-weight: 0;
+                        padding: 0 0 0 6px !important;
+                      }
+.principal {font-size: 32px; color: #222121; font-family: 'Yanone Kaffeesatz', sans-serif; text-align: center}
+.secundario{font-size: 20px; color: #7D7A7A; line-height: 1; font-family: 'Yanone Kaffeesatz', sans-serif;}
+.box-logo  { width: 89px; height: 68px; float: left; }
+.box-title { float: left; width: 290px; }
+#box-sucripcion-c { padding: 30px 41px 0 41px; margin: 0;}
+#box-head,#box-body,#box-foot,#box-body2 { padding: 0; margin: 0;float: left; width: 100%;}
+
+.input-suscripcion { 
+                        border: 1px solid #D8D8D8;
+                        font-family: 'Yanone Kaffeesatz', sans-serif;
+                        font-size: 18px;
+                        padding: 5px 9px 5px;                                                
+                        color:#000000 !important;
+                   }          
+
+
+    .myButton {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cb0101), color-stop(1, #de0909));
+            background:-moz-linear-gradient(top, #cb0101 5%, #de0909 100%);
+            background:-webkit-linear-gradient(top, #cb0101 5%, #de0909 100%);
+            background:-o-linear-gradient(top, #cb0101 5%, #de0909 100%);
+            background:-ms-linear-gradient(top, #cb0101 5%, #de0909 100%);
+            background:linear-gradient(to bottom, #cb0101 5%, #de0909 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#cb0101', endColorstr='#de0909',GradientType=0);
+            background-color:#cb0101;
+            -moz-border-radius:1px;
+            -webkit-border-radius:1px;
+            border-radius:1px;
+            border:1px solid #b80b0b;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size:20px;
+            padding:6px 40px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #0d0d0d;
+    }
+    .myButton:hover {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #de0909), color-stop(1, #cb0101));
+            background:-moz-linear-gradient(top, #de0909 5%, #cb0101 100%);
+            background:-webkit-linear-gradient(top, #de0909 5%, #cb0101 100%);
+            background:-o-linear-gradient(top, #de0909 5%, #cb0101 100%);
+            background:-ms-linear-gradient(top, #de0909 5%, #cb0101 100%);
+            background:linear-gradient(to bottom, #de0909 5%, #cb0101 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#de0909', endColorstr='#cb0101',GradientType=0);
+            background-color:#de0909;
+    }
+    .myButton:active {
+            position:relative;
+            top:1px;
+    }
+    #box-foot { background: #EEEEEE; margin-top: 20px; height: 63px; font-size: 16px;font-family: 'Yanone Kaffeesatz', sans-serif;}
+    
+    .box-msg-response { font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 28px; padding: 20px 20px; text-align: center; }
+    .box-msg-response div { font-size: 20px;}

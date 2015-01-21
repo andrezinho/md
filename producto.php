@@ -13,7 +13,10 @@ for($s=0; $s<($n-1); $s++)
 }
 $id=$id[$n-1];
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,
+                             p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,
+                             e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,
+                             e.youtube,e.razon_comercial,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google,l.latitud,l.longitud
@@ -28,6 +31,7 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripci
 $stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $stmt->execute();
 $r = $stmt->fetch();
+$idempresa = $r['idempresa'];
 $ahorro=$r['precio_regular']-$r['precio'];
 $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
 if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
@@ -45,6 +49,7 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
 <script src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <body>
+<div id="frm-suscripcion"></div>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
   <div class="container">
@@ -80,7 +85,7 @@ $lista= $st->rowCount();
 
   <div class="container" >
       <div style="width: 846px; display: inline-block; background: #EEEEEE">
-            <div class="product-details-head" style="float:left; width:440px; border-right: 1px solid #fafafa;">
+            <div class="product-details-head" style="float:left; width:590px; ">
                 <div class="short-info-det-name-empresa">                    
                   <div class="name-empresa" >
                     <img src="<?php echo $logo;?>" class="logo-empresa">  
@@ -117,7 +122,7 @@ $lista= $st->rowCount();
                 -->
                <!-- </div>
             </div>  -->                    
-            <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        
+            <div class="searchbar" style="float:right; width:auto; margin-right: 7px; padding-left:7px;">                        
                 <div class="social-icons" style="">                    
                       <ul > 
                         <?php if($r["youtube"]!="")
@@ -136,18 +141,17 @@ $lista= $st->rowCount();
                       </ul>
                 </div>
             </div>
-
             <div style="width:auto; float:right; border-right: 1px solid #fafafa; padding:0 10px 0 0 ">                                
                 <div style="padding:5px 0px 5px 0px">
                     <div>
-                        <input type="button" value="Suscribirse" class="btn-deseo" style="background:#C73B2C !important; color:#fff !important; width:auto;" /> 
+                        <input id="recibir_ofertas" type="button" value="Suscribirse" class="btn-deseo" style="background:#C73B2C !important; color:#fff !important; width:auto;" title="Recibir Ofertas de esta Empresa" /> 
                     </div>
                 </div>
             </div>
             <div style="width:auto; float:right; border-right: 0">
                 <div style="padding:5px 0px 5px 0px">
                     <div>
-                        <input type="text" name="deseo-descuento" class="input-deseo" placeholder="tucorreo@midominio.com" style="border:1px solid #999; width: 100%"/>
+                        <input type="hidden" name="iemp" id="idemp" value="<?php echo $idempresa; ?>" />                        
                     </div>                    
                 </div>
             </div>
@@ -157,10 +161,7 @@ $lista= $st->rowCount();
                         <a href="#" style="color:#333;" data-toggle="tooltip"  title="Recibir Descuentos de esta Empresa"><i class="fa fa-envelope fa-fw" style="color:#333"></i>&nbsp;</a>                        
                     </div>                                      
                 </div>
-            </div>
-            
-            <!-- <div style="width:85px; float:right; padding: 17px 0 0"></div> -->
-          
+            </div>            
       </div>
         <div id="buscador" class="product-details-head">
            <div class="searchbar-details">

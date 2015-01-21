@@ -1,11 +1,13 @@
 <?php 
+$host="http://".$_SERVER['SERVER_NAME']."/md/";
 function dameURL()
 {
     $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     return $url;
 }
       //echo dameURL();
-      function urls_amigables($url) { 
+function urls_amigables($url) 
+{ 
       // Tranformamos todo a minusculas 
       $url = strtolower($url);
  
@@ -49,7 +51,7 @@ function limpiar($valor)
 
 function oferta($r)
 {
-      $host="http://".$_SERVER['SERVER_NAME']."/md/";
+      global $host;
       $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
       $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
 
@@ -115,7 +117,7 @@ function oferta($r)
 }
 function login($helper,$config)
 {
-    $host="http://".$_SERVER['SERVER_NAME']."/md/";
+    global $host;
     if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email']))
     {
        $html = '<li class="dropdown">
@@ -159,20 +161,20 @@ function login($helper,$config)
             </a>
               <div class="loginbox dropdown-menu">                     
                 <ul>';
-                if($_SESSION['id_perfil']!=4) 
-                { 
-                  $html .= '<li><a href="'.$host.'panel/">Panel Admin</a></li>';
-                } 
+        if($_SESSION['id_perfil']!=4) 
+        { 
+          $html .= '<li><a href="'.$host.'panel/">Panel Admin</a></li>';
+        } 
 
-                $html .= '<li><a href="'.$host.'cuenta.php">Mis Datos</a></li>';
-                
+        $html .= '<li><a href="'.$host.'cuenta.php">Mis Datos</a></li>';
+        
 
-                $html .= '<li><a href="'.$host.'mis-cupones.php">Mis Cupones</a></li>
-                          <li><a href="#">Mis Suscripciones</a></li>
-                          <li><a href="'.$host.'app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
-                          </ul>               
-                          </div>
-                          </li>';
+        $html .= '<li><a href="'.$host.'mis-cupones.php">Mis Cupones</a></li>
+                  <li><a href="#">Mis Suscripciones</a></li>
+                  <li><a href="'.$host.'app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
+                  </ul>               
+                  </div>
+                  </li>';
       }
       return $html;
 }

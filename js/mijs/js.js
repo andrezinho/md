@@ -8,7 +8,8 @@ $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),
 $("#recibir_ofertas").click(function(){
   $.get('http://'+host+'/view/_suscripcion.php','',function(data){    
     $("#frm-suscripcion").empty().append(data);
-    $("#frm-suscripcion").dialog("open");    
+    $("#frm-suscripcion").dialog("open");   
+    $(".ui-dialog-titlebar-close").hide();
     PI.onReady();
   })
    
@@ -122,6 +123,8 @@ $("#frm-suscripcion").dialog({
       height:'auto',
       resizing:true,
       title:"Suscripcion a Descuentos",
+      closeText: "hide",
+      closeOnEscape: true,
       buttons: {
                   'Cerrar': function(){ $(this).dialog('close');},
                   'Confirmar':function(){PI.sending();}
@@ -284,27 +287,27 @@ function ndoc(v)
     {
         $("#pop-alert-ui").remove();
         if($(this).attr("title"))
-            {
-                var msg = $(this).attr("title"),   
-                w = $(this).css('width'),
-                xy = $(this).offset(),
-                div = '';                
-                if(msg!="")
-                    {   
-                        div = '<div id="pop-alert-ui" class="ui-state-highlight ui-corner-all" style="top:'+(xy.top-1)+'px; left:'+(parseInt(w)+xy.left + 15)+'px ;position:absolute;z-index:9999; display:none;  padding: 0em 0.3em; width:200px ">';
-                        div += '<p style="margin:3px"><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>';
-                        div += '<strong>Hey! </strong>';
-                        div += msg;
-                        div += '</p></div>';
-                        
-                        $('body').append(div);
-                        $("#pop-alert-ui").fadeTo('slow', 0.95).delay(4000).fadeOut(500,function(){
-                            $("#pop-alert-ui").remove();
-                        });
+        {
+            var msg = $(this).attr("title"),   
+            w = $(this).css('width'),
+            xy = $(this).offset(),
+            div = '';                
+            if(msg!="")
+                {   
+                    div = '<div id="pop-alert-ui" class="ui-state-highlight ui-corner-all" style="top:'+(xy.top-1)+'px; left:'+(parseInt(w)+xy.left + 15)+'px ;position:absolute;z-index:9999; display:none;  padding: 0em 0.3em; width:200px ">';
+                    div += '<p style="margin:3px"><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>';
+                    div += '<strong>Hey! </strong>';
+                    div += msg;
+                    div += '</p></div>';
+                    
+                    $('body').append(div);
+                    $("#pop-alert-ui").fadeTo('slow', 0.95).delay(4000).fadeOut(500,function(){
+                        $("#pop-alert-ui").remove();
+                    });
 
-                    }
-                 
-            }        
+                }
+             
+        }        
         $(this).addClass('ui-state-error');
         $(this).focus();
         return false;
@@ -350,14 +353,19 @@ var PI = {
             },            
             sending  : function()
             {
-              
                var email = $("#email_suscripcion").val(),
-                   mname = $("#name_suscripcion").val();
+                   mname = $("#name_suscripcion").val(),
+                   idem = $("#iemp").val();
+               if (idem === undefined) 
+               {
+                  idem = 0;
+               }
+
               if(mname!="")
                {
                   if(PI.validar(email))
                  {
-                    $.post('model/suscripcion.php','e='+email+'&n='+mname,function(r){
+                    $.post('model/suscripcion.php','e='+email+'&n='+mname+'&em='+idem,function(r){
                     if(r.res=="1")
                     {
                         alert("Gracias por suscribirte.\nTe estaremos enviando nuevos descuentos.");

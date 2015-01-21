@@ -3,6 +3,7 @@ require_once '../lib/spdo.php';
 $db = Spdo::singleton();
 $email = $_POST['e'];
 $name = $_POST['n'];
+$idem = $_POST['em'];
 if (filter_var($email, FILTER_VALIDATE_EMAIL)) 
 {
     $stmt = $db->prepare("SELECT count(*) as n from email where correo = :c");
@@ -19,10 +20,11 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL))
             $name = substr($name,0,100);
             
             $fecha = date('Y-m-d');
-            $stmt = $db->prepare("INSERT INTO email(correo,fecha,nombre) values(:c,:f,:n)");
+            $stmt = $db->prepare("INSERT INTO email(correo,fecha,nombre,empresa) values(:c,:f,:n,:e)");
             $stmt->bindParam(':c',$email,PDO::PARAM_STR);
             $stmt->bindParam(':f',$fecha,PDO::PARAM_STR);
             $stmt->bindParam(':n',$name,PDO::PARAM_STR);
+            $stmt->bindParam(':e',$idem,PDO::PARAM_STR);
             $stmt->execute();
             send_email($email,$name);
             $db->commit();            
