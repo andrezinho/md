@@ -6,9 +6,22 @@ require_once '/app/funciones.php';
 <!DOCTYPE html>
 <html class="noIE" lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
-<meta content="Muchos Descuentos" name="description">
+<meta name="description" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc ">
+<meta name="keywords" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc " />
+<meta name="news_keywords" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc "/>
+<meta name="robots" content="index,follow"/>
+<meta name='googlebot' content='index, follow' />
+<meta name="organization" content="Muchos Descuentos" />
+<meta property="og:url" content="http://www.muchosdescuentos.com.pe" />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="Muchos Descuentos" />
+<meta name='Origen' content='Muchos Descuentos' />
+<meta name="locality" content="Lima, Peru" />
+
+
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
 <title>Muchos Descuentos</title>
 
@@ -55,6 +68,4 @@ require_once '/app/funciones.php';
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
 
 <!-- timer -->
-
-<!--<script src= "/bower_components/jquery.countdown/dist/jquery.countdown.js" ></script>-->
 </head>

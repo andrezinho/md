@@ -47,10 +47,10 @@ $st->execute();
 $lista= $st->rowCount();
 ?>
 <script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
-<script src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
-var host=window.location.host;
-host=host;
+  var host=window.location.host;
+  host=host+"/md";
   $(document).ready(function(){
     
     $("#sendf").click(function(){
@@ -81,6 +81,7 @@ host=host;
     });
     
   });
+
 </script>
 <body>
 <div id="frm-suscripcion"></div>
@@ -90,7 +91,7 @@ host=host;
     <div class="row">
       <div class="col-md-12">
         <div class="topheadrow">
-            <a href="<?php echo $host;?>/index.php"><img src="<?php echo $host;?>/images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
+            <a href="<?php echo $host;?>"><img src="<?php echo $host;?>/images/logo-icon.png" class="logo-icon" style="width:43px;height:43px; margin-top: 2px;" /></a>
             <ul class="nav nav-pills pull-right">          
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Tef: (01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
             </li>
@@ -256,12 +257,14 @@ host=host;
               <div class="product-details">
                 <div class="short-info-det" style="padding:15px 0px">                   
                       <div class="short-info-opt" style="height: 0px">                           
-                          <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/producto" data-width="50" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                          <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/producto/<?php echo $url;?>" data-width="50" data-layout="button" data-action="like" data-show-faces="false"></div>
+
+                          <div style="float:left;margin-left:1px;" class="fb-share-button" data-href="http://www.muchosdescuentos.com/producto/<?php echo $url;?>" data-layout="button"></div>
                           <!-- <div  class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.html" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div> -->
                           <script src="https://apis.google.com/js/platform.js" async defer>
                             {lang: 'es'}
                           </script>                          
-                          <a href="http://www.muchosdescuentos.com/producto" class="twitter-share-button"
+                          <a href="http://www.muchosdescuentos.com/producto/<?php echo $url;?>" class="twitter-share-button"
                             data-dnt="true"
                             data-count="none"
                             data-via="twitterdev">
