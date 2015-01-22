@@ -29,22 +29,19 @@ $(document).ready(function(){
             publi +='<i class="fa fa-star"></i>';
             publi +='<i class="fa fa-star-half-o"></i>';
             publi +='<i class="fa fa-star-o"></i></div>';
-            */
-            
-            publi +='<div class="small-btns">';
-            
+            */            
+            publi +='<div class="small-btns">';            
             if(j.deseo==0)
             {                
                 publi +='<button id="btn-wishlist-'+j.idpublicaciones+'" class="btn btn-default btn-wishlist pull-left" title="">';
                 publi +='<i class="fa fa-heart fa-fw" id="fa-heart-'+j.idpublicaciones+'"></i></button>';
-            }   
+            }
             else
             {
                 publi +='<button class="btn btn-default btn-wishlist pull-left" title="">';
                 publi +='<i class="fa fa-heart fa-fw" style="color:#FCD209"></i></button>';
-            }         
-            publi +='<button class="btn btn-default btn-compare pull-left" title="View">';
-            publi +='<a href="producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">VER <b>&GT;</b> </a></button></div></div>';
+            }
+            publi +='<a class="btn btn-default btn-compare pull-left" href="http://'+host+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">VER <b>&GT;</b> </a></div></div>';
             publi +='<div class="meta-back"></div></div>';
             publi +='</div> ';
 		});

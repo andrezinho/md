@@ -94,21 +94,18 @@ function oferta($r)
              if($r['deseo']==0) 
              {
                   $html .='<button id="btn-wishlist-'.$r['idpublicaciones'].'" class="btn btn-default btn-wishlist pull-left" title="">
-                        <i class="fa fa-heart fa-fw" id="fa-heart-'.$r['idpublicaciones'].'"></i>';
+                        <i class="fa fa-heart fa-fw" id="fa-heart-'.$r['idpublicaciones'].'"></i></button>';
              } 
             else 
             {
                    $html .= '<button class="btn btn-default btn-wishlist pull-left" title="">
-                        <i class="fa fa-heart fa-fw" style="color:#FCD209"></i> ';
+                        <i class="fa fa-heart fa-fw" style="color:#FCD209"></i> </button>';
              } 
-                  $html .= '</button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver">
-                          <a href="producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'">Ver</a> <b>&GT;</b>
-                        </button>
-                      </div>';
+            
+             $html .= '<a class="btn btn-default btn-compare pull-left" href="'.$host.'/producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'" >Ver <b>&GT;</b></a></div>';
                    
 
-                  $html .='</div>
+              $html .='</div>
                     <div class="meta-back"></div>
                   </div> 
                   <div class="row clearfix f-space30"></div>
