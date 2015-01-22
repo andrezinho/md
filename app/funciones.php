@@ -1,5 +1,6 @@
 <?php 
-$host="http://".$_SERVER['SERVER_NAME']."/md/";
+$host="http://".$_SERVER['SERVER_NAME']."/md";
+//$host="http://".$_SERVER['SERVER_NAME'];
 function dameURL()
 {
     $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -139,7 +140,7 @@ function login($helper,$config)
                   <span>Login:</span>
                   <span><a href="cuenta.php" id="registrar">Registrar</a></span>
                  </div>
-                 <form id="frmlogin" method="post"  action="'.$host.'panel/web/process.php">
+                 <form id="frmlogin" method="post"  action="'.$host.'/panel/web/process.php">
                     <div class="form-group"> <i class="fa fa-user fa-fw"></i>
                       <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
                     </div>
