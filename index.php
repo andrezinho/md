@@ -16,12 +16,16 @@ $st->execute();
 <body>
 <div id="frm-suscripcion"></div>
 <header>   
-  <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="topheadrow">
-          <img src="images/logo.png" />
+    
+  <!-- Barra Top y Logo -->
+  <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">  
+  <div class="my-container">
+    <div>
+      <div>
+        <div class="topheadrow">        
+          <div>            
+             <div class="logoimage"><img src="images/logo.png" /></div>             
+          </div>
           <ul class="nav nav-pills pull-right">            
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
@@ -51,10 +55,12 @@ $st->execute();
       </div>
     </div>
   </div>
-  </div>
-  <div class="container">
-    <div class="row clearfix">      
-      <div class="pull-right" style="float:right; diaplay:inline-block; width:410px;margin-bottom: 6px; ">
+  </div>  
+  <!-- Fin de Barra Top y Logo -->
+  
+  <!-- Buscador y Barra de Redes Sociales -->
+  <div class="my-container" style="height: 60px"> 
+      <div class="pull-right" style="padding: 4px 0 0 0">
         <div class="searchbar" style="float:left; width:220px;">
           <form action="resultados.php" method="get">                  
             <div style="background: red; float: left; ">
@@ -76,60 +82,61 @@ $st->execute();
             </div>  
         </div>
       </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row clearfix" style="width: 1140px;margin-left: 0px;" id="posicion">
+ </div>
+  <!-- Fin de Buscador y Barra de Redes Sociales -->
+  
+  <!-- Menu -->
+  <div class="my-container">
+    <div  id="posicion">
       <div> 
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
           <ul class="nav nav-pills nav-justified" id="listamenu">
           <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
           </li>
-
             <!-- Menu -->
-
           </ul>
         </div>
           <div class="clearfix"></div>
       </div>
     </div>
   </div>
+  <!-- Fin de Menu -->
+  
 </header>
 <!-- end: Header --> 
 <!-- Products -->
-<div class="container">
+
+<div class="f-space10"></div>
+<div class="my-container">
   <div class="row" >
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
-        <div class="box-heading"><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
-      <div class="box-content">
-        <div class="box-products slide" id="productc1">          
-          <div class="carousel-inner"> 
+        <div class="box-heading" ><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
+        <div class="box-content">
+        <div class="box-products" >          
+          <div> 
             <!-- Items Row -->
-            <div class="item active">
+            <div>
               <div class="row box-product" id="publicacion"> 
                   <!-- PUBLICACION  -->
               </div>
             </div>
-            
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 box-block sidebar">
-      <div class="box-heading"><span>% Especiales</span><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box-block sidebar">
+        <div class="box-heading" style="margin-bottom: 2px"><span>% Especiales</span><span class="view-all"><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></span></div>
       <div class="box-content" >
         <div class="box-products slide carousel-fade" id="productc2">
-          <ol class="carousel-indicators">
-          
+          <ol class="carousel-indicators">          
           <?php for ($i=0; $i<$lista ; $i++){ 
             if ($i==0) {$activo="active";}
             else{$activo="";}
             echo '<li class="'.$activo.'" data-slide-to="'.$i.'" data-target="#productc2"></li>';
           }?>
-
           </ol>
-          <div class="carousel-inner" id="items"  style="height:352px"> 
+          <div class="carousel-inner" id="items" > 
             <!-- PRODUCTOS ESPECIALES -->           
           </div>
         </div>
@@ -150,10 +157,7 @@ $st->execute();
 <div class="row clearfix f-space30"></div>
 <div class="container">
   <div class="row" id="category">
-      
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-column box-block">
-
-
+    <div class="col-lg-12 col-md-12 main-column box-block">
       <?php while($c=$st->fetch()){
          echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
          <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';

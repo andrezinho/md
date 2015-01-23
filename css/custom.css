@@ -253,9 +253,9 @@ a.color3:hover {
 }
 .logoimage {
 	width: 70px;
-	height: 70px;
+	height: 40px;
 	float: left;
-	background: #00aff0;
+	
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
@@ -1158,6 +1158,9 @@ a.color3:hover {
 }
 .f-space10 {
 	margin-top: 10px;
+}
+.f-space8 {
+	margin-top: 8px;
 }
 .f-space0 {
 	margin-top: 0px;
@@ -4586,7 +4589,7 @@ div>.row>div.twitter-block{padding-left: 15px;}
 	margin-top: 10px;
 }
 .f-space20 {
-	margin-top: 10px;
+	margin-top: 20px;
 }
 .f-space10 {
 	margin-top: 10px;
