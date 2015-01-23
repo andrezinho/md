@@ -1,6 +1,6 @@
 var host=window.location.host;
 host=host+'/md';
-//host=host;
+//host=host; 
 
 $(document).ready(function(){
 //Suscripciones
