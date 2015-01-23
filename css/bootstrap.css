@@ -261,6 +261,11 @@ hr {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+.my-container{
+    width: 1140px; margin:0 auto;
+}
+
 .container {
   margin-right: auto;
   margin-left: auto;
@@ -482,6 +487,8 @@ hr {
 .col-xs-offset-0 {
   margin-left: 0%;
 }
+
+
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -966,6 +973,8 @@ hr {
     margin-left: 0%;
   }
 }
+
+
 fieldset {
   padding: 0;
   margin: 0;
@@ -2875,3 +2884,5 @@ td.visible-print {
     display: none !important;
   }
 }
+
+.container { max-width: none !important; width: 1170px !important;}
