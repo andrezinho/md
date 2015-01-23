@@ -5,20 +5,22 @@ $db = Spdo::singleton();
     
     if(!isset($_SESSION['idusuario']))
     {        
-        $sql = "SELECT p.*,0 as deseo
-                FROM publicaciones as p inner join suscripcion as s 
-                    on s.idsuscripcion = p.idsuscripcion
-                    inner join local as l on l.idlocal = s.idlocal                
+        $sql = "SELECT p.*,0 as deseo,e.dominio
+                FROM publicaciones as p 
+                    inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
+                    inner join local as l on l.idlocal = s.idlocal
+                    INNER JOIN empresa as e on e.idempresa=l.idempresa                 
                 WHERE p.estado<>0 and p.tipo<>1 and l.idubigeo = '".$_SESSION['idciudad']."'
                 ORDER BY idpublicaciones desc limit 3 ";
 
     }
     else
     {
-        $sql = "SELECT p.*,coalesce(d.idpublicaciones,0) as deseo
+        $sql = "SELECT p.*,coalesce(d.idpublicaciones,0) as deseo,e.dominio
             FROM publicaciones as p inner join suscripcion as s 
                 on s.idsuscripcion = p.idsuscripcion
-                inner join local as l on l.idlocal = s.idlocal                
+                inner join local as l on l.idlocal = s.idlocal
+                INNER JOIN empresa as e on e.idempresa=l.idempresa                 
                 left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
             WHERE p.estado<>0 and p.tipo<>1 and l.idubigeo = '".$_SESSION['idciudad']."'
             ORDER BY idpublicaciones desc limit 3 ";
@@ -47,6 +49,7 @@ $db = Spdo::singleton();
                             'hora_fin' => $valor['hora_fin'],
                             'imagen' => $valor['imagen'],
                             'deseo' => $valor['deseo'],
+                            'dominio' => $valor['dominio'],
                             'enlaces' => array()
             );
         $cont ++;

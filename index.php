@@ -1,9 +1,10 @@
 <?php
 require_once 'head.php';
-$stmt = $db->prepare("SELECT p.* 
+$stmt = $db->prepare("SELECT p.*,e.dominio 
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
                            inner join local as l on l.idlocal = s.idlocal
+                           INNER JOIN empresa as e on e.idempresa=l.idempresa
                       WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
@@ -15,6 +16,7 @@ $st->execute();
 ?>
 <body>
 <div id="frm-suscripcion"></div>
+
 <header>   
     
   <!-- Barra Top y Logo -->
@@ -26,6 +28,7 @@ $st->execute();
           <div>            
              <div class="logoimage"><img src="images/logo.png" /></div>             
           </div>
+
           <ul class="nav nav-pills pull-right">            
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
@@ -163,12 +166,13 @@ $st->execute();
          <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
          if(!isset($_SESSION['idusuario']))
          {
-           $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                               c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                               p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
-                               e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
-                               l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
-                               l.mapa_google,l.latitud,l.longitud,0 as deseo
+           $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, 
+                            p.descripcion as desc_publi,e.dominio,c.idcategoria,
+                            c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,
+                            p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,
+                            e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,e.website,e.nombre_contacto, 
+                            l.idubigeo,l.descripcion,l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,l.mapa_google,l.latitud,
+                            l.longitud,0 as deseo
                         FROM publicaciones as p
                                 INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                                 INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -180,12 +184,12 @@ $st->execute();
           }
          else
          {
-            $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                               c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                               p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
-                               e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
-                               l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
-                               l.mapa_google,l.latitud,l.longitud,coalesce(d.idpublicaciones,0) as deseo
+            $sql_q = "SELECT  p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, 
+                              p.descripcion as desc_publi,e.dominio,c.idcategoria,
+                              c.escripcion as categoria,p.precio,p.precio_regular, p.imagen,
+                              p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,
+                              e.twitter,e.youtube,e.razon_comercial,p.cc,e.website,e.nombre_contacto, l.idubigeo,l.descripcion,l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,l.mapa_google,
+                              l.latitud,l.longitud,coalesce(d.idpublicaciones,0) as deseo
                         FROM publicaciones as p
                                 INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                                 INNER JOIN categoria as c on c.idcategoria=s.idcategoria
