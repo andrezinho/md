@@ -163,7 +163,9 @@ else{$logo=$host."/images/nologo.png";}
             </div>
             <div>
               <form id="frm" name="frm">
-                 <input type="hidden" name="idp" id="idp" value="<?php echo $id; ?>" />
+
+                 <input type="hidden" name="idp" id="idp" value="<?php echo $id ?>" />
+
                  <table border="0">
                   <tr> 
                    <td>*Nombres</td>

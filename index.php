@@ -62,19 +62,9 @@ $st->execute();
   <!-- Fin de Barra Top y Logo -->
   
   <!-- Buscador y Barra de Redes Sociales -->
-  <div class="my-container" style="height: 60px"> 
-      <div class="pull-right" style="padding: 4px 0 0 0">
-        <div class="searchbar" style="float:left; width:220px;">
-          <form action="resultados.php" method="get">                  
-            <div style="background: red; float: left; ">
-              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
-            </div>
-            <div class="searchbox">
-              <button class="fa fa-search fa-fw" type="submit"></button>
-            </div>          
-          </form>          
-        </div>
-        <div class="searchbar" style="float:left; width:175px;">
+  <div class="my-container" style="height: 60px; "> 
+      <div style="padding: 4px 0 0 0; width:100%">
+          <div class="searchbar" style="float:right; width:175px;">
             <div class="social-icons">
                 <ul>
                   <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
@@ -84,6 +74,17 @@ $st->execute();
                 </ul>
             </div>  
         </div>
+        <div class="searchbar" style="float:right; width:220px;">
+          <form action="resultados.php" method="get">                  
+            <div style="background: red; float: left; ">
+              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
+            </div>
+            <div class="searchbox">
+              <button class="fa fa-search fa-fw" type="submit"></button>
+            </div>          
+          </form>          
+        </div>
+        
       </div>
  </div>
   <!-- Fin de Buscador y Barra de Redes Sociales -->
@@ -156,14 +157,15 @@ $st->execute();
     </div>
   </div>
 </div>
-
 <div class="row clearfix f-space30"></div>
 <div class="container">
   <div class="row" id="category">
     <div class="col-lg-12 col-md-12 main-column box-block">
-      <?php while($c=$st->fetch()){
+      <?php 
+        while($c=$st->fetch()){
          echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
          <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
+         
          if(!isset($_SESSION['idusuario']))
          {
            $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, 
@@ -186,7 +188,7 @@ $st->execute();
          {
             $sql_q = "SELECT  p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, 
                               p.descripcion as desc_publi,e.dominio,c.idcategoria,
-                              c.escripcion as categoria,p.precio,p.precio_regular, p.imagen,
+                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,
                               p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,
                               e.twitter,e.youtube,e.razon_comercial,p.cc,e.website,e.nombre_contacto, l.idubigeo,l.descripcion,l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,l.mapa_google,
                               l.latitud,l.longitud,coalesce(d.idpublicaciones,0) as deseo
@@ -200,6 +202,7 @@ $st->execute();
                          WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
                          order by idpublicaciones desc limit 8";
          }
+         
          $pub = $db->prepare($sql_q);
          $pub->bindValue(':idc', $c['idcategoria'] , PDO::PARAM_INT);
          $pub->execute();
