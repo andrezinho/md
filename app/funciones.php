@@ -1,4 +1,4 @@
-<?php 
+<?php  
 $host="http://".$_SERVER['SERVER_NAME']."/md";
 //$host="http://".$_SERVER['SERVER_NAME'];
 function dameURL()
