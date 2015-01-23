@@ -163,7 +163,7 @@ else{$logo=$host."/images/nologo.png";}
             </div>
             <div>
               <form id="frm" name="frm">
-                 <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['id'] ?>" />
+                 <input type="hidden" name="idp" id="idp" value="<?php echo $id; ?>" />
                  <table border="0">
                   <tr> 
                    <td>*Nombres</td>
@@ -250,7 +250,7 @@ else{$logo=$host."/images/nologo.png";}
           </div>
           <?php else: ?>
           <form id="frm" name="frm">
-            <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['id'] ?>" />
+            <input type="hidden" name="idp" id="idp" value="<?php echo $id ?>" />
             <table>
             <tr>
               <td>Nombres</td>

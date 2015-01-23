@@ -121,8 +121,8 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  //host=host+"/md";
-  host=host;
+  host=host+"/md";
+  //host=host;
   $(document).ready(function(){
     
     $("#sendf").click(function(){

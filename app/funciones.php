@@ -1,6 +1,6 @@
 <?php 
-//$host="http://".$_SERVER['SERVER_NAME']."/md";
-$host="http://".$_SERVER['SERVER_NAME'];
+$host="http://".$_SERVER['SERVER_NAME']."/md";
+//$host="http://".$_SERVER['SERVER_NAME'];
 function dameURL()
 {
     $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -64,7 +64,7 @@ function oferta($r)
                       <a class="img" href="'.$link.'"><img alt="product info" src="'.$img.'" title="'.utf8_encode($r['titulo1']).'"></a> </div>
                     <div class="product-meta">
                       <div class="name">
-                        <a href="producto.html">
+                        <a href="'.$link.'">
                         '.utf8_encode($r['titulo1']).'
                         </a>
                       </div>
@@ -103,7 +103,7 @@ function oferta($r)
                         <i class="fa fa-heart fa-fw" style="color:#FCD209"></i> </button>';
              } 
             
-             $html .= '<a class="btn btn-default btn-compare pull-left" href="'.$host.'/'.$r['dominio'].'producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'" >Ver <b>&GT;</b></a></div>';
+             $html .= '<a class="btn btn-default btn-compare pull-left" href="'.$host.'/'.$r['dominio'].'/producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'" >Ver <b>&GT;</b></a></div>';
                    
 
               $html .='</div>
@@ -161,15 +161,15 @@ function login($helper,$config)
                 <ul>';
         if($_SESSION['id_perfil']!=4) 
         { 
-          $html .= '<li><a href="'.$host.'panel/">Panel Admin</a></li>';
+          $html .= '<li><a href="'.$host.'/panel/">Panel Admin</a></li>';
         } 
 
-        $html .= '<li><a href="'.$host.'cuenta.php">Mis Datos</a></li>';
+        $html .= '<li><a href="'.$host.'/cuenta.php">Mis Datos</a></li>';
         
 
-        $html .= '<li><a href="'.$host.'mis-cupones.php">Mis Cupones</a></li>
+        $html .= '<li><a href="'.$host.'/mis-cupones.php">Mis Cupones</a></li>
                   <li><a href="#">Mis Suscripciones</a></li>
-                  <li><a href="'.$host.'app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
+                  <li><a href="'.$host.'/app/logout.php?url_ref=http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'">Salir</a></li>
                   </ul>               
                   </div>
                   </li>';
