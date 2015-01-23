@@ -1,7 +1,6 @@
 <?php 
 require_once '/app/start.php'; //Start para facebook -> ;)
 require_once '/app/funciones.php';
-
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
@@ -10,16 +9,16 @@ require_once '/app/funciones.php';
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta name="description" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc ">
-<meta name="keywords" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc " />
-<meta name="news_keywords" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc "/>
-<meta name="robots" content="index,follow"/>
-<meta name='googlebot' content='index, follow' />
-<meta name="organization" content="Muchos Descuentos" />
-<meta property="og:url" content="http://www.muchosdescuentos.com.pe" />
-<meta name="robots" content="index, follow" />
-<meta name="author" content="Muchos Descuentos" />
-<meta name='Origen' content='Muchos Descuentos' />
-<meta name="locality" content="Lima, Peru" />
+<meta name="keywords" content="qEn muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc " />
+<meta name="news_keywords" content="sEn muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc "/>
+<meta name="robots" 		content="index,follow"/>
+<meta name='googlebot' 		content='index, follow' />
+<meta name="organization" 	content="Muchos Descuentos" />
+<meta property="og:url" 	content="http://www.muchosdescuentos.com" />
+<meta name="robots" 		content="index, follow" />
+<meta name="author" 		content="Muchos Descuentos" />
+<meta name='Origen' 		content='Muchos Descuentos' />
+<meta name="locality" 		content="Lima, Peru" />
 
 
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">

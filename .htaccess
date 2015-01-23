@@ -22,8 +22,11 @@ RewriteRule ^resultados/(\w+)/?$ resultados.php?id=$1 [L]
 RewriteRule resultados/(.*) resultados.php?page=resultados&id=$1 [L]
 
 RewriteRule ^deseos/(\w+)/?$ deseos.php?id=$1 [L]
-RewriteRule deseos(.*) deseos.php?page=deseos&id=$1 [L]
+RewriteRule deseos/(.*) deseos.php?page=deseos&id=$1 [L]
 
 RewriteRule ^recuperar/(\w+)/?$ recuperar.php?id=$1 [L]
-RewriteRule recuperar(.*) recuperar.php?page=recuperar&id=$1 [L]
+RewriteRule recuperar/(.*) recuperar.php?page=recuperar&id=$1 [L]
+
+RewriteRule ^fichacompra/(\w+)/?$ fichacompra.php?id=$1 [L]
+RewriteRule fichacompra/(.*) fichacompra.php?page=fichacompra&id=$1 [L]
 </ifmodule>

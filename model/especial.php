@@ -4,10 +4,11 @@ require_once '../lib/spdo.php';
 $db = Spdo::singleton();
 
 
-        $stmt = $db->prepare("SELECT p.* 
+        $stmt = $db->prepare("SELECT p.*,e.dominio
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
                            inner join local as l on l.idlocal = s.idlocal
+                           INNER JOIN empresa as e on e.idempresa=l.idempresa
                       WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
                       ORDER BY idpublicaciones desc limit 3");
         //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
@@ -32,6 +33,7 @@ $db = Spdo::singleton();
                                 'hora_inicio' => $valor['hora_inicio'],
                                 'hora_fin' => $valor['hora_fin'],
                                 'imagen' => $valor['imagen'],
+                                'dominio' => $valor['dominio'],
                                 'enlaces' => array()
                 );
             $cont ++;

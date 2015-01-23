@@ -1,6 +1,6 @@
 <?php 
-$host="http://".$_SERVER['SERVER_NAME']."/md";
-//$host="http://".$_SERVER['SERVER_NAME'];
+//$host="http://".$_SERVER['SERVER_NAME']."/md";
+$host="http://".$_SERVER['SERVER_NAME'];
 function dameURL()
 {
     $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -53,7 +53,7 @@ function limpiar($valor)
 function oferta($r)
 {
       global $host;
-      $link = $host."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
+      $link = $host."/".$r['dominio']."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
       $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
 
       $html = '';
@@ -78,7 +78,7 @@ function oferta($r)
                             '.$r['precio_regular'].'
                           </span> 
                       </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="'.$host.'/ficha-compra.php?p='.$r['idpublicaciones'].'">Comprar</a></div>
+                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="'.$host.'/'.$r['dominio'].'/fichacompra/'.urls_amigables($r['titulo1']."-".$r['idpublicaciones']).'">Comprar</a></div>
                       <div class="small-price">
                         <span class="price-new">
                           <span class="sym">S/.</span>
@@ -103,7 +103,7 @@ function oferta($r)
                         <i class="fa fa-heart fa-fw" style="color:#FCD209"></i> </button>';
              } 
             
-             $html .= '<a class="btn btn-default btn-compare pull-left" href="'.$host.'/producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'" >Ver <b>&GT;</b></a></div>';
+             $html .= '<a class="btn btn-default btn-compare pull-left" href="'.$host.'/'.$r['dominio'].'producto/'.urls_amigables($r['titulo1'].'-'.$r['idpublicaciones']).'" >Ver <b>&GT;</b></a></div>';
                    
 
               $html .='</div>

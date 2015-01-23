@@ -1,17 +1,29 @@
 <?php
 session_start();
-require_once 'head.php'; //Start para facebook -> ;)
+require_once 'head.php';
+
+//$db = Spdo::singleton();
 $url=$_GET["id"];
-$db = Spdo::singleton();
+
+$id=explode("-",$url);
+$n=count($id);
+
+$titulo="";
+for($s=0; $s<($n-1); $s++) 
+{
+  $titulo .=$id[$s]." ";
+}
+$id=$id[$n-1];
+
 $stmt = $db->prepare("SELECT * 
                       FROM publicaciones
                       WHERE estado<>0 and tipo=1
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
 $lista= $stmt->rowCount();
-$id = $_GET['p'];
+//$id = $_GET['p'];
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
+                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,e.dominio,
                              p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
@@ -32,6 +44,7 @@ $img=$host."/panel/web/imagenes/".$rr['imagen'].".jpg";
 if($rr['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$rr['logo'];}
 else{$logo=$host."/images/nologo.png";}
 ?>
+
 <script type="text/javascript" src="<?php echo $host; ?>/js/compra.js"></script>
 <style type="text/css">
   input {border:1px solid #dadada; height: 28px}
@@ -150,7 +163,7 @@ else{$logo=$host."/images/nologo.png";}
             </div>
             <div>
               <form id="frm" name="frm">
-                 <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['p'] ?>" />
+                 <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['id'] ?>" />
                  <table border="0">
                   <tr> 
                    <td>*Nombres</td>
@@ -237,7 +250,7 @@ else{$logo=$host."/images/nologo.png";}
           </div>
           <?php else: ?>
           <form id="frm" name="frm">
-            <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['p'] ?>" />
+            <input type="hidden" name="idp" id="idp" value="<?php echo $_GET['id'] ?>" />
             <table>
             <tr>
               <td>Nombres</td>
@@ -272,7 +285,7 @@ else{$logo=$host."/images/nologo.png";}
         <div style="margin:20px 0">
           <table>
             <tr>
-              <td><img src="panel/web/imagenes/home/small_<?php echo $rr['imagen']; ?>.jpg" width="50" ></td>
+              <td><img src="<?php echo $img;?>" width="50" ></td>
               <td><?php echo utf8_encode($rr['titulo2']); ?></td>
             </tr>
           </table>

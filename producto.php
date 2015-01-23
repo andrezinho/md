@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once 'head.php';
+require_once '/app/start.php'; //Start para facebook -> ;)
+require_once '/app/funciones.php';
+
 $db = Spdo::singleton();
 $url=$_GET["id"];
 $id=explode("-",$url);
@@ -15,7 +17,7 @@ $id=$id[$n-1];
 $stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,
                              p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,
-                             e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,
+                             e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.dominio,
                              e.youtube,e.razon_comercial,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
@@ -46,11 +48,81 @@ $st = $db->prepare("SELECT p.*
 $st->execute();
 $lista= $st->rowCount();
 ?>
+
+
+<!DOCTYPE html>
+<html class="noIE" lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
+<meta name="description" content="<?php echo $r['titulo2'];?>">
+<meta name="keywords" content="<?php echo $r['titulo2'];?>" />
+<meta name="news_keywords" content="<?php echo $r['titulo2'];?>"/>
+<meta name="robots"     content="index,follow"/>
+<meta name='googlebot'    content='index, follow' />
+<meta name="organization"   content="Muchos Descuentos" />
+<meta property="og:url"   content="http://www.muchosdescuentos.com/producto/<?php echo $url; ?>" />
+<meta name="og:image"     content="<?php echo $img;?>" />
+<meta name="og:title"     content="<?php echo $r['titulo1'];?>" />
+<meta name="robots"     content="index, follow" />
+<meta name="author"     content="Muchos Descuentos" />
+<meta name='Origen'     content='Muchos Descuentos' />
+<meta name="locality"     content="Lima, Peru" />
+
+
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
+<title><?php echo $titulo;?></title>
+
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+
+<link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
+<link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
+<link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
+
+<link href="<?php echo $host; ?>/css/suscripcion.css" rel="stylesheet"/>
+
+<link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.min.css" rel="stylesheet" />
+<link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.structure.min.css" rel="stylesheet" />
+<link type="text/css" href="<?php echo $host; ?>/css/jquery-ui.theme.min.css" rel="stylesheet" />
+<!-- Animations -->
+<!-- Custom styles for this template -->
+<link href="<?php echo $host; ?>/css/custom.css" rel="stylesheet" type="text/css" />
+<!-- Style Switcher -->
+<link href="<?php echo $host; ?>/css/style-switch.css" rel="stylesheet" type="text/css"/>
+<!-- Color -->
+<link href="<?php echo $host; ?>/css/skin/color.css" id="colorstyle" rel="stylesheet">
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]> <script src="js/html5shiv.js"></script> <script src="js/respond.min.js"></script> <![endif]-->
+<!-- Bootstrap core JavaScript -->
+
+<script type="text/javascript" src="<?php echo $host; ?>/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/jquery-ui-1.10.3.custom.min.js"></script>    
+<script src="<?php echo $host; ?>/js/bootstrap.min.js"></script>
+
+<!-- iView Slider -->
+<script src="<?php echo $host; ?>/js/raphael-min.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/jquery.easing.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/iView.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
+<script>
+  !window.jQuery && document.write("<script src='<?php echo $host; ?>/js/jquery.min.js'><\/script>")
+</script>
+<!--[if IE 8]>
+    <script type="text/javascript" src="<?php echo $host; ?>/js/selectivizr.js"></script>
+<![endif]-->
+<script type="text/javascript" src="<?php echo $host; ?>/js/utilitarios.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
+<script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
+
+<!-- timer -->
 <script type="text/javascript" src="<?php echo $host; ?>/js/countdown.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  host=host+"/md";
+  //host=host+"/md";
+  host=host;
   $(document).ready(function(){
     
     $("#sendf").click(function(){
@@ -83,6 +155,8 @@ $lista= $st->rowCount();
   });
 
 </script>
+</head>
+
 <body>
 <div id="frm-suscripcion"></div>
 <header>   
@@ -231,7 +305,10 @@ $lista= $st->rowCount();
                         <div class="precio-empresa"><b>Precio S/.</b><b class="c-precio"><?php echo $r['precio']; ?></b></div>
                             <div class="product-btns-detalle">
                                 <div class="product-big-btns">
-                                    <a href="../ficha-compra.php?p=<?php echo $r['idpublicaciones'] ?>" id="comprar" class="btn-comprar" data-toggle="tooltip" title="Comprar" style="width:100%; padding:15px 0 0 0">COMPRAR</a>                                    
+                                <?php 
+                                 $fc=$host."/".$r['dominio']."/fichacompra/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
+                                 ?>
+                                    <a href="<?php echo $fc;?>" id="comprar" class="btn-comprar" data-toggle="tooltip" title="Comprar" style="width:100%; padding:15px 0 0 0">COMPRAR</a>                                    
                                 </div>
                             </div>
                             <div class="time" style="padding:8px 0;"><img src="<?php echo $host;?>/images/time.jpg">Finaliza en: 
@@ -258,16 +335,18 @@ $lista= $st->rowCount();
                 <div class="short-info-det" style="padding:15px 0px">                   
                       <div class="short-info-opt" style="height: 0px">                           
                           <div style="float:left;" class="fb-like" data-href="http://www.muchosdescuentos.com/producto/<?php echo $url;?>" data-width="50" data-layout="button" data-action="like" data-show-faces="false"></div>
-
+                          
                           <div style="float:left;margin-left:1px;" class="fb-share-button" data-href="http://www.muchosdescuentos.com/producto/<?php echo $url;?>" data-layout="button"></div>
+
+
+
                           <!-- <div  class="fb-like" data-href="http://www.muchosdescuentos.com/peru/producto.html" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div> -->
                           <script src="https://apis.google.com/js/platform.js" async defer>
                             {lang: 'es'}
                           </script>                          
                           <a href="http://www.muchosdescuentos.com/producto/<?php echo $url;?>" class="twitter-share-button"
                             data-dnt="true"
-                            data-count="none"
-                            data-via="twitterdev">
+                            data-count="none">
                           Tweet
                           </a>                          
                           <script type="text/javascript">
@@ -439,7 +518,7 @@ $lista= $st->rowCount();
            
            $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
-                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                             p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,e.dominio,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google,l.latitud,l.longitud
@@ -483,7 +562,7 @@ $lista= $st->rowCount();
                     <?php echo $p['precio_regular'] ?>
                   </span> 
               </div>
-              <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host;?>/producto/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Comprar</a></div>
+              <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host."/".$p['dominio']."/";?>/fichacompra/<?php echo urls_amigables($p['titulo1']."-".$p['idpublicaciones']);?>">Comprar</a></div>
 
               <div class="small-price">
                 <span class="price-new">
