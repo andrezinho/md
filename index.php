@@ -6,6 +6,7 @@ $stmt = $db->prepare("SELECT p.*,e.dominio
                            inner join local as l on l.idlocal = s.idlocal
                            INNER JOIN empresa as e on e.idempresa=l.idempresa
                       WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                          and p.fecha_fin >= CURDATE()
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
 $lista= $stmt->rowCount();
@@ -182,6 +183,7 @@ $st->execute();
                                 INNER JOIN local as l on l.idlocal=su.idlocal
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa 
                          WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                            and p.fecha_fin >= CURDATE()
                          order by idpublicaciones desc limit 8";
           }
          else
@@ -200,6 +202,7 @@ $st->execute();
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa 
                                 left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                          WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                            and p.fecha_fin >= CURDATE()
                          order by idpublicaciones desc limit 8";
          }
          

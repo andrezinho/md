@@ -14,14 +14,40 @@ for($s=0; $s<($n-1); $s++)
   $titulo .=$id[$s]." ";
 }
 $id=$id[$n-1];
-$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,
-                             p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,
-                             e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.dominio,
-                             e.youtube,e.razon_comercial,p.cc,
-                             e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
-                             l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
-                             l.mapa_google,l.latitud,l.longitud
+$stmt = $db->prepare("SELECT p.idpublicaciones,
+                              p.titulo1, 
+                              p.titulo2, 
+                              p.descripcion as desc_publi,
+                              c.descripcion as categoria,
+                              p.precio,
+                              p.precio_regular, 
+                              p.imagen,
+                              p.fecha_inicio,
+                              p.fecha_fin,
+                              p.hora_inicio,
+                              p.hora_fin,
+                              p.descuento,
+                              e.idempresa,
+                              e.razon_social as empresa,
+                              e.logo,
+                              e.facebook,
+                              e.twitter,
+                              e.dominio,
+                              e.youtube,
+                              e.razon_comercial,
+                              p.cc,
+                              e.website,
+                              e.nombre_contacto, 
+                              l.idubigeo,
+                              l.descripcion as local,
+                              l.direccion,
+                              l.referencia,
+                              l.telefono1,
+                              l.telefono2,
+                              l.horario,
+                              l.mapa_google,
+                              l.latitud,
+                              l.longitud
                       FROM publicaciones as p
                               INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                               INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -121,8 +147,8 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  //host=host+"/md";
-  host=host;
+  host=host+"/md";
+  //host=host;
   $(document).ready(function(){
     
     $("#sendf").click(function(){
@@ -379,25 +405,17 @@ $lista= $st->rowCount();
             <ul class="nav nav-tabs blog-tabs nav-justified">
               <li class="active"><a href="#detalle-producto" data-toggle="tab">Detalles de la Oferta</a></li>
               <li><a href="#tags" data-toggle="tab">Condiciones Comerciales</a> </li>
-              <li><a href="#reviews" data-toggle="tab">Local</a></li>
-              
-            </ul>
-            <!-- Tab panes -->
+              <li><a href="#reviews" data-toggle="tab">Local</a></li>              
+            </ul>            
             <div class="tab-content">
                <div class="tab-pane active" id="detalle-producto">
-                  <div >
-                <!-- detail mobile -->
+                  <div >                
                 <h3 class="tab_title mobile">
                     <span class="logo_section logo_info"></span>
                     TODO SOBRE LA OFERTA
                 </h3>
-                <!-- detail mobile -->
-              
-                              <?php echo utf8_encode($r['desc_publi']);?><br>
-                              
-                              
-
-                      </div>
+                <?php echo utf8_encode($r['desc_publi']);?><br>
+                </div>
                  </div>
                   <div class="tab-pane " id="reviews">          
                         <div class="table-responsive">
@@ -407,9 +425,7 @@ $lista= $st->rowCount();
                                     <table>
                                         <tbody valign="top">
                                           <tr>
-                                              <td colspan="2">La empresa<br> <strong><?php echo $r['empresa'];?></strong><br>
-                                                  <p><?php echo $r['razon_comercial'];?></p>
-                                              </td>
+                                              <td colspan="2"><h2>Local:<br><strong><?php echo $r['local'];?></strong></h2><br></td>
                                           </tr>
                                           <tr>
                                               <td>                    

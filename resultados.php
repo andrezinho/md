@@ -118,75 +118,15 @@ $buscame = $bus->buscar();
                 else{
                     foreach($buscame as $r)
                     {
-                    $link = $host."/producto/".urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);
-                    $img  = $host."/panel/web/imagenes/home/small_".$r["imagen"].".jpg";
-                    
+                      $link = $host."/producto/".urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);
+                      $img  = $host."/panel/web/imagenes/home/small_".$r["imagen"].".jpg";                    
+
+                      $o = oferta($r);
+                      echo utf8_decode($o);
                 ?>
-
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                  <div class="product-block">
-                    <div class="image">
-                      <div class="product-label product-sale"><span><?php echo $r["descuento"];?></span></div>
-                      <a class="img" href="<?php echo $link;?>"><img alt="product info" src="<?php echo $img;?>" title="<?php echo utf8_encode($r['titulo1']);?>"></a> </div>
-                    <div class="product-meta">
-                      <div class="name">
-                        <a href="<?php echo $host;?>/producto/<?php echo urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);?>">
-                        <?php echo utf8_encode($r["titulo1"]);?>
-                        </a>
-                      </div>
-                      <div class="big-price"> 
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                           <?php echo $r["precio"];?>
-                          </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                            <?php echo $r["precio_regular"];?>
-                          </span> 
-                      </div>
-                      <div class="big-btns"><a class="btn btn-default btn-View pull-left" href="<?php echo $host;?>/producto/<?php echo urls_amigables($r["titulo1"]."-".$r["idpublicaciones"]);?>">Comprar</a></div>
-                      <div class="small-price">
-                        <span class="price-new">
-                          <span class="sym">$</span>
-                          <?php echo $r["precio"];?>
-                        </span> 
-                        <span class="price-old">
-                          <span class="sym">$</span>
-                          <?php echo $r["precio_regular"];?>
-                        </span>
-                      </div>
-                      <div class="rating"> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star"></i> 
-                        <i class="fa fa-star-half-o"></i> 
-                        <i class="fa fa-star-o"></i> 
-                      </div>
-                      
-                      <div class="small-btns">
-                        <button class="btn btn-default btn-wishlist pull-left" title="">
-                         <i class="fa fa-heart fa-fw"></i> 
-                        </button>
-                        <button class="btn btn-default btn-compare pull-left" title="Ver"><a href="<?php echo $link; ?>">Ver</a> <b>&GT;</b></button>
-                      </div>
-
-                    </div>
-                    <div class="meta-back"></div>
-                  </div> 
-                  <div class="row clearfix f-space30"></div>
-                </div> <!-- fin col-lg-3 col-md-3 col-sm-6 col-xs-12-->
-
-
-
                 <?php } }?>
-
-
-
-
-
               </div>
             </div>
-            
           </div>
         </div>
         </div>

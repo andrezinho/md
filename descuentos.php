@@ -16,7 +16,9 @@ if($url=="")
                               INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                               INNER JOIN local as l on l.idlocal=su.idlocal
-                              WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                              WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                                AND p.fecha_fin >= CURDATE()
+                              order by p.idpublicaciones desc";
           }
           else
           {
@@ -30,7 +32,9 @@ if($url=="")
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                              WHERE l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                              WHERE l.idubigeo='".$_SESSION['idciudad']."' 
+                                  AND p.fecha_fin >= CURDATE()
+                              order by p.idpublicaciones desc";
           }
 
     $stmt = $db->prepare($sql_c);                
@@ -63,7 +67,9 @@ else
                                     INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                                     INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                                     INNER JOIN local as l on l.idlocal=su.idlocal
-                                    WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";        
+                                    WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                                      AND p.fecha_fin >= CURDATE()
+                                    order by p.idpublicaciones desc";        
         
                 }
                 else
@@ -77,7 +83,9 @@ else
                             INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                             INNER JOIN local as l on l.idlocal=su.idlocal
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                            WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";        
+                            WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                                AND p.fecha_fin >= CURDATE()
+                            order by p.idpublicaciones desc";        
                 }
                 $stmt = $db->prepare($sql_qa);
                 $stmt->execute();
@@ -115,7 +123,9 @@ else
                             INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                             INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                             INNER JOIN local as l on l.idlocal=su.idlocal
-                            WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                            WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' 
+                              AND p.fecha_fin >= CURDATE()
+                            order by p.idpublicaciones desc";
         }
         else
         {
@@ -129,7 +139,9 @@ else
                             INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                             INNER JOIN local as l on l.idlocal=su.idlocal
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                            WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                            WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' 
+                            AND p.fecha_fin >= CURDATE()
+                            order by p.idpublicaciones desc";
         }
 
         $stmt = $db->prepare($sql_c);        
@@ -160,7 +172,9 @@ else
                                 INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                                 INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                                 INNER JOIN local as l on l.idlocal=su.idlocal
-                                WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                                WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
+                                    AND p.fecha_fin >= CURDATE()
+                                order by p.idpublicaciones desc";
         }
         else
         {
@@ -173,7 +187,9 @@ else
                     INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                     INNER JOIN local as l on l.idlocal=su.idlocal
                     left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                    WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc";
+                    WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
+                        AND p.fecha_fin >= CURDATE()
+                    order by p.idpublicaciones desc";
           
         }
 

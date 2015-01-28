@@ -9,5 +9,10 @@ if(isset($_SESSION['idusuario'])&&isset($_POST['i']))
 	$stmt->bindParam(':us',$_SESSION['idusuario'],PDO::PARAM_INT);
 	$stmt->bindParam(':f',$fecha,PDO::PARAM_STR);
 	$stmt->execute();
+	echo "1";
+}
+else
+{
+	echo "0";
 }
 ?>
