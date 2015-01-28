@@ -1,6 +1,6 @@
 var host=window.location.host;
-host=host+'/md';
-//host=host; 
+//host=host+'/md';
+host=host; 
 
 $(document).ready(function(){
 //Suscripciones
@@ -408,6 +408,12 @@ var PI = {
 function addwishlist(i)
 {
     $.post('http://'+host+'/model/addwish.php','i='+i,function(r){
+      if(r==1) {
         $("#fa-heart-"+i).css("color","#FCD209");
+      }
+      else
+      {
+        
+      }      
     });
 }

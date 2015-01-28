@@ -49,7 +49,9 @@ class Buscador extends Spdo
                       INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                       INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                       INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE lower(p.titulo1) like '%".strtolower($_GET['search'])."%' OR lower(p.titulo2) like '%".strtolower($_GET['search'])."%' and l.idubigeo='".$_SESSION['idciudad']."' order by p.idpublicaciones desc");
+                      WHERE lower(p.titulo1) like '%".strtolower($_GET['search'])."%' OR lower(p.titulo2) like '%".strtolower($_GET['search'])."%' and l.idubigeo='".$_SESSION['idciudad']."' 
+                        and p.fecha_fin >= CURDATE()
+                      order by p.idpublicaciones desc");
         
         $stmt->execute();
         return $stmt->fetchAll();
