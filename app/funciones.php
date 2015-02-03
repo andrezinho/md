@@ -52,7 +52,9 @@ function limpiar($valor)
 
 function oferta($r)
 {
+
       global $host;
+      
       $link = $host."/".$r['dominio']."/producto/".urls_amigables($r['titulo1']."-".$r['idpublicaciones']);
       $img  = $host."/panel/web/imagenes/home/small_".$r['imagen'].".jpg";
 
@@ -111,8 +113,11 @@ function oferta($r)
                   </div> 
                   <div class="row clearfix f-space30"></div>
                 </div>';
+      
   return $html;
 }
+
+
 function login($helper,$config)
 {
     global $host;

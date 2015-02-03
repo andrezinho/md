@@ -3,12 +3,12 @@ session_start();
 require_once '../lib/spdo.php';
 require_once '../app/funciones.php';
 
-$email = trim($_POST['mail']);
-$idp=$_POST['idp'];
+echo $email = trim($_POST['mail']);
+echo $idp=$_POST['idp'];
 if (filter_var($email, FILTER_VALIDATE_EMAIL)) 
 {   
 	$stmt = $db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion as desc_publi,
-                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
+                             c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.dominio,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,p.cc,
                              e.website,e.nombre_contacto, l.idubigeo,l.descripcion,
                              l.direccion,l.referencia,l.telefono1,l.telefono2,l.horario,
                              l.mapa_google,l.latitud,l.longitud
@@ -38,9 +38,9 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL))
                 </h2>
                 <div style="font-size:14px; color: #666">
                     <p>Hola, <b>'.$email.'</b></p>
-                    <p><a href="http://www.muchosdescuentos.com/producto/'.urls_amigables($r->titulo1."-".$r->idpublicaciones).'">'.$r->titulo1.'</a></p>
+                    <p><a href="http://www.muchosdescuentos.com/'.$r->dominio.'/producto/'.urls_amigables($r->titulo1."-".$r->idpublicaciones).'">'.$r->titulo1.'</a></p>
                 <img src="http://www.muchosdescuentos.com/panel/web/imagenes/'.$r->imagen.'.jpg" /><br>
-                <p><a href="http://www.muchosdescuentos.com/producto/'.urls_amigables($r->titulo1."-".$r->idpublicaciones).'">'.$r->titulo2.'</a></p>
+                <p><a href="http://www.muchosdescuentos.com/'.$r->dominio.'/producto/'.urls_amigables($r->titulo1."-".$r->idpublicaciones).'">'.$r->titulo2.'</a></p>
                 <p><b>Precio Regula: S/.</b>'.$r->precio_regular.'</p>
                 <p><b>Precio Oferta: S/.'.$r->precio.'</b></p>
                 <p><b>Descuento:</b>&nbsp;'.$r->descuento.'</p>

@@ -12,6 +12,12 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 #   Entrada:  producto/NOMBRE/
 #   Salida: producto.php?id=NOMBRE
 
+#ErrorDocument 404 /errors/404.php
+
+RewriteRule ^([a-zA-Z0-9]+)/$ dominio.php?id=$1 [L]
+RewriteRule ^([a-zA-Z0-9]+)$ dominio.php?id=$1 [L]
+#RewriteRule index/(.*) index.php?page=index&id=$1 [L]
+
 RewriteRule ^producto/(\w+)/?$ producto.php?id=$1 [L]
 RewriteRule producto/(.*) producto.php?page=producto&id=$1 [L]
 
@@ -22,7 +28,7 @@ RewriteRule ^resultados/(\w+)/?$ resultados.php?id=$1 [L]
 RewriteRule resultados/(.*) resultados.php?page=resultados&id=$1 [L]
 
 RewriteRule ^deseos/(\w+)/?$ deseos.php?id=$1 [L]
-RewriteRule deseos/(.*) deseos.php?page=deseos&id=$1 [L]
+RewriteRule deseos(.*) deseos.php?page=deseos&id=$1 [L]
 
 RewriteRule ^recuperar/(\w+)/?$ recuperar.php?id=$1 [L]
 RewriteRule recuperar/(.*) recuperar.php?page=recuperar&id=$1 [L]
