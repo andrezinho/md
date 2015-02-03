@@ -138,6 +138,27 @@ $st->execute();
 <script type="text/javascript" src="<?php echo $host; ?>/js/utilitarios.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js' type='text/javascript'></script>
+
+
+<script type='text/javascript'> 
+$(document).ready(function() {
+$(".contenido_tab").hide(); //Ocultar capas
+$("ul.tabs li:first").addClass("activa").show(); //Activar primera pestaña
+$(".contenido_tab:first").show(); //Mostrar contenido primera pestaña
+
+// Sucesos al hacer click en una pestaña
+$("ul.tabs li").click(function() {
+$("ul.tabs li").removeClass("activa"); //Borrar todas las clases "activa"
+$(this).addClass("activa"); //Añadir clase "activa" a la pestaña seleccionada
+$(".contenido_tab").hide(); //Ocultar todo el contenido de la pestaña
+var activatab = $(this).find("a").attr("href"); //Leer el valor de href para identificar la pestaña activa 
+$(activatab).fadeIn(); //Visibilidad con efecto fade del contenido activo
+return false;
+});
+});
+</script>
+
 </head>
 <body>
 	<div id="frm-suscripcion"></div>
@@ -277,36 +298,108 @@ $st->execute();
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="box-heading" ><span>Datos de <?php echo $r["dominio"];?></span></div>
-        <table border="0" width="100%">
+        <table border="0" width="100%" style="background:#EEE">
         <tr>
         <td width="60%" valign="top">
-        <p>
-        Somos una empresa con 20 años de experiencia, brindando un servicio de calidad
-        para ud. y su familia.
-
-        </p>
+        <p><b><?php echo $r["razon_comercial"];?></b></p>
+        <hr>
         <span><b>Nombre Contacto:</b><?php echo $r["nombre_contacto"]; ?></span><br>
-        <span><b>Direccion:</b><?php echo $r["direccion"]." - ".$r["ubigeo"]." - ".$r["local"]; ?></span><br>
-        <span><b>Referencia:</b><?php echo $r["referencia"]; ?></span><br>
-        <span><b>Telefonos:</b><?php echo $r["telefono1"]." - ".$r["telefono2"]; ?></span><br>
-        <span><b>Horario Atenci&oacute;n:</b><?php echo $r["horario"]; ?></span><br>
-        <span><b>Web:</b><a href="<?php echo $r["website"];?>" target="_blank" style="color:blue"><?php echo $r["website"];?></a></span>
+        <hr>
+        <?php
+          $sl = $db->prepare("SELECT l.idlocal, 
+                                     l.idempresa, 
+                                     u.descripcion as ubigeo, 
+                                     l.descripcion as local, 
+                                     l.direccion, 
+                                     l.referencia, 
+                                     l.telefono1, 
+                                     l.telefono2, 
+                                     l.horario, 
+                                     l.pagina_web, 
+                                     l.email, 
+                                     l.latitud, 
+                                     l.longitud, 
+                                     e.ruc, 
+                                     e.razon_comercial, 
+                                     e.nombre_contacto 
+                              FROM local as l 
+                              INNER JOIN empresa as e on e.idempresa=l.idempresa 
+                              INNER JOIN ubigeo as u on u.idubigeo=l.idubigeo 
+                              WHERE l.idempresa=:id");
+
+          $sl->bindValue(':id', $r["idempresa"] , PDO::PARAM_INT);
+          $sl->execute();
+        ?>
+        
+          <ul class="nav nav-tabs blog-tabs nav-justified">
+          <?php 
+          $c=0;
+          $tabs="";
+              foreach($sl->fetchAll() as $e){
+               $c++;
+               if($c==1){$c="active";}
+               else{$c="";} 
+          ?>   
+              <li class="<?php echo $c;?>">
+              <a href="#id_<?php echo $e['idlocal'];?>" data-toggle="tab"><?php echo $e["local"];?></a>
+              </li>
+
+
+              
+          <?php
+          $tabs .='<div class="tab-pane '.$c.'" id="id_'.$e["idlocal"].'">';
+          $tabs .='<div>';
+          $tabs .="<table border='0' style='width:100%'>";
+          $tabs .="<tr>";
+          $tabs .='<td  align="right"><b>Direccion:</b></td><td>'.$e["direccion"].' - '.$e["ubigeo"].'</td>';
+          $tabs .="</tr>";
+          $tabs .="<tr>";
+          $tabs .='<td align="right"><b>Referencia:</b></td><td>'.$e["referencia"].'</td>';
+          $tabs .="</tr>";
+          $tabs .="<tr>";
+          $tabs .='<td align="right"><b>Telefonos:</b></td><td>'.$e["telefono1"].' - '.$e["telefono2"].'</td>';
+          $tabs .="</tr>";
+          $tabs .="<tr>";
+          $tabs .='<td align="right"><b>Horario Atenci&oacute;n:</td><td>'.$e["horario"].'</td>';
+          $tabs .="</tr>";
+          $tabs .="<tr>";
+          $tabs .='<td align="right"><b>Web:</b></td><td><a href="'.$e["pagina_web"].'" target="_blank" style="color:blue">'.$e["pagina_web"].'</a></td>';
+          $tabs .="</tr>";
+          $tabs .="</table>";
+          $tabs .='</div>';
+          $tabs .='</div>';
+
+           } 
+
+
+           ?>
+            </ul>
+            
+            <div class="tab-content">
+            <?php echo $tabs;?>          
+                  
+            </div> <!-- fin tab-content -->
+
+
+
+
+
+
         </td>
-        <td width="40%" valign="top"><b>Ubicaci&oacute;n</b>
+        <td width="40%" valign="top"><b>Ubicaci&oacute;n - <a href="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>" style="color:blue;font-size:11px" target="_blank">Ver en otra pestaña</a></b>
           <section id="mapa">
                                                                             
-            <iframe width="425" height="150" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
+            <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
             </iframe>                                    
           </section>
         </td>
         </tr>
         </table>
+        
     </div>
 </div>
 </div>
-<div class="f-space10"></div>      
-
-
+<div class="f-space20"></div>      
 
 <div class="container">
   <div class="row" id="category">
