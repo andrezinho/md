@@ -128,13 +128,12 @@ function login($helper,$config)
                   <i class="fa fa-user fa-fw"></i>
                     <span class="hidden-xs"> Iniciar Sesión</span>              
                 </a>              
-                <div class="loginbox dropdown-menu" id="box-login"> 
+                <div class="loginbox dropdown-menu" id="box-login" style="border:1px solid #C53C2C; border-top:0;"> 
                   Conectarse con:<br>
                     <div class="social-icons">
                       <ul>
-                        <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
-                        <li class="icon twitter"><a href="#"><i class="fa fa-twitter fa-fw"></i></a></li>
-                        <li class="icon facebook" id="icon_facebook"><a href="'.$helper->getLoginUrl($config['scopes']).'"><i class="fa fa-facebook fa-fw"></i></a></li>
+                      
+                        <li class="icon facebook" id="icon_facebook" ><a href="'.$helper->getLoginUrl($config['scopes']).'" style="width:250px">Conectarse con Facebook &nbsp;&nbsp;&nbsp;<i class="fa fa-facebook fa-fw"></i></a></li>
                       </ul>
                     </div>               
                  <br><br>
