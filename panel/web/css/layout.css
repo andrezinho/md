@@ -104,3 +104,6 @@
 .enlaces-menu li a { color:#fafafa; }
 
 .item-required { color: red; padding: 0 5px;}
+.table-list-md { }
+.table-list-md tr th { background: #EEEEEE;}
+.table-list-md tr th,.table-list-md tr td { padding: 5px; border:1px dotted #666; }

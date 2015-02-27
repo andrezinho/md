@@ -1,9 +1,9 @@
 <form name="frm-suscripcion" id="frm-suscripcion">
 <div class="box-logo">
-    <img src="http://localhost/md/images/logo.png">
+    <img src="http://www.muchosdescuentos.com/images/logo.png">
 </div>
 <div class="principal">
-	Suscripcion a Muchos Descuentos
+	Suscripción a Muchos Descuentos
 </div>
 <table style="width:500px;">
 	<tr>
@@ -19,6 +19,6 @@
 <div style="text-align:center;" id="botones-suscrip">
 <br/>
 	<a href="#" id="btnclose" class="myButton" style="color:#fff">Cerrar</a>
-    <a href="#" id="btnsend" class="myButton" style="color:#fff">Confirmar</a>
+    <a href="#" id="btnsend" class="myButton" style="color:#fff">Acepto</a>
 </div>
 <br/>

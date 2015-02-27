@@ -28,7 +28,7 @@ class empresa extends Main
         
         $_P['colores']="";
 
-        if($this->verifica_dominio($_P['dominio']))
+        if($this->verifica_dominio($_P['dominio'],0))
         {
 
 
@@ -71,7 +71,23 @@ class empresa extends Main
             
             $p1 = $stmt->execute();
             $p2 = $stmt->errorInfo();
-            
+
+
+            $idempresa = $this->IdlastInsert('empresa','idempresa');
+
+            foreach($_P['idbancosd'] as $k => $v)
+            {
+                if($v!="")
+                {
+                    $stmt2=$this->db->prepare("insert into empresa_bancos(idempresa,idbancos,nrocuenta) 
+                            values(:ide,:idb,:nroc)");
+                    $stmt2->bindParam(':ide',$idempresa,PDO::PARAM_INT);
+                    $stmt2->bindParam(':idb',$v,PDO::PARAM_INT);
+                    $stmt2->bindParam(':nroc',$_P['nrocuentad'][$k],PDO::PARAM_STR);
+                    $stmt2->execute();
+                }
+            }
+
             return array($p1 , $p2[2]);
         }
         else
@@ -83,7 +99,7 @@ class empresa extends Main
     }
     function update($_P ) 
     {
-        if($this->verifica_dominio($_P['dominio']))
+        if($this->verifica_dominio($_P['dominio'],$_P['idempresa']))
         {
 
             $sql = "update empresa set  ruc=:p1,
@@ -130,6 +146,24 @@ class empresa extends Main
 
             $p1 = $stmt->execute();
             $p2 = $stmt->errorInfo();
+
+            $stmt_=$this->db->prepare("delete from empresa_bancos where idempresa = :idem");
+            $stmt_->bindParam(':idem',$_P['idempresa'],PDO::PARAM_INT);
+            $stmt_->execute();
+
+            foreach($_P['idbancosd'] as $k => $v)
+            {
+                if($v!="")
+                {
+                    $stmt2=$this->db->prepare("insert into empresa_bancos(idempresa,idbancos,nrocuenta) 
+                            values(:ide,:idb,:nroc)");
+                    $stmt2->bindParam(':ide',$_P['idempresa'],PDO::PARAM_INT);
+                    $stmt2->bindParam(':idb',$v,PDO::PARAM_INT);
+                    $stmt2->bindParam(':nroc',$_P['nrocuentad'][$k],PDO::PARAM_STR);
+                    $stmt2->execute();
+                }
+            }
+
             return array($p1 , $p2[2]);
         }
         else
@@ -147,9 +181,16 @@ class empresa extends Main
         return array($p1 , $p2[2]);
     }
     
-    function verifica_dominio($dominio)
+    function verifica_dominio($dominio,$idempresa)
     {
-        $stmt = $this->db->prepare("SELECT count(*) as n from empresa where dominio = :d");
+        if($idempresa!=0)
+        {
+            $stmt=$this->db->prepare("SELECT count(*) as n from empresa where dominio = :d and idempresa <> ".$idempresa);
+        }
+        else 
+        {
+            $stmt=$this->db->prepare("SELECT count(*) as n from empresa where dominio = :d ");
+        }
         $stmt->bindParam(':d',$dominio,PDO::PARAM_STR);
         $stmt->execute();
         $r = $stmt->fetchObject();
@@ -162,5 +203,22 @@ class empresa extends Main
             return false;
         }
     }
+
+    function getCuentas($idempresa)
+    {
+        $stmt=$this->db->prepare("SELECT b.idbancos,b.descripcion as banco,eb.nrocuenta
+                                  from empresa_bancos as eb inner join bancos as b on b.idbancos=eb.idbancos
+                                  where eb.idempresa =:ide");
+        $stmt->bindParam(':ide',$idempresa,PDO::PARAM_INT);
+        $stmt->execute();
+        $data=array();
+        foreach ($stmt->fetchAll() as $r) {
+            $data[]=array('idbancos'=>$r[0],
+                           'bancos'=>$r[1],
+                           'nrocuenta'=>$r[2]
+                           );
+        }
+        return $data;
+    }   
 }
 ?>

@@ -61,9 +61,9 @@ else{$logo=$host."/images/nologo.png";}
           <a href="<?php echo $host;?>"><img src="<?php echo $host;?>/images/logo.png" /></a>
           <ul class="nav nav-pills pull-right">            
             <li style="padding:10px 10px 6px;">Descuentos en
-              <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:140px;border:0;">
+              <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:200px;border:0;">
                 <?php                   
-                  $sql = "SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
+                  $sql = "SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,'')) from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
                   $stmt = $db->prepare($sql);
                   $stmt->execute();                  
                   foreach($stmt->fetchAll() as $r)
@@ -80,9 +80,10 @@ else{$logo=$host."/images/nologo.png";}
                 ?>
               </select>
             </li>       
-
-            <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="<?php echo $host; ?>/mis/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Descuentos</span></a> </li>
+            <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php endif; ?>
             <?php echo login($helper,$config); ?>
           </ul>
         </div>

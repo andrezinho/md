@@ -56,7 +56,7 @@ class empresaController extends Controller
     {
         $data = array();
         $view = new View();
-                
+        $data['bancos'] = $this->Select(array('id'=>'idbancos','name'=>'idbancos','table'=>'bancos'));
         $view->setData($data);
         $view->setTemplate( '../view/empresa/_form.php' );
         echo $view->renderPartial();
@@ -64,12 +64,14 @@ class empresaController extends Controller
 
     public function edit() 
     {
-        $obj = new empresa();
+        $obj_ = new empresa();
         $data = array();
         $view = new View();
-        $obj = $obj->edit($_GET['id']);
+        $obj = $obj_->edit($_GET['id']);
         $data['obj'] = $obj;
+        $data['bancos'] = $this->Select(array('id'=>'idbancos','name'=>'idbancos','table'=>'bancos'));
         $data['empresasPadres'] = $this->Select(array('id'=>'idpadre','name'=>'idpadre','table'=>'vista_empresa','code'=>$obj->idpadre));
+        $data['cuentas'] = $obj_->getCuentas($_GET['id']);
         $view->setData($data);
         $view->setTemplate( '../view/empresa/_form.php' );
         echo $view->renderPartial();
@@ -82,6 +84,7 @@ class empresaController extends Controller
         $view = new View();
         $obj = $obj->edit($_GET['id']);
         $data['obj'] = $obj;
+        $data['bancos'] = $this->Select(array('id'=>'idbancos','name'=>'idbancos','table'=>'bancos'));
         $data['empresasPadres'] = $this->Select(array('id'=>'idpadre','name'=>'idpadre','table'=>'vista_empresa','code'=>$obj->idpadre));
         $view->setData($data);
         $view->setTemplate( '../view/empresa/_form.php' );

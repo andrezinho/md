@@ -6,6 +6,7 @@ class ciudad extends Main
     {
         $sql = "SELECT s.idciudad,
                        u.descripcion,
+                       s.zona,
                        case s.estado when true then 'ACTIVO' else 'INCANTIVO' end
                 from ciudad AS s inner join ubigeo as u on s.idciudad = u.idubigeo";    
         return $this->execQuery($page,$limit,$sidx,$sord,$filtro,$query,$cols,$sql);
@@ -21,8 +22,9 @@ class ciudad extends Main
 
     function insert($_P ) 
     {
-        $stmt = $this->db->prepare("INSERT INTO ciudad (idciudad, estado) VALUES(:p0,:p2)");
+        $stmt = $this->db->prepare("INSERT INTO ciudad (idciudad, zona,estado) VALUES(:p0,:p1,:p2)");
         $stmt->bindParam(':p0', $_P['distrito'] , PDO::PARAM_STR);        
+        $stmt->bindParam(':p1', $_P['zona'] , PDO::PARAM_STR);
         $stmt->bindParam(':p2', $_P['activo'] , PDO::PARAM_INT);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
@@ -31,7 +33,10 @@ class ciudad extends Main
 
     function update($_P ) 
     {
-        $stmt = $this->db->prepare("UPDATE ciudad set  estado = :p2, idciudad=:p3 WHERE idciudad = :idciudad");        
+        $stmt = $this->db->prepare("UPDATE ciudad set  estado = :p2, idciudad=:p3,
+                                            zona = :p1
+                                        WHERE idciudad = :idciudad");        
+        $stmt->bindParam(':p1', $_P['zona'] , PDO::PARAM_STR);
         $stmt->bindParam(':p2', $_P['activo'] , PDO::PARAM_INT);
         $stmt->bindParam(':p3', $_P['distrito'] , PDO::PARAM_INT);
         $stmt->bindParam(':idciudad', $_P['idciudad'] , PDO::PARAM_STR);
@@ -51,7 +56,7 @@ class ciudad extends Main
 
     function arrayCiudad()
     {      
-       $stmt = $this->db->prepare("SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ");
+       $stmt = $this->db->prepare("SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,''))  from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ");
        $stmt->execute();
        $data = array();
        foreach($stmt->fetchAll() as $r)
@@ -63,7 +68,7 @@ class ciudad extends Main
 
     function getCiudad()
     {
-        $stmt = $this->db->prepare("SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod limit 1  ");
+        $stmt = $this->db->prepare("SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,'')) from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod limit 1  ");
         $stmt->execute();
         $data = array();
         $row = $stmt->fetchObject();        

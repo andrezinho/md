@@ -1,7 +1,14 @@
 $(function() 
 {   $( "#tabs" ).tabs({collapsible: true });
     $( "#ruc" ).focus();    
+    $("#idbancos").css("width","auto");
     $("#div_activo").buttonset();
+    $("#addBanco").click(function(){
+      addBanco();
+    });
+    $("#t-cuentas tbody tr td").on('click','.t-delete-item',function(){
+       $(this).parent().parent().remove();
+    })
 });
 
 function save()
@@ -31,4 +38,27 @@ function save()
       },'json');
   }
   return false;
+}
+
+function addBanco()
+{
+  var bval=true;
+  bval=bval&&$("#idbancos").required();
+  bval=bval&&$("#nrocuenta").required();
+  if(bval)
+  {
+    var idb=$("#idbancos").val(),
+        b=$("#idbancos option:selected").html(),
+        c=$("#nrocuenta").val();
+    html='';
+    html+='<tr>';
+    html+='<td><input type="hidden" name="idbancosd[]" value="'+idb+'"/>'+b+'</td>';
+    html+='<td><input type="hidden" name="nrocuentad[]" value="'+c+'"/>'+c+'</td>';
+    html+='<td align="center"><a href="javascript:" class="t-delete-item" style="color:red">[Eliminar]</a></td>';
+    html+='</tr>';
+    $("#t-cuentas").find('tbody').append(html);
+    $("#t-cuentas tbody tr td").on('click','.t-delete-item',function(){
+       $(this).parent().parent().remove();
+    })
+  }  
 }

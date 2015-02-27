@@ -1,17 +1,19 @@
 <?php
 require_once '../lib/controller.php';
 require_once '../lib/view.php';
-require_once '../model/ciudad.php';
-require_once '../model/empresa.php';
+require_once '../model/admin.php';
 
-class ciudadController extends Controller
+class adminController extends Controller
 {
     var $cols = array(
-                        1 => array('Name'=>'Codigo','NameDB'=>'s.idciudad','align'=>'center','width'=>'20'),
-                        2 => array('Name'=>'Descripcion','NameDB'=>'u.descripcion','search'=>true),
-                        3 => array('Name'=>'Zona','NameDB'=>'s.zona','search'=>true),
-                        4 => array('Name'=>'Estado','NameDB'=>'s.estado','width'=>'30','align'=>'center','color'=>'#FFFFFF')
+                        1 => array('Name'=>'Codigo','NameDB'=>'idusuario','align'=>'center','width'=>'30'),
+                        2 => array('Name'=>'Nombres y Apellidos','NameDB'=>'nombres','search'=>true),
+                        3 => array('Name'=>'DNI','NameDB'=>'nrodocumento','search'=>true,'width'=>'50','align'=>'center'),
+                        4 => array('Name'=>'Telefono','NameDB'=>'telefono','search'=>true,'width'=>'50','align'=>'center'),
+                        5 => array('Name'=>'email','NameDB'=>'email','search'=>true,'width'=>'80','align'=>'center'),                        
+                        6 => array('Name'=>'Estado','NameDB'=>'estado','width'=>'40','align'=>'center','color'=>'#FFFFFF')
                      );
+    
     public function index() 
     {
         $data = array();                               
@@ -22,6 +24,7 @@ class ciudadController extends Controller
 
         //(nuevo,editar,eliminar,ver)
         $data['actions'] = array(true,true,true,false);
+        $data['titulo'] = "Gestion de Administradores";
 
         $view = new View();
         $view->setData($data);
@@ -32,7 +35,7 @@ class ciudadController extends Controller
 
     public function indexGrid() 
     {
-        $obj = new ciudad();        
+        $obj = new admin();        
         $page = (int)$_GET['page'];
         $limit = (int)$_GET['rows']; 
         $sidx = $_GET['sidx'];
@@ -48,49 +51,30 @@ class ciudadController extends Controller
     public function create()
     {
         $data = array();
-        $view = new View(); 
-        $d = $this->departamentos();
-        $data['departamento'] = $this->Select(array('name'=>'departamento','id'=>'departamento','table'=>$d));                       
-        
+        $view = new View();
+        $data['tipo_documento'] = $this->Select(array('name'=>'idtipo_documento','id'=>'idtipo_documento','table'=>'tipo_documento'));
         $view->setData($data);
-        $view->setTemplate( '../view/ciudad/_form.php' );
+        $view->setTemplate( '../view/admin/_form.php' );
         echo $view->renderPartial();
     }
 
-    public function edit() 
-    {
-        $obj = new ciudad();
+    public function edit() {
+        $obj = new admin();
         $data = array();
         $view = new View();
         $obj = $obj->edit($_GET['id']);
-        $data['obj'] = $obj;    
-        $d = $this->departamentos();
-        $data['departamento'] = $this->Select(array('name'=>'departamento','id'=>'departamento','table'=>$d,'code'=>  substr($obj->idciudad, 0,2)."0000"));
-        $p = $this->provincia($obj->idciudad);
-        $data['provincia'] = $this->Select(array('name'=>'provincia','id'=>'provincia','table'=>$d,'code'=>  substr($obj->idciudad, 0,2)."0000"));
-        $dd = $this->distrito($obj->idciudad);
-        $data['distrito'] = $this->Select(array('name'=>'distrito','id'=>'distrito','table'=>$dd,'code'=> $obj->idciudad));    
-        $data['more_options'] = $this->more_options('ciudad');
+        $data['obj'] = $obj;
+        $data['tipo_documento'] = $this->Select(array('name'=>'idtipo_documento','id'=>'idtipo_documento','table'=>'tipo_documento','code'=>$obj->idtipo_documento));
         $view->setData($data);
-        $view->setTemplate( '../view/ciudad/_form.php' );
+        $view->setTemplate( '../view/admin/_form.php' );
         echo $view->renderPartial();
-        
     }
-    public function loadProvincia()
-    {
-        $p = $this->provincia($_GET['idd']);
-        print_r(json_encode($p));
-    }
-    public function loadDistrito()
-    {
-        $p = $this->distrito($_GET['idp']);
-        print_r(json_encode($p));
-    }
+
     public function save()
     {
-        $obj = new ciudad();
+        $obj = new admin();
         $result = array();        
-        if ($_POST['idciudad']=='') 
+        if ($_POST['idusuario']=='') 
             $p = $obj->insert($_POST);                        
         else         
             $p = $obj->update($_POST);                                
@@ -99,26 +83,24 @@ class ciudadController extends Controller
         else                 
             $result = array(2,$p[1]);
         print_r(json_encode($result));
-
     }
+
     public function delete()
     {
-        $obj = new ciudad();
+        $obj = new admin();
         $result = array();        
         $p = $obj->delete($_GET['id']);
         if ($p[0]) $result = array(1,$p[1]);
         else $result = array(2,$p[1]);
         print_r(json_encode($result));
     }
-  
-    public function arrayCiudad()
-    {
-        $obj = new ciudad();
-        $data = array();        
-        $data = $obj->arrayCiudad();
-        print_r(json_encode($data));
-    } 
-   
-}
 
+    public function vemail()
+    {
+        $obj = new admin();
+        $result = array();
+        $v = $obj->vemail($_GET['e']);
+        print_r(json_encode($v));
+    }
+}
 ?>

@@ -195,7 +195,10 @@ $lista= $st->rowCount();
             <ul class="nav nav-pills pull-right">          
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Tef: (01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
             </li>
-            <li> <a href="<?php echo $host; ?>/mis/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php endif; ?>
+
             <?php echo login($helper,$config); ?>
           </ul>
           <div class="searchbar" style="float:right; width:auto; margin-right: 7px;">                        

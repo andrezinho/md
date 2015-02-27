@@ -43,7 +43,7 @@ class PDF extends FPDF
         $this->Cell(45, 7,utf8_decode($text), $border, 0, 'L', true);
         $this->SetDrawColor(0,0,0);
     }
-	function FancyTable($r)
+	function FancyTable($r,$r_)
 	{
         $tingreso = 0;
         $tegresos = 0;
@@ -129,47 +129,25 @@ class PDF extends FPDF
         $this->Ln(2);
         $this->SetDrawColor(191, 191, 191);
         $w = 30;
-
-        if($r->bcp!="")
+        $cont=0;
+        foreach ($r_ as $r__) 
         {
-            $this->SetFillColor(231, 231, 231);
-            $this->Cell($w, 5,utf8_decode("BCP"), 1, 0, 'L', true);
-            $this->Cell($w+130, 5,utf8_decode($r->bcp), 1, 1, 'L', true);            
+            if($cont%2==0)
+            {
+                $this->SetFillColor(231, 231, 231);
+            }
+            else
+            {
+                $this->SetFillColor(255, 255, 255);
+            }
+
+            $cont +=1;
+
+            $this->Cell($w+30, 5,utf8_decode($r__['banco']), 1, 0, 'L', true);
+            $this->Cell($w+100, 5,": ".utf8_decode($r__['nrocuenta']), 1, 1, 'L', true);            
+            
         }
 
-        if($r->scotiabank!="")
-        {
-            $this->SetFillColor(255, 255, 255);
-            $this->Cell($w, 5,utf8_decode("SCOTIABANK"), 1, 0, 'L', true);
-            $this->Cell($w+130, 5,utf8_decode($r->scotiabank), 1, 1, 'L', true);            
-        }
-
-        if($r->interbank!="")
-        {
-            $this->SetFillColor(231, 231, 231);
-            $this->Cell($w, 5,utf8_decode("INTERBANK"), 1, 0, 'L', true);
-            $this->Cell($w+130, 5,utf8_decode($r->interbank), 1, 1, 'L', true);            
-        }
-
-        if($r->continental!="")
-        {
-            $this->SetFillColor(255, 255, 255);
-            $this->Cell($w, 5,utf8_decode("CONTINENTAL"), 1, 0, 'L', true);
-            $this->Cell($w+130, 5,utf8_decode($r->continental), 1, 1, 'L', true);            
-        }
-
-        if($r->nacion!="")
-        {
-            $this->SetFillColor(231, 231, 231);
-            $this->Cell($w, 5,utf8_decode("NACION"), 1, 0, 'L', true);
-            $this->Cell($w+130, 5,utf8_decode($r->nacion), 1, 1, 'L', true);            
-        }
-
-        if($r->otros!="")
-        {
-             $this->SetFillColor(255, 255, 255);            
-            $this->Cell(0, 5,utf8_decode($r->otros), 1, 1, 'L', true);            
-        }
 
         $this->Ln(5);
         $this->SetDrawColor(255, 255, 255);
@@ -213,7 +191,8 @@ $sql = "SELECT c.idcupon,
                 e.nacion,
                 p.titulo2,
                 p.cc,
-                ub.descripcion as ciudad
+                ub.descripcion as ciudad,
+                e.idempresa
         FROM cupon as c inner join publicaciones as p on c.idpublicaciones = p.idpublicaciones
         inner join usuario as u on c.idcliente = u.idusuario
         inner join suscripcion as s on p.idsuscripcion = s.idsuscripcion
@@ -233,7 +212,14 @@ if($r->nombres!="")
     $pdf->SetMargins(10, 15);
     $pdf->AddPage($orientacion);
     $pdf->AliasNbPages();
-    $pdf->FancyTable($r);
+
+    $stmt_ = $db->prepare("SELECT b.idbancos,b.descripcion as banco,eb.nrocuenta
+                                  from empresa_bancos as eb inner join bancos as b on b.idbancos=eb.idbancos
+                                  where eb.idempresa =:ide");
+    $stmt_->bindParam(':ide',$r->idempresa,PDO::PARAM_INT);
+    $stmt_->execute();
+
+    $pdf->FancyTable($r,$stmt_->fetchAll());
     $pdf->Output();
 }
 else
