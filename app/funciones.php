@@ -151,7 +151,7 @@ function login($helper,$config)
                     <input type="hidden" name="url_ref" id="url_ref" value="http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'" />
                     <button class="btn medium color1 pull-right" type="submit">Entrar</button>
                  </form>
-                 <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
+                 <a href="'.$host.'/recuperar.php">¿Olvidaste tu contrase&nacute;a?</a>
                 </div>
               </li>';
     }

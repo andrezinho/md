@@ -68,11 +68,43 @@
             ?>
     </div>  
     
-    <div id="tabs-4">
-        <p>
-            Número de Cuentas Bancarias con la que cuenta la empresa.
-        </p>
+    <div id="tabs-4">        
         <div style="width:700px;"></div>
+
+        <fieldset> <legend>Cuentas Bancarias</legend>
+            <label for="Banco" class="labels" style="width:130px;">Entidad Financiera:</label>
+            <?php echo $bancos; ?>
+            <input type="text" name="nrocuenta" id="nrocuenta" value="" class="ui-widget-content text ui-corner-all" style="width:180px" />
+            <a href="javascript:" id="addBanco" style="color:blue">[Agregar]</a>
+        </fieldset>
+
+        <div>
+            <table id="t-cuentas" class="table-list-md" style="width:100%">
+                <thead>
+                    <tr>                        
+                        <th>Banco</th>
+                        <th>Nro de Cuenta</th>
+                        <th align="center" style="width:50px"><p style="font-size:10px;color:red;text-align:center">Eliminar</p></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        foreach($cuentas as $ro)
+                        {
+                            ?>
+                            <tr>
+                                <td><input type="hidden" name="idbancosd[]" value="<?php echo $ro['idbancos']; ?>" /><?php echo $ro['bancos'] ?></td>
+                                <td><input type="hidden" name="nrocuentad[]" value="<?php echo $ro['nrocuenta']; ?>" /><?php echo $ro['nrocuenta'] ?></td>
+                                <td align="center"><a href="javascript:" class="t-delete-item" style="color:red">[Eliminar]</a></td>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 
         <label for="bcp" class="labels" style="width:130px;">BCP:</label>
         <input type="text" id="bcp"  name="bcp" class="text ui-widget-content ui-corner-all" style=" width: 200px; text-align: left;" value="<?php echo $obj->bcp; ?>" onkeypress="return permite(event,'num_car');"  />
         <br/>
@@ -90,6 +122,7 @@
         <br/>
         <label for="otros" class="labels" style="width:130px;">Otras Entidades:</label>
         <input type="text" id="otros"  name="otros" class="text ui-widget-content ui-corner-all" style=" width: 450px; text-align: left;" value="<?php echo $obj->otros; ?>" onkeypress="return permite(event,'num_car');"  />
+        -->
     </div>
 
     <div id="tabs-2">       

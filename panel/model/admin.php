@@ -1,8 +1,8 @@
 <?php
 include_once("Main.php");
-class asesor extends Main
+class admin extends Main
 {
-    var $idperfil = 2; //Asesor
+    var $idperfil = 1; //Administrador
     function indexGrid($page,$limit,$sidx,$sord,$filtro,$query,$cols)
     {
         $sql = "SELECT idusuario,
@@ -12,7 +12,8 @@ class asesor extends Main
                        email,
                        case estado when 1 then 'ACTIVO' else 'INCANTIVO' end
                 from usuario
-                where idperfil = 2";
+                where idperfil = 1 ";
+        
         return $this->execQuery($page,$limit,$sidx,$sord,$filtro,$query,$cols,$sql);
     }
 

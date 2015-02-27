@@ -57,4 +57,4 @@
         <?php } ?>
 </form>
 <div id="box-frm2" class="ui-widget-content ui-corner-all" style="height:400px; width:890px; display:none; margin:5px auto">      
-  </div>
+</div>

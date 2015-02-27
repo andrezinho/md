@@ -1,6 +1,4 @@
-<?php
-require_once 'head.php'; //Start para facebook -> x)
-?>
+<?php require_once 'head.php'; ?>
 <script type="text/javascript">
   $(document).ready(function(){
     
@@ -43,17 +41,11 @@ require_once 'head.php'; //Start para facebook -> x)
     <div class="row">
       <div class="col-md-12">
         <div class="topheadrow">
-          <a href="<?php echo $host;?>"><img src="images/logo.png" /></a>
-          <ul class="nav nav-pills pull-right">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Lima <i class="fa fa-angle-down fa-fw"></i></a>              
-              <ul class="dropdown-menu" role="menu">
-                  <li><a href="#a">LIMA</a></li>                
-                  <li><a href="#a">TRUJILLO</a></li>                
-              </ul>
-            </li>            
-            <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+          <a href="<?php echo $host; ?>/index.php"><img src="<?php echo $host; ?>/images/logo.png" /></a>
+          <ul class="nav nav-pills pull-right">                                 
+            <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
+            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <?php endif; ?>
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 
@@ -78,7 +70,7 @@ require_once 'head.php'; //Start para facebook -> x)
                   <div class="form-group"> <i class="fa fa-user fa-fw"></i>
                     <input class="form-control" id="usuario" name="usuario" placeholder="Email" type="text" data-validation="required">
                   </div>
-                  <div class="form-group"> <i class="fa fa-lock fa-fw"></i>
+                  <div class="form-group"><i class="fa fa-lock fa-fw"></i>
                     <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
                   </div>
                   <button class="btn medium color1 pull-right" type="submit">Entrar</button>

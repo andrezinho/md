@@ -28,7 +28,8 @@ $sql = "SELECT c.idcupon,
 		        e.otros,
 		        p.titulo2,
 		        p.cc,
-		        ub.descripcion as ciudad
+		        ub.descripcion as ciudad,
+		        e.idempresa
 		FROM cupon as c inner join publicaciones as p on c.idpublicaciones = p.idpublicaciones
 		inner join usuario as u on c.idcliente = u.idusuario
 		inner join suscripcion as s on p.idsuscripcion = s.idsuscripcion
@@ -101,36 +102,22 @@ if($r->nombres!="")
 	<div style="background:#E7E7E7;">
 		<b>Cuentas Bancarias: </b> <br/>
 		<table>
-			<?php if($r->bcp!="") { ?>
-			<tr>
-				<td>BCP</td><td><?php echo $r->bcp; ?></td>
-			</tr>
-			<?php } ?>
-			<?php if($r->scotiabank!="") { ?>			
-			<tr>
-				<td>BANCO SCOTIABANK</td><td><?php echo $r->scotiabank; ?></td>
-			</tr>
-			<?php } ?>
-			<?php if($r->interbank!="") { ?>
-			<tr>
-				<td>BANCO INTERBANK</td><td><?php echo $r->interbank; ?></td>
-			</tr>
-			<?php } ?>
-			<?php if($r->continental!="") { ?>
-			<tr>
-				<td>BANCO CONTINENTAL</td><td><?php echo $r->continental; ?></td>
-			</tr>
-			<?php } ?>
-			<?php if($r->nacion!="") { ?>
-			<tr>
-				<td>BANCO DE LA NACION</td><td><?php echo $r->nacion; ?></td>
-			</tr>
-			<?php } ?>
-			<?php if($r->otros!="") { ?>
-			<tr>
-				<td colspan="2"><?php echo $r->otros; ?></td>
-			</tr>
-			<?php } ?>
+		<?php
+			$stmt_ = $db->prepare("SELECT b.idbancos,b.descripcion as banco,eb.nrocuenta
+                                  from empresa_bancos as eb inner join bancos as b on b.idbancos=eb.idbancos
+                                  where eb.idempresa =:ide");
+			$stmt_->bindParam(':ide',$r->idempresa,PDO::PARAM_INT);
+			$stmt_->execute();
+			foreach ($stmt_->fetchAll() as $r_) 
+			{
+            	?>
+            	<tr>
+            		<td><?php echo $r_['banco']; ?></td>
+            		<td>:&nbsp;<?php echo $r_['nrocuenta']; ?></td>
+            	</tr>
+            	<?php
+        	}
+		?>
 		</table>	
 	</div>
 	<br/>

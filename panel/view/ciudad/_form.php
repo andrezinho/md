@@ -34,7 +34,9 @@
             { echo "<select class='ui-widget-content ui-corner-all text' name='distrito' id='distrito' ><option>...</option></select>";}
         ?> 
         <span class="item-required">*</span>
-
+        <br/>
+        <label for="zona" class="labels" style="width:130px;">Zona:</label>
+        <input type="text" name="zona" id="zona" value="<?php echo $obj->zona; ?>" maxlength="100" class="ui-widget-content ui-corner-all text" style="width:270px" />
         
         <br/>
         <label for="estado" class="labels" style="width:130px;">Activo:</label>

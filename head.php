@@ -24,8 +24,6 @@ require_once '/app/funciones.php';
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
 <title>Muchos Descuentos</title>
 
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
 <link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
@@ -68,3 +66,4 @@ require_once '/app/funciones.php';
 
 <!-- timer -->
 </head>
+<?php //print_r($_SESSION); ?>

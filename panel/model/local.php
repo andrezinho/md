@@ -7,10 +7,11 @@ class local extends Main
         $sql = "SELECT l.idlocal,
                         l.descripcion,
                         l.direccion,
-                        u.descripcion,
+                        concat(u.descripcion,' ',coalesce(c.zona,'')),
                         l.telefono1,
                 l.telefono2
-             from local as l inner join ubigeo as u on u.idubigeo = l.idubigeo
+             from local as l inner join ciudad as c on c.idciudad=l.idubigeo
+              inner join  ubigeo as u on u.idubigeo = c.idciudad
              where l.idempresa=".$emp;                
         return $this->execQuery($page,$limit,$sidx,$sord,$filtro,$query,$cols,$sql);
     }

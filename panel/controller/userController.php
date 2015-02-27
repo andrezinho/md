@@ -52,7 +52,7 @@ class UserController extends Controller {
             }
             else
             {   
-                header('location:../../index.php');                
+                header('location:../../index.php?error=1');                
             }
             //print_r(json_encode(array("resp"=>"0","msg"=>"Sus datos son incorrectos")));
         }
