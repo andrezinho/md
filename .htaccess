@@ -21,6 +21,7 @@ RewriteRule ^([a-zA-Z0-9]+)$ dominio.php?id=$1 [L]
 RewriteRule ^producto/(\w+)/?$ producto.php?id=$1 [L]
 RewriteRule producto/(.*) producto.php?page=producto&id=$1 [L]
 
+
 RewriteRule ^descuentos/(\w+)/?$ descuentos.php?id=$1 [L]
 RewriteRule descuentos/(.*) descuentos.php?page=descuentos&id=$1 [L]
 

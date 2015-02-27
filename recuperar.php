@@ -53,7 +53,7 @@ require_once 'head.php'; //Start para facebook -> x)
               </ul>
             </li>            
             <li> <a href="#a"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="#a"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/mis/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>
             <li class="dropdown">
               <a class="dropdown-toggle" data-hoView="dropdown" data-toggle="dropdown" href="#a"> 

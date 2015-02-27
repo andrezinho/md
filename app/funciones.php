@@ -139,7 +139,7 @@ function login($helper,$config)
                  <br><br>
                  <div id="log-in"><hr> 
                   <span>Login:</span>
-                  <span><a href="cuenta.php" id="registrar">Registrar</a></span>
+                  <span><a href="'.$host.'/cuenta.php" id="registrar">Registrar</a></span>
                  </div>
                  <form id="frmlogin" method="post"  action="'.$host.'/panel/web/process.php">
                     <div class="form-group"> <i class="fa fa-user fa-fw"></i>
@@ -149,9 +149,9 @@ function login($helper,$config)
                       <input class="form-control" id="password" name="password" placeholder="Password" type="password" data-validation="required">
                     </div>
                     <input type="hidden" name="url_ref" id="url_ref" value="http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'].'" />
-                    <button class="btn medium color1 pull-right" type="submit">Entrar</button>
+                    <button class="btn medium color1 pull-right" type="submit" id="into">Entrar</button>
                  </form>
-                 <a href="#">¿Olvidaste tu contrase&nacute;a?</a>
+                 <a href="'.$host.'/recuperar.php">¿Olvidaste tu contrase&nacute;a?</a>
                 </div>
               </li>';
     }

@@ -233,7 +233,7 @@ else
               </select>
             </li>           
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/mis/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php echo login($helper,$config); ?>            
           </ul>
         </div>
@@ -296,11 +296,17 @@ else
             <div class="item active">
               <div class="row box-product" > 
                 <!-- Product -->
-                <?php while($r = $stmt->fetch())
-                {
-                  $o = oferta($r);
-                  echo $o;
-                } 
+
+                <?php
+                  if($nc>0)
+                  { 
+                    while($r = $stmt->fetch())
+                    {
+                      $o = oferta($r);
+                      echo $o;
+                    } 
+                  }
+                  else{echo "<br><center><layout>Disculpe no existe descuentos para esta zona, le recomendamos visitar las otras zonas</layout></center>";}
                ?>
               </div>
             </div>

@@ -122,7 +122,8 @@ $.get('http://'+host+'/model/menu.php','&',function(data){
   		   $("#categoria-"+idcc).css({background:"#DE1215"});
        }
   	 });
-},'json');	
+},'json');
+
 
 $("#frm-suscripcion").dialog({ 
       modal:true,

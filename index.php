@@ -52,7 +52,7 @@ $st->execute();
               </select>
             </li>
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Ofertas</span></a> </li>
-            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/mis/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php echo login($helper,$config); ?>
           </ul>
         </div>
@@ -209,6 +209,7 @@ $st->execute();
          $pub = $db->prepare($sql_q);
          $pub->bindValue(':idc', $c['idcategoria'] , PDO::PARAM_INT);
          $pub->execute();
+         $cant= $pub->rowCount();
     ?> 
       <div class="box-content">
         <div class="box-products slide" id="productc3">
@@ -217,11 +218,15 @@ $st->execute();
             <div class="item active">
               <div class="row box-product"> 
                  <?php  
+                 if ($cant>0) {
                   while($p=$pub->fetch())
-                  {
-                    $o = oferta($p);
-                    echo $o;
+                    {
+                      $o = oferta($p);
+                      echo $o;
+                      
+                    }
                   }
+                  else{echo "<br><center><layout>Disculpe no existe descuentos para esta zona, le recomendamos visitar las otras zonas</layout></center>";}
                  ?>                
               </div>
             </div>

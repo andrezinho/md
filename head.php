@@ -1,6 +1,12 @@
 <?php 
 require_once '/app/start.php'; //Start para facebook -> ;)
 require_once '/app/funciones.php';
+
+$error=$_GET["error"];
+if(isset($error)){
+	if($error==1){echo "<script>alert('Sus datos son incorrectos.');</script>";}
+}
+
 ?>
 <!DOCTYPE html>
 <html class="noIE" lang="es">
@@ -10,7 +16,7 @@ require_once '/app/funciones.php';
 <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta name="description" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc ">
 <meta name="keywords" content="qEn muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc " />
-<meta name="news_keywords" content="sEn muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc "/>
+<meta name="news_keywords" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc "/>
 <meta name="robots" 		content="index,follow"/>
 <meta name='googlebot' 		content='index, follow' />
 <meta name="organization" 	content="Muchos Descuentos" />
@@ -65,6 +71,5 @@ require_once '/app/funciones.php';
 <script type="text/javascript" src="<?php echo $host; ?>/js/utilitarios.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/js.js"></script>
 <script type="text/javascript" src="<?php echo $host; ?>/js/mijs/publicaciones.js"></script>
-
 <!-- timer -->
 </head>

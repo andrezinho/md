@@ -1,5 +1,6 @@
 <?php
 require_once 'head.php'; //Start para facebook -> x)
+$url=$_GET["id"];
 ?>
 <script type="text/javascript">
   $(document).ready(function(){
