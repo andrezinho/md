@@ -501,9 +501,22 @@ $lista= $st->rowCount();
 </section>
 
 </section> <!-- fin  section contenido -->
-
+      
         <section id="c-especial">
           <article class="producto-especial">
+          <?php 
+          $s = $db->prepare("SELECT p.*,e.dominio
+                      FROM publicaciones as p 
+                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
+                           inner join local as l on l.idlocal = s.idlocal
+                           INNER JOIN empresa as e on e.idempresa=l.idempresa
+                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                            and p.fecha_fin >= CURDATE()
+                      ORDER BY idpublicaciones desc limit 3");
+        $s->execute();
+        $ne=$s->rowCount();
+        if($ne>0){
+          ?>
            <div class="box-block sidebar">
               <div class="box-heading"><span>Descuentos Especiales</span></div>
                   <div class="box-content">
@@ -516,26 +529,25 @@ $lista= $st->rowCount();
                                 }?>
                               </ol>
                             <div class="carousel-inner" id="items2" style="height:380px"> 
-                                
                                 <!-- Productos Especiales -->
-                  
                             </div>
-                            </div>
-        <div class="carousel-controls">
-          <a class="carousel-control left" data-slide="prev" href="#productc2">
-            <i class="fa fa-angle-left fa-fw"></i> 
-          </a> 
-          <a class="carousel-control right" data-slide="next" href="#productc2"> 
-            <i class="fa fa-angle-right fa-fw"></i> 
-          </a> 
-        </div>
-        <div class="nav-bg"></div>
-      </div>
-    </div>
-    <div class="row clearfix f-space30"></div>
+                        </div>
+                  <div class="carousel-controls">
+                    <a class="carousel-control left" data-slide="prev" href="#productc2">
+                      <i class="fa fa-angle-left fa-fw"></i> 
+                    </a> 
+                    <a class="carousel-control right" data-slide="next" href="#productc2"> 
+                      <i class="fa fa-angle-right fa-fw"></i> 
+                    </a> 
+                  </div>
+                  <div class="nav-bg"></div>
+                </div>
+          </div>
+          <div class="row clearfix f-space30"></div>
+          <?php }?>
+          <!-- fin especiales --> 
            
            <?php 
-           
            $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
                              p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,e.dominio,p.cc,
@@ -618,6 +630,7 @@ $lista= $st->rowCount();
     
         </article>
      </section>
+
   </div>
   <!-- fin c-especial -->
 

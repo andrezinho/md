@@ -1237,7 +1237,7 @@ a.color3:hover {
 	position: absolute;
 	right: 0px;
 	top: -68px;
-	width: 116px;
+	width: 305px;
 }
 .box-block .box-content .box-products .carousel-controls .carousel-control {
 	font-size: 20px;
@@ -2387,6 +2387,7 @@ h2 {
 	border: 0;
 	cursor: default;
 	font-weight: bold;
+
 }
 .nav-tabs > li.active > a .fa, .nav-tabs > li.active > a:hover .fa, .nav-tabs > li.active > a:focus .fa {
 	color: #444444;
@@ -2422,6 +2423,7 @@ h2 {
 }
 .nav-tabs > li.active {
 	background-color: #f3f3f3;
+	border-bottom: 1px solid #dadada;
 }
 .nav-tabs > li.active > a {
 	background-color: none;

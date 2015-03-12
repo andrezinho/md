@@ -59,6 +59,8 @@ function finaliza(a,m,d,h,mi,s){
 				message += "<br>Oferta Finalizada";
 				$("#comprar").css({background:"#ccc"});
 				$("#comprar").css({"pointer-events":"none"});
+				$(".product-details").css({background:"#ccc"});
+				$(".product-details").css({"pointer-events":"none"});
 			}
 			//alert(message);
 			note.html(message);
