@@ -115,27 +115,9 @@ $st->execute();
 <!-- end: Header --> 
 <!-- Products -->
 
-    <?php
-      $stmt = $db->prepare("SELECT p.*,e.dominio
-                      FROM publicaciones as p 
-                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
-                           inner join local as l on l.idlocal = s.idlocal
-                           INNER JOIN empresa as e on e.idempresa=l.idempresa
-                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
-                            and p.fecha_fin >= CURDATE()
-                      ORDER BY idpublicaciones desc limit 3");
-        //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
-        $stmt->execute();
-        $i = $stmt->fetchAll();
-        if($i>0){$a="9";}
-        else{$a="12";}
-    ?>
-
 <div class="f-space10"></div>
 <div class="my-container">
   <div class="row" >
-
-
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
         <div class="box-heading" ><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
         <div class="box-content">
@@ -151,6 +133,7 @@ $st->execute();
         </div>
       </div>
     </div>
+    
 
 
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box-block sidebar">
@@ -179,6 +162,7 @@ $st->execute();
         <div class="nav-bg"></div>
         </div> 
     </div>
+
 
 
 
