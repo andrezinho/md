@@ -10,10 +10,8 @@ $stmt = $db->prepare("SELECT p.*,e.dominio
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
 $lista= $stmt->rowCount();
-
 $st = $db->prepare("SELECT * FROM categoria ORDER BY orden asc");
 $st->execute();
-
 ?>
 <body>
 <div id="frm-suscripcion"></div>
@@ -133,32 +131,39 @@ $st->execute();
         </div>
       </div>
     </div>
+    
+
+
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box-block sidebar">
         <div class="box-heading" style="margin-bottom: 2px"><span>% Especiales</span><span class="view-all"><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></span></div>
-      <div class="box-content" >
-        <div class="box-products slide carousel-fade" id="productc2">
-          <ol class="carousel-indicators">          
-          <?php for ($i=0; $i<$lista ; $i++){ 
-            if ($i==0) {$activo="active";}
-            else{$activo="";}
-            echo '<li class="'.$activo.'" data-slide-to="'.$i.'" data-target="#productc2"></li>';
-          }?>
-          </ol>
-          <div class="carousel-inner" id="items" > 
-            <!-- PRODUCTOS ESPECIALES -->           
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <a class="carousel-control left" data-slide="prev" href="#productc2">
-            <i class="fa fa-angle-left fa-fw"></i> 
-          </a> 
-          <a class="carousel-control right" data-slide="next" href="#productc2"> 
-            <i class="fa fa-angle-right fa-fw"></i> 
-          </a> 
-        </div>
+        <div class="box-content" >
+            <div class="box-products slide carousel-fade" id="productc2">
+                  <ol class="carousel-indicators">          
+                      <?php for ($i=0; $i<$lista ; $i++){ 
+                        if ($i==0) {$activo="active";}
+                        else{$activo="";}
+                        echo '<li class="'.$activo.'" data-slide-to="'.$i.'" data-target="#productc2"></li>';
+                      }?>
+                  </ol>
+              <div class="carousel-inner" id="items" > 
+              <!-- PRODUCTOS ESPECIALES -->           
+              </div>
+            </div>
+            <div class="carousel-controls">
+              <a class="carousel-control left" data-slide="prev" href="#productc2">
+                <i class="fa fa-angle-left fa-fw"></i> 
+              </a> 
+              <a class="carousel-control right" data-slide="next" href="#productc2"> 
+                <i class="fa fa-angle-right fa-fw"></i> 
+              </a> 
+            </div>
         <div class="nav-bg"></div>
-      </div> 
+        </div> 
     </div>
+
+
+
+
   </div>
 </div>
 <div class="row clearfix f-space30"></div>

@@ -1,6 +1,6 @@
 var host=window.location.host;
-host=host+"/md"; 
-//host=host;
+//host=host+"/md"; 
+host=host;
 $(document).ready(function(){    
 	$.get("http://"+host+"/model/publicaciones.php","&",function(data){
 		publi="";

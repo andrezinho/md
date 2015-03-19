@@ -97,7 +97,7 @@ class admin extends Main
 
     function vemail($email)
     {
-        $stmt = $this->db->prepare("SELECT count(*) as n from usuario where email = :e and idperfil = 2");
+        $stmt = $this->db->prepare("SELECT count(*) as n from usuario where email = :e and idperfil = 1");
         $stmt->bindParam(':e',$email,PDO::PARAM_STR);
         $stmt->execute();
         $r = $stmt->fetchObject();

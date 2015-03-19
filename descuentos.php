@@ -10,12 +10,13 @@ if($url=="")
             $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                      c.descripcion,p.precio,p.precio_regular,p.descuento,
                                      p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                     0 as deseo
+                                     0 as deseo, e.dominio
                               FROM publicaciones as p
                               INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                               INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                               INNER JOIN local as l on l.idlocal=su.idlocal
+                              INNER JOIN empresa as e on e.idempresa=l.idempresa
                               WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
                                 AND p.fecha_fin >= CURDATE()
                               order by p.idpublicaciones desc";
@@ -25,19 +26,21 @@ if($url=="")
             $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                      c.descripcion,p.precio,p.precio_regular,p.descuento,
                                      p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                     coalesce(d.idpublicaciones,0) as deseo
+                                     coalesce(d.idpublicaciones,0) as deseo,e.dominio
                               FROM publicaciones as p
                               INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                               INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                               INNER JOIN local as l on l.idlocal=su.idlocal
+                              INNER JOIN empresa as e on e.idempresa=l.idempresa
                               left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                               WHERE l.idubigeo='".$_SESSION['idciudad']."' 
                                   AND p.fecha_fin >= CURDATE()
                               order by p.idpublicaciones desc";
           }
 
-    $stmt = $db->prepare($sql_c);                
+    $stmt = $db->prepare($sql_c);  
+    
     $stmt->bindValue(':id', $id , PDO::PARAM_STR);        
     $stmt->execute();
     $nc= $stmt->rowCount();
@@ -61,12 +64,13 @@ else
                 { 
                   $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                            c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                                           p.imagen,p.idtipo_descuento,0 as deseo
+                                           p.imagen,p.idtipo_descuento,0 as deseo,e.dominio
                                     FROM publicaciones as p
                                     INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                                     INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                                     INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                                     INNER JOIN local as l on l.idlocal=su.idlocal
+                                    INNER JOIN empresa as e on e.idempresa=l.idempresa
                                     WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' 
                                       AND p.fecha_fin >= CURDATE()
                                     order by p.idpublicaciones desc";        
@@ -76,12 +80,13 @@ else
                 {
                   $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                              c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                                             p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo
+                                             p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo,e.dominio
                             FROM publicaciones as p
                             INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                             INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                             INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                             INNER JOIN local as l on l.idlocal=su.idlocal
+                            INNER JOIN empresa as e on e.idempresa=l.idempresa
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                             WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' 
                                 AND p.fecha_fin >= CURDATE()
@@ -117,12 +122,13 @@ else
           $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                    c.descripcion,p.precio,p.precio_regular,p.descuento,
                                    p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                   0 as deseo
+                                   0 as deseo,e.dominio
                             FROM publicaciones as p
                             INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                             INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                             INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                             INNER JOIN local as l on l.idlocal=su.idlocal
+                            INNER JOIN empresa as e on e.idempresa=l.idempresa
                             WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' 
                               AND p.fecha_fin >= CURDATE()
                             order by p.idpublicaciones desc";
@@ -132,18 +138,19 @@ else
           $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                    c.descripcion,p.precio,p.precio_regular,p.descuento,
                                    p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                   coalesce(d.idpublicaciones,0) as deseo
+                                   coalesce(d.idpublicaciones,0) as deseo,e.dominio
                             FROM publicaciones as p
                             INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                             INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                             INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                             INNER JOIN local as l on l.idlocal=su.idlocal
+                            INNER JOIN empresa as e on e.idempresa=l.idempresa
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                             WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' 
                             AND p.fecha_fin >= CURDATE()
                             order by p.idpublicaciones desc";
         }
-
+        
         $stmt = $db->prepare($sql_c);        
         $stmt->bindValue(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
@@ -166,12 +173,13 @@ else
         { 
           $sql_vq = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                        c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                                       p.imagen,p.idtipo_descuento,0 as deseo
+                                       p.imagen,p.idtipo_descuento,0 as deseo,e.dominio
                                 FROM publicaciones as p
                                 INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                                 INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                                 INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                                INNER JOIN local as l on l.idlocal=su.idlocal
+                                INNER JOIN local as l on l.idlocal=su.idlocal                                
+                                INNER JOIN empresa as e on e.idempresa=l.idempresa
                                 WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
                                     AND p.fecha_fin >= CURDATE()
                                 order by p.idpublicaciones desc";
@@ -180,12 +188,13 @@ else
         {
           $sql_vq = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                        c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                                       p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo
+                                       p.imagen,p.idtipo_descuento,coalesce(d.idpublicaciones,0) as deseo,e.dominio
                      FROM publicaciones as p
                     INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                     INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                     INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                     INNER JOIN local as l on l.idlocal=su.idlocal
+                    INNER JOIN empresa as e on e.idempresa=l.idempresa
                     left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                     WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
                         AND p.fecha_fin >= CURDATE()
@@ -371,7 +380,7 @@ else
       <div class="col-sm-3 col-xs-12 shopinfo">
         <h4 class="title">EMPRESAS</h4>
             <li><a href="#">Empresa 1</a></li>
-            <li><a href="#">Empresa 2</a></li>
+            <li><a href="#">Empresa s2</a></li>
             <li><a href="#">Empresa 3</a></li>
             <li><a href="#">Empresa 4</a></li>
             <li><a href="#">Empresa 5</a></li>                        

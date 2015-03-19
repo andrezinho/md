@@ -1,10 +1,9 @@
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("#add").click(function(){
-	       $("#ciudad").css({display:"inline-block"});
+$(document).ready(function(){
+	$("#add").click(function(){
+       $("#ciudad").css({display:"inline-block"});
+    });
 });
-
-	});
 </script>
 <div style="margin-left:2em;">
 <h3>Administra tus Suscripciones</h3>

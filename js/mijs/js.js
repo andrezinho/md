@@ -1,17 +1,17 @@
 var host=window.location.host;
-host=host+'/md';
-//host=host; 
-
-$(document).ready(function(){
+//host=host+'/md';
+host=host;
+$(document).ready(function(){    
 //Suscripciones
 $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});
 //fin suscripciones
 $("#recibir_ofertas").click(function(){
+    
   $.get('http://'+host+'/view/_suscripcion.php','',function(data)
   {    
     $("#frm-suscripcion").empty().append(data);
     $("#frm-suscripcion").dialog("open");   
-    $(".ui-dialog-titlebar-close").hide();
+    $(".ui-dialog-titlebar-close").html("<a style='color:#D01111; font-weight:bold;vertical-align: top !important;'>X</a>");
     $("#botones-suscrip").on('click','#btnclose',function(){
       $("#frm-suscripcion").dialog('close');
     });

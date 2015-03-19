@@ -1,5 +1,4 @@
 <h3 style="margin-left:5em;">Mis Cupones</h3>
-
 <div id="contenedor">
     <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked="checked" />
     <label for="tab-1" class="tab-label-1">Cupones Activos</label>
@@ -9,7 +8,6 @@
     
     <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3" />
     <label for="tab-3" class="tab-label-3">Cupones Expirados</label>
-    
     
     <div class="content">
         <div class="content-1">

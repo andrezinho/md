@@ -1,5 +1,6 @@
 var host=window.location.host;
-  host=host+"/md";
+//host=host+"/md";
+host=host;
 $(function(){
 var idp=$("#idp").val();
 $.get('http://'+host+'/model/timer.php','idp='+idp,function(datos){
@@ -59,6 +60,8 @@ function finaliza(a,m,d,h,mi,s){
 				message += "<br>Oferta Finalizada";
 				$("#comprar").css({background:"#ccc"});
 				$("#comprar").css({"pointer-events":"none"});
+                                $(".product-details").css({background:"#ccc"});
+                                $(".product-details").css({"pointer-events":"none"});
 			}
 			//alert(message);
 			note.html(message);

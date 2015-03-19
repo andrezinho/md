@@ -41,15 +41,16 @@ class Buscador extends Spdo
     public function buscar()
     {
         
-        $stmt = $this->db->prepare("SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+        $stmt = $this->db->prepare("SELECT distinct p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                              c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
-                             p.imagen,p.idtipo_descuento
+                             p.imagen,p.idtipo_descuento,e.dominio
                       FROM publicaciones as p
                       INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                       INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                       INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
                       INNER JOIN local as l on l.idlocal=su.idlocal
-                      WHERE lower(p.titulo1) like '%".strtolower($_GET['search'])."%' OR lower(p.titulo2) like '%".strtolower($_GET['search'])."%' and l.idubigeo='".$_SESSION['idciudad']."' 
+                      INNER JOIN empresa as e on e.idempresa=l.idempresa
+                      WHERE lower(c.descripcion) like '%".strtolower($_GET['search'])."%' or lower(s.descripcion) like '%".strtolower($_GET['search'])."%' or lower(p.titulo1) like '%".strtolower($_GET['search'])."%' OR lower(p.titulo2) like '%".strtolower($_GET['search'])."%' and l.idubigeo='".$_SESSION['idciudad']."' 
                         and p.fecha_fin >= CURDATE()
                       order by p.idpublicaciones desc");
         

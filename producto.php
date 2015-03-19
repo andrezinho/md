@@ -98,10 +98,7 @@ $lista= $st->rowCount();
 
 
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
-<title><?php echo $titulo;?></title>
-
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+<title>Muchos Descuentos: <?php echo $titulo;?></title>
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
 <link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
@@ -147,8 +144,8 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  host=host+"/md";
-  //host=host;
+  //host=host+"/md";
+  host=host;
   $(document).ready(function(){
     
     $("#sendf").click(function(){
@@ -265,15 +262,40 @@ $lista= $st->rowCount();
                       <ul > 
                         <?php if($r["youtube"]!="")
                             {
-                             echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                               $pos1 = stripos($r["youtube"], "http://");
+                               if ($pos1 === false) 
+                               {
+                                    echo '<li class="icon youtube" ><a href="http://'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                               }
+                               else
+                               {
+                                   echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                               }
                             }
 
-                             if($r["twitter"]!=""){
-                               echo '<li class="icon twitter"><a href="'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                             if($r["twitter"]!="")
+                             {
+                               $pos1 = stripos($r["twitter"], "http://");
+                               if ($pos1 === false) 
+                               {
+                                    echo '<li class="icon twitter"><a href="http://'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                               }
+                               else {
+                                     echo '<li class="icon twitter"><a href="'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                                }
                              }
                              
                              if($r["facebook"]!=""){
-                               echo '<li class="icon facebook"><a href="'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                               $pos1 = stripos($r["facebook"], "http://");
+                               if ($pos1 === false) 
+                               {
+                                   echo '<li class="icon facebook"><a href="http://'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                               }
+                               else
+                               {
+                                   echo '<li class="icon facebook"><a href="'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                               }
+                               
                              }
                               
                              ?>
@@ -469,7 +491,7 @@ $lista= $st->rowCount();
                                     
                                     <section id="mapa">
                                                                             
-                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
+                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<?php echo $host ?>/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
                                       </iframe>                                    
 
                                     </section>
@@ -501,9 +523,21 @@ $lista= $st->rowCount();
 </section>
 
 </section> <!-- fin  section contenido -->
-
-        <section id="c-especial">
+ <section id="c-especial">
           <article class="producto-especial">
+          <?php 
+          $s = $db->prepare("SELECT p.*,e.dominio
+                      FROM publicaciones as p 
+                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
+                           inner join local as l on l.idlocal = s.idlocal
+                           INNER JOIN empresa as e on e.idempresa=l.idempresa
+                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                            and p.fecha_fin >= CURDATE()
+                      ORDER BY idpublicaciones desc limit 3");
+        $s->execute();
+        $ne=$s->rowCount();
+        if($ne>0){
+          ?>
            <div class="box-block sidebar">
               <div class="box-heading"><span>Descuentos Especiales</span></div>
                   <div class="box-content">
@@ -516,26 +550,25 @@ $lista= $st->rowCount();
                                 }?>
                               </ol>
                             <div class="carousel-inner" id="items2" style="height:380px"> 
-                                
                                 <!-- Productos Especiales -->
-                  
                             </div>
-                            </div>
-        <div class="carousel-controls">
-          <a class="carousel-control left" data-slide="prev" href="#productc2">
-            <i class="fa fa-angle-left fa-fw"></i> 
-          </a> 
-          <a class="carousel-control right" data-slide="next" href="#productc2"> 
-            <i class="fa fa-angle-right fa-fw"></i> 
-          </a> 
-        </div>
-        <div class="nav-bg"></div>
-      </div>
-    </div>
-    <div class="row clearfix f-space30"></div>
+                        </div>
+                  <div class="carousel-controls">
+                    <a class="carousel-control left" data-slide="prev" href="#productc2">
+                      <i class="fa fa-angle-left fa-fw"></i> 
+                    </a> 
+                    <a class="carousel-control right" data-slide="next" href="#productc2"> 
+                      <i class="fa fa-angle-right fa-fw"></i> 
+                    </a> 
+                  </div>
+                  <div class="nav-bg"></div>
+                </div>
+          </div>
+          <div class="row clearfix f-space30"></div>
+          <?php }?>
+          <!-- fin especiales --> 
            
            <?php 
-           
            $pub = $db->prepare("SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, p.descripcion as desc_publi,
                              c.idcategoria,c.descripcion as categoria,p.precio,p.precio_regular, p.imagen,p.fecha_inicio,
                              p.fecha_fin,p.hora_inicio,p.hora_fin,p.descuento,e.idempresa,e.razon_social as empresa,e.logo,e.facebook,e.twitter,e.youtube,e.razon_comercial,e.dominio,p.cc,
@@ -618,6 +651,7 @@ $lista= $st->rowCount();
     
         </article>
      </section>
+
   </div>
   <!-- fin c-especial -->
 
@@ -695,11 +729,9 @@ $lista= $st->rowCount();
 
 <script src="<?php echo $host;?>/js/jquery.elevatezoom.js" type="text/javascript"></script> 
 <script>
-
 (function($) {
   "use strict";
   //Mega Menu
-
       //SPECIALS
       $('#productc2').carousel({
         interval: 4000
@@ -711,7 +743,6 @@ $lista= $st->rowCount();
       
       
 })(jQuery);
-
  </script>
 </body>
 </html>
