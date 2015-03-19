@@ -150,19 +150,23 @@ class empresa extends Main
             $stmt_=$this->db->prepare("delete from empresa_bancos where idempresa = :idem");
             $stmt_->bindParam(':idem',$_P['idempresa'],PDO::PARAM_INT);
             $stmt_->execute();
-
-            foreach($_P['idbancosd'] as $k => $v)
+            
+            if(isset($_P['idbancosd']))
             {
-                if($v!="")
+                foreach($_P['idbancosd'] as $k => $v)
                 {
-                    $stmt2=$this->db->prepare("insert into empresa_bancos(idempresa,idbancos,nrocuenta) 
-                            values(:ide,:idb,:nroc)");
-                    $stmt2->bindParam(':ide',$_P['idempresa'],PDO::PARAM_INT);
-                    $stmt2->bindParam(':idb',$v,PDO::PARAM_INT);
-                    $stmt2->bindParam(':nroc',$_P['nrocuentad'][$k],PDO::PARAM_STR);
-                    $stmt2->execute();
+                    if($v!="")
+                    {
+                        $stmt2=$this->db->prepare("insert into empresa_bancos(idempresa,idbancos,nrocuenta) 
+                                values(:ide,:idb,:nroc)");
+                        $stmt2->bindParam(':ide',$_P['idempresa'],PDO::PARAM_INT);
+                        $stmt2->bindParam(':idb',$v,PDO::PARAM_INT);
+                        $stmt2->bindParam(':nroc',$_P['nrocuentad'][$k],PDO::PARAM_STR);
+                        $stmt2->execute();
+                    }
                 }
             }
+            
 
             return array($p1 , $p2[2]);
         }

@@ -2387,7 +2387,6 @@ h2 {
 	border: 0;
 	cursor: default;
 	font-weight: bold;
-
 }
 .nav-tabs > li.active > a .fa, .nav-tabs > li.active > a:hover .fa, .nav-tabs > li.active > a:focus .fa {
 	color: #444444;
@@ -2423,7 +2422,7 @@ h2 {
 }
 .nav-tabs > li.active {
 	background-color: #f3f3f3;
-	border-bottom: 1px solid #dadada;
+        border-bottom: 1px solid #dadada;
 }
 .nav-tabs > li.active > a {
 	background-color: none;

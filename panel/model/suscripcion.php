@@ -33,7 +33,7 @@ class suscripcion extends Main
     }
 
     function insert($_P ) 
-    {        
+    {
         $estado = 0;
         $_P['num_publi']=0;
 

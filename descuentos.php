@@ -10,7 +10,7 @@ if($url=="")
             $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
                                      c.descripcion,p.precio,p.precio_regular,p.descuento,
                                      p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                     0 as deseo,e.dominio
+                                     0 as deseo, e.dominio
                               FROM publicaciones as p
                               INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                               INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -39,7 +39,8 @@ if($url=="")
                               order by p.idpublicaciones desc";
           }
 
-    $stmt = $db->prepare($sql_c);                
+    $stmt = $db->prepare($sql_c);  
+    
     $stmt->bindValue(':id', $id , PDO::PARAM_STR);        
     $stmt->execute();
     $nc= $stmt->rowCount();
@@ -62,8 +63,8 @@ else
               if(!isset($_SESSION['idusuario']))
                 { 
                   $sql_qa = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                           c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,e.dominio,
-                                           p.imagen,p.idtipo_descuento,0 as deseo
+                                           c.descripcion as categoria,p.precio,p.precio_regular,p.descuento,
+                                           p.imagen,p.idtipo_descuento,0 as deseo,e.dominio
                                     FROM publicaciones as p
                                     INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                                     INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -149,7 +150,7 @@ else
                             AND p.fecha_fin >= CURDATE()
                             order by p.idpublicaciones desc";
         }
-
+        
         $stmt = $db->prepare($sql_c);        
         $stmt->bindValue(':id', $id , PDO::PARAM_STR);
         $stmt->execute();
@@ -177,7 +178,7 @@ else
                                 INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                                 INNER JOIN categoria as c on c.idcategoria=s.idcategoria
                                 INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                                INNER JOIN local as l on l.idlocal=su.idlocal
+                                INNER JOIN local as l on l.idlocal=su.idlocal                                
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa
                                 WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
                                     AND p.fecha_fin >= CURDATE()
@@ -379,7 +380,7 @@ else
       <div class="col-sm-3 col-xs-12 shopinfo">
         <h4 class="title">EMPRESAS</h4>
             <li><a href="#">Empresa 1</a></li>
-            <li><a href="#">Empresa 2</a></li>
+            <li><a href="#">Empresa s2</a></li>
             <li><a href="#">Empresa 3</a></li>
             <li><a href="#">Empresa 4</a></li>
             <li><a href="#">Empresa 5</a></li>                        

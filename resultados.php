@@ -3,9 +3,7 @@ require_once 'head.php'; //Start para facebook -> ;)
 $db = Spdo::singleton();
 $bus = new Buscador();
 $buscame = $bus->buscar();
-
 ?>
-
 <body>
 <div id="frm-suscripcion"></div>
 <header>   

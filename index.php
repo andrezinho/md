@@ -10,10 +10,8 @@ $stmt = $db->prepare("SELECT p.*,e.dominio
                       ORDER BY idpublicaciones desc limit 3");
 $stmt->execute();
 $lista= $stmt->rowCount();
-
 $st = $db->prepare("SELECT * FROM categoria ORDER BY orden asc");
 $st->execute();
-
 ?>
 <body>
 <div id="frm-suscripcion"></div>

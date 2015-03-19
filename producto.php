@@ -98,10 +98,7 @@ $lista= $st->rowCount();
 
 
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
-<title><?php echo $titulo;?></title>
-
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+<title>Muchos Descuentos: <?php echo $titulo;?></title>
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
 <link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
@@ -147,8 +144,8 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  host=host+"/md";
-  //host=host;
+  //host=host+"/md";
+  host=host;
   $(document).ready(function(){
     
     $("#sendf").click(function(){
@@ -265,15 +262,40 @@ $lista= $st->rowCount();
                       <ul > 
                         <?php if($r["youtube"]!="")
                             {
-                             echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                               $pos1 = stripos($r["youtube"], "http://");
+                               if ($pos1 === false) 
+                               {
+                                    echo '<li class="icon youtube" ><a href="http://'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                               }
+                               else
+                               {
+                                   echo '<li class="icon youtube" ><a href="'.$r["youtube"].'" target="_blank" style="background:#DC2310"><i class="fa fa-youtube fa-fw"></i></a></li>';                  
+                               }
                             }
 
-                             if($r["twitter"]!=""){
-                               echo '<li class="icon twitter"><a href="'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                             if($r["twitter"]!="")
+                             {
+                               $pos1 = stripos($r["twitter"], "http://");
+                               if ($pos1 === false) 
+                               {
+                                    echo '<li class="icon twitter"><a href="http://'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                               }
+                               else {
+                                     echo '<li class="icon twitter"><a href="'.$r["twitter"].'" target="_blank" style="background:#33BCE9"><i class="fa fa-twitter fa-fw"></i></a></li>';
+                                }
                              }
                              
                              if($r["facebook"]!=""){
-                               echo '<li class="icon facebook"><a href="'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                               $pos1 = stripos($r["facebook"], "http://");
+                               if ($pos1 === false) 
+                               {
+                                   echo '<li class="icon facebook"><a href="http://'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                               }
+                               else
+                               {
+                                   echo '<li class="icon facebook"><a href="'.$r["facebook"].'" target="_blank" style="background:#37528D"><i class="fa fa-facebook fa-fw"></i></a></li>';
+                               }
+                               
                              }
                               
                              ?>
@@ -469,7 +491,7 @@ $lista= $st->rowCount();
                                     
                                     <section id="mapa">
                                                                             
-                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
+                                      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="<?php echo $host ?>/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
                                       </iframe>                                    
 
                                     </section>
@@ -501,8 +523,7 @@ $lista= $st->rowCount();
 </section>
 
 </section> <!-- fin  section contenido -->
-      
-        <section id="c-especial">
+ <section id="c-especial">
           <article class="producto-especial">
           <?php 
           $s = $db->prepare("SELECT p.*,e.dominio
@@ -708,11 +729,9 @@ $lista= $st->rowCount();
 
 <script src="<?php echo $host;?>/js/jquery.elevatezoom.js" type="text/javascript"></script> 
 <script>
-
 (function($) {
   "use strict";
   //Mega Menu
-
       //SPECIALS
       $('#productc2').carousel({
         interval: 4000
@@ -724,7 +743,6 @@ $lista= $st->rowCount();
       
       
 })(jQuery);
-
  </script>
 </body>
 </html>
