@@ -52,7 +52,7 @@ $(document).ready(function(){
             publi +='</div> ';
 		});
 
-        if(publi==""){$("#recientes").css({display:"none"});
+        if(publi==""){$("#reciente").css({display:"none"});
        $("#publicacion").append(publi); 
        $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});
 	},'json');

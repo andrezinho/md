@@ -130,7 +130,7 @@ $st->execute();
     ?>
 
 <div class="f-space10"></div>
-<div class="my-container"  id="recientes">
+<div class="my-container" id="reciente">
   <div class="row" >
 
   
