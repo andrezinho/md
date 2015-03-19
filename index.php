@@ -126,7 +126,7 @@ $st->execute();
                       ORDER BY idpublicaciones desc limit 3");
         //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
         $stmt->execute();
-        $i = $stmt->fetchAll();
+        $i= $stmt->rowCount();
         if($i>0){$a="9";}
         else{$a="12";}
     ?>
@@ -135,8 +135,9 @@ $st->execute();
 <div class="my-container">
   <div class="row" >
 
-
-    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column box-block" >
+  
+    <div class="col-lg-<?php $a;?> col-md-9 col-sm-12 col-xs-12 main-column box-block" >
+  
         <div class="box-heading" ><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
         <div class="box-content">
         <div class="box-products" >          
@@ -152,7 +153,7 @@ $st->execute();
       </div>
     </div>
 
-
+    <?php if($i>0){?>
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box-block sidebar">
         <div class="box-heading" style="margin-bottom: 2px"><span>% Especiales</span><span class="view-all"><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></span></div>
         <div class="box-content" >
@@ -179,7 +180,7 @@ $st->execute();
         <div class="nav-bg"></div>
         </div> 
     </div>
-
+<?php } ?>
 
 
   </div>
