@@ -130,13 +130,13 @@ $st->execute();
     ?>
 
 <div class="f-space10"></div>
-<div class="my-container">
+<div class="my-container" id="reciente">
   <div class="row" >
 
   
-    <div class="col-lg-<?php $a;?> col-md-9 col-sm-12 col-xs-12 main-column box-block" >
+    <div class="col-lg-<?php echo $a;?> col-md-<?php echo $a;?> col-sm-12 col-xs-12 main-column box-block">
   
-        <div class="box-heading" ><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
+        <div class="box-heading"><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
         <div class="box-content">
         <div class="box-products" >          
           <div> 
@@ -189,9 +189,9 @@ $st->execute();
   
     <div class="col-lg-12 col-md-12 main-column box-block">
       <?php 
+        $flag=false;
         while($c=$st->fetch()){
-         echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
-         <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
+         
          
          if(!isset($_SESSION['idusuario']))
          {
@@ -236,6 +236,11 @@ $st->execute();
          $pub->bindValue(':idc', $c['idcategoria'] , PDO::PARAM_INT);
          $pub->execute();
          $cant= $pub->rowCount();
+         if($cant>0){
+          echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
+         <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
+         }
+
     ?> 
       <div class="box-content">
         <div class="box-products slide" id="productc3">
@@ -247,19 +252,28 @@ $st->execute();
                  if ($cant>0) {
                   while($p=$pub->fetch())
                     {
+                      $flag=true;
                       $o = oferta($p);
                       echo $o;
                       
                     }
                   }
-                  else{echo "<br><center><layout>Disculpe no existe descuentos para esta zona, le recomendamos visitar las otras zonas</layout></center>";}
+                  //else{echo "<br><center><layout>Disculpe no existe descuentos para esta zona, le recomendamos visitar las otras zonas</layout></center>";}
                  ?>                
               </div>
             </div>
           </div>
         </div>
         </div>
-      <?php } ?>
+      <?php } 
+
+      if(!$flag)
+      {
+        echo "<center>Disculpe no existe descuentos por el momento.</center>";
+      }
+      ?>
+
+
 
    </div>
    </div>

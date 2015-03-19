@@ -1,6 +1,5 @@
 var host=window.location.host;
 host=host+'/md';
-//host=host;
 $(document).ready(function(){    
 //Suscripciones
 $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});

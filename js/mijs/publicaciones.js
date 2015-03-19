@@ -1,53 +1,70 @@
 var host=window.location.host;
 host=host+"/md"; 
 //host=host;
-$(document).ready(function(){    
-	$.get("http://"+host+"/model/publicaciones.php","&",function(data){
-		publi="";
-		$.each(data,function(i,j){ 
-			publi +='<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" >';
-			publi +='<div class="product-block">';
-			publi +='<div class="image">';
+$(document).ready(function(){             
+	$.get("http://"+host+"/model/publicaciones.php","&",function(data){		
+        var publi="";   
+        if(data[0]!=0)
+        {            
+    		$.each(data,function(i,j)
+            { 
+                if(j.e==3)
+                {
+    			     publi +='<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" >';
+                }
+                else
+                {
+                     publi +='<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" >';
+                }
+    			publi +='<div class="product-block">';
+    			publi +='<div class="image">';
 
-			if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
-			else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
+    			if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
+    			else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
 
-			publi +='<a class="img" href="'+j.dominio+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="'+j.titulo1+'" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a> </div>';
-			publi +='<div class="product-meta">';
-			publi +='<div class="name">';
-			publi +='<a href="'+j.dominio+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
-			publi +='<div class="big-price"><span class="price-new">';
-			publi +='<span class="sym">S/. </span>'+j.precio+'</span>';
-			publi +='<span class="price-old"><span class="sym">S/. </span>'+j.precio_regular+'</span></div>';
-			publi +='<div class="big-btns"><a href="'+j.dominio+'/fichacompra/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'" class="btn btn-default btn-View pull-left">Comprar</a></div>';
-			publi +='<div class="small-price"><span class="price-new">';
-			publi +='<span class="sym">S/. </span>'+j.precio+'</span>';
-			publi +='<span class="price-old"><span class="sym">S/. </span>'+j.precio_regular+'</span></div>';
-			
-            /*publi +='<div class="rating">';
-            publi +='<i class="fa fa-star"></i>';
-            publi +='<i class="fa fa-star"></i>';
-            publi +='<i class="fa fa-star"></i>';
-            publi +='<i class="fa fa-star-half-o"></i>';
-            publi +='<i class="fa fa-star-o"></i></div>';
-            */            
-            publi +='<div class="small-btns">';            
-            if(j.deseo==0)
-            {                
-                publi +='<button id="btn-wishlist-'+j.idpublicaciones+'" class="btn btn-default btn-wishlist pull-left" title="">';
-                publi +='<i class="fa fa-heart fa-fw" id="fa-heart-'+j.idpublicaciones+'"></i></button>';
-            }
-            else
-            {
-                publi +='<button class="btn btn-default btn-wishlist pull-left" title="">';
-                publi +='<i class="fa fa-heart fa-fw" style="color:#FCD209"></i></button>';
-            }
-            publi +='<a class="btn btn-default btn-compare pull-left" href="http://'+host+'/'+j.dominio+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">VER <b>&GT;</b> </a></div></div>';
-            publi +='<div class="meta-back"></div></div>';
-            publi +='</div> ';
-		});
-       $("#publicacion").append(publi); 
-       $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});
+    			publi +='<a class="img" href="'+j.dominio+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'"><img alt="'+j.titulo1+'" src="panel/web/imagenes/home/small_'+j.imagen+'.jpg" title="'+j.titulo1+'"></a> </div>';
+    			publi +='<div class="product-meta">';
+    			publi +='<div class="name">';
+    			publi +='<a href="'+j.dominio+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">'+j.titulo1+'</a></div>';
+    			publi +='<div class="big-price"><span class="price-new">';
+    			publi +='<span class="sym">S/. </span>'+j.precio+'</span>';
+    			publi +='<span class="price-old"><span class="sym">S/. </span>'+j.precio_regular+'</span></div>';
+    			publi +='<div class="big-btns"><a href="'+j.dominio+'/fichacompra/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'" class="btn btn-default btn-View pull-left">Comprar</a></div>';
+    			publi +='<div class="small-price"><span class="price-new">';
+    			publi +='<span class="sym">S/. </span>'+j.precio+'</span>';
+    			publi +='<span class="price-old"><span class="sym">S/. </span>'+j.precio_regular+'</span></div>';
+    			
+                /*publi +='<div class="rating">';
+                publi +='<i class="fa fa-star"></i>';
+                publi +='<i class="fa fa-star"></i>';
+                publi +='<i class="fa fa-star"></i>';
+                publi +='<i class="fa fa-star-half-o"></i>';
+                publi +='<i class="fa fa-star-o"></i></div>';
+                */            
+                publi +='<div class="small-btns">';            
+                if(j.deseo==0)
+                {                
+                    publi +='<button id="btn-wishlist-'+j.idpublicaciones+'" class="btn btn-default btn-wishlist pull-left" title="">';
+                    publi +='<i class="fa fa-heart fa-fw" id="fa-heart-'+j.idpublicaciones+'"></i></button>';
+                }
+                else
+                {
+                    publi +='<button class="btn btn-default btn-wishlist pull-left" title="">';
+                    publi +='<i class="fa fa-heart fa-fw" style="color:#FCD209"></i></button>';
+                }
+                publi +='<a class="btn btn-default btn-compare pull-left" href="http://'+host+'/'+j.dominio+'/producto/'+amigable(j.titulo1+'-'+j.idpublicaciones)+'">VER <b>&GT;</b> </a></div></div>';
+                publi +='<div class="meta-back"></div></div>';
+                publi +='</div> ';
+    		});
+            //if(publi==""){$("#reciente").css("display","none");}
+           $("#publicacion").append(publi); 
+           $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});
+            
+        }
+        else
+        {            
+            $("#reciente").css("display","none");
+        }
 	},'json');
 
 
@@ -57,7 +74,7 @@ $.get("http://"+host+"/model/especial.php","&",function(data){
 	$.each(data,function(i,j){
 		if(i==0){publi +='<div class="item active">';}
 		else{publi +='<div class="item">';}
-        publi +='<div class="product-block">';
+        publi +='<div class="product-block m">';
         publi +='<div class="image">';
         if(j.idtipo_descuento!=1){publi +='<div class="product-label product-sale"><span>-'+j.descuento+'%</span></div>';}
         else{publi +='<div class="product-label product-sale"><span>'+j.descuento+'</span></div>';}
