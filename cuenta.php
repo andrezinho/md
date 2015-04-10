@@ -22,8 +22,11 @@ $url=$_GET["id"];
           <ul class="nav nav-pills pull-right">
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:200px;border:0;">
-                <?php                   
-                  $sql = "SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,'')) from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
+                 <?php                   
+                  $sql = "SELECT c.cod,concat(u.descripcion,' ',coalesce(c.zona,'')) 
+                                from ciudad as c 
+                                inner join ubigeo as u on c.idciudad = u.idubigeo 
+                                where c.estado = 1 order by c.cod ";
                   $stmt = $db->prepare($sql);
                   $stmt->execute();                  
                   foreach($stmt->fetchAll() as $r)
@@ -51,20 +54,9 @@ $url=$_GET["id"];
     </div>
   </div>
   </div>
-  <div class="container">
-    <div class="row clearfix">      
-      <div class="pull-right" style="float:right; diaplay:inline-block; width:410px;margin-bottom: 6px; ">
-        <div class="searchbar" style="float:left; width:220px;">
-          <form action="#">                  
-            <div style="background: red; float: left; ">
-              <input class="searchinput" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
-            </div>
-            <div class="searchbox">
-              <button class="fa fa-search fa-fw" type="submit"></button>
-            </div>          
-          </form>          
-        </div>
-        <div class="searchbar" style="float:left; width:175px;">
+  <div class="container" style="height: 47px; "> 
+      <div class="row" style="padding: 0px 0 0 0;">
+          <div class="searchbar" style="float:right; width:175px; margin-right: 15px; background: #FFF;">
             <div class="social-icons">
                 <ul>
                   <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
@@ -74,9 +66,19 @@ $url=$_GET["id"];
                 </ul>
             </div>  
         </div>
+        <div class="searchbar" style="float:right; width:320px;">
+          <form action="resultados.php" method="get">                  
+            <div style="background: red; float: left; border:1px solid #dadada ">
+              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 38px; width:290px; ">
+            </div>
+            <div class="searchbox center" style="width: 27px;background:#DE1215;">
+              <button class="fa fa-search fa-fw" type="submit" style="color:#FFF !important"></button>
+            </div>          
+          </form>          
+        </div>
+        
       </div>
-    </div>
-  </div>
+ </div>
   <div class="container">
     <div class="row clearfix" style="width: 1140px;margin-left: 0px;" id="posicion">
       <div> 

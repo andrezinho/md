@@ -1,5 +1,7 @@
 <?php
+//error_reporting(E_ALL);
 require_once 'head.php';
+
 $stmt = $db->prepare("SELECT p.*,e.dominio 
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
@@ -15,9 +17,7 @@ $st->execute();
 ?>
 <body>
 <div id="frm-suscripcion"></div>
-
 <header>   
-    
   <!-- Barra Top y Logo -->
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">  
   <div class="my-container">
@@ -32,18 +32,21 @@ $st->execute();
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:200px;border:0;">
                 <?php                   
-                  $sql = "SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,'')) from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
-                  $stmt = $db->prepare($sql);
-                  $stmt->execute();                  
-                  foreach($stmt->fetchAll() as $r)
+                  $sql = "SELECT c.cod,concat(u.descripcion,' ',coalesce(c.zona,'')) 
+                                from ciudad as c 
+                                inner join ubigeo as u on c.idciudad = u.idubigeo 
+                                where c.estado = 1 order by c.cod ";
+                  $stmtq = $db->prepare($sql);
+                  $stmtq->execute();                  
+                  foreach($stmtq->fetchAll() as $rq)
                   {
                      $s = "";
-                     if($r[0]==$_SESSION['idciudad'])
+                     if($rq[0]==$_SESSION['idciudad'])
                      {
                        $s = "selected";
                      }
                      ?>
-                     <option value="<?php echo $r[0] ?>" <?php echo $s; ?>><?php echo $r[1]; ?></option>
+                     <option value="<?php echo $rq[0] ?>" <?php echo $s; ?>><?php echo $rq[1]; ?></option>
                      <?php
                   }
                 ?>
@@ -62,11 +65,10 @@ $st->execute();
   </div>
   </div>  
   <!-- Fin de Barra Top y Logo -->
-  
   <!-- Buscador y Barra de Redes Sociales -->
-  <div class="my-container" style="height: 60px; "> 
-      <div style="padding: 4px 0 0 0; width:100%">
-          <div class="searchbar" style="float:right; width:175px;">
+  <div class="container" style="height: 47px; "> 
+      <div class="row" style="padding: 0px 0 0 0;">
+          <div class="searchbar" style="float:right; width:175px; margin-right: 15px; background: #FFF;">
             <div class="social-icons">
                 <ul>
                   <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
@@ -76,13 +78,13 @@ $st->execute();
                 </ul>
             </div>  
         </div>
-        <div class="searchbar" style="float:right; width:220px;">
+        <div class="searchbar" style="float:right; width:320px;">
           <form action="resultados.php" method="get">                  
-            <div style="background: red; float: left; ">
-              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
+            <div style="background: red; float: left; border:1px solid #dadada ">
+              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 38px; width:290px; ">
             </div>
-            <div class="searchbox">
-              <button class="fa fa-search fa-fw" type="submit"></button>
+            <div class="searchbox center" style="width: 27px;background:#DE1215;">
+              <button class="fa fa-search fa-fw" type="submit" style="color:#FFF !important"></button>
             </div>          
           </form>          
         </div>
@@ -90,7 +92,6 @@ $st->execute();
       </div>
  </div>
   <!-- Fin de Buscador y Barra de Redes Sociales -->
-  
   <!-- Menu -->
   <div class="my-container">
     <div  id="posicion">
@@ -98,7 +99,7 @@ $st->execute();
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
         <div class="menu-links hidden-xs">
           <ul class="nav nav-pills nav-justified" id="listamenu">
-          <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span></a>
+          <li> <a href="index.php"><span class="">&Uacute;ltimas Ofertas</span></a>
           </li>
             <!-- Menu -->
           </ul>
@@ -108,11 +109,9 @@ $st->execute();
     </div>
   </div>
   <!-- Fin de Menu -->
-  
 </header>
 <!-- end: Header --> 
 <!-- Products -->
-
     <?php
       $stmt = $db->prepare("SELECT p.*,e.dominio
                       FROM publicaciones as p 
@@ -132,10 +131,7 @@ $st->execute();
 <div class="f-space10"></div>
 <div class="my-container" id="reciente">
   <div class="row" >
-
-  
-    <div class="col-lg-<?php echo $a;?> col-md-<?php echo $a;?> col-sm-12 col-xs-12 main-column box-block">
-  
+    <div class="col-lg-<?php echo $a;?> col-md-<?php echo $a;?> col-sm-9 col-xs-8 main-column box-block">
         <div class="box-heading"><span>Descuentos Recientes</span><span class="view-all"><a href="descuentos/">[Ver Todos]</a></span></div>
         <div class="box-content">
         <div class="box-products" >          
@@ -152,7 +148,7 @@ $st->execute();
     </div>
 
     <?php if($i>0){?>
-    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box-block sidebar">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 box-block sidebar">
         <div class="box-heading" style="margin-bottom: 2px"><span>% Especiales</span><span class="view-all"><a href="descuentos/especiales" style="font-size:10px">[Ver Todos]</a></span></div>
         <div class="box-content" >
             <div class="box-products slide carousel-fade" id="productc2">
@@ -307,6 +303,7 @@ $st->execute();
 
 
 </section>
+
 
 <footer class="footer">
 

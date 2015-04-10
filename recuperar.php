@@ -107,20 +107,9 @@
     </div>
   </div>
   </div>
-  <div class="container">
-    <div class="row clearfix">      
-      <div class="pull-right" style="float:right; diaplay:inline-block; width:410px;margin-bottom: 6px; ">
-        <div class="searchbar" style="float:left; width:220px;">
-          <form action="#">                  
-            <div style="background: red; float: left; ">
-              <input class="searchinput" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
-            </div>
-            <div class="searchbox">
-              <button class="fa fa-search fa-fw" type="submit"></button>
-            </div>          
-          </form>          
-        </div>
-        <div class="searchbar" style="float:left; width:175px;">
+   <div class="container" style="height: 47px; "> 
+      <div class="row" style="padding: 0px 0 0 0;">
+          <div class="searchbar" style="float:right; width:175px; margin-right: 15px; background: #FFF;">
             <div class="social-icons">
                 <ul>
                   <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
@@ -130,10 +119,19 @@
                 </ul>
             </div>  
         </div>
+        <div class="searchbar" style="float:right; width:320px;">
+          <form action="resultados.php" method="get">                  
+            <div style="background: red; float: left; border:1px solid #dadada ">
+              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 38px; width:290px; ">
+            </div>
+            <div class="searchbox center" style="width: 27px;background:#DE1215;">
+              <button class="fa fa-search fa-fw" type="submit" style="color:#FFF !important"></button>
+            </div>          
+          </form>          
+        </div>        
       </div>
-    </div>
-  </div>
-  <div class="container">
+ </div>
+ <div class="container">
     <div class="row clearfix" style="width: 1140px;margin-left: 0px;" id="posicion">
       <div> 
         <!-- Navigation Buttons/Quick Cart for Tablets and Desktop Only -->
@@ -142,7 +140,6 @@
           <li> <a href="index.php"><span class="hidden-sm">&Uacute;ltimas Ofertas</span><i class="fa fa-angle-down fa-fw"></i></a>
           </li>
             <!-- Menu -->
-
           </ul>
         </div>
           <div class="clearfix"></div>

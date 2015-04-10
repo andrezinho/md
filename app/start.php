@@ -1,20 +1,20 @@
 <?php
 session_start();
-require_once '/lib/spdo.php';
-require_once '/config/facebook.php';
-require_once '/vendor/autoload.php';
+require_once 'lib/spdo.php';
+require_once 'config/facebook.php';
+require_once 'vendor/autoload.php';
 require 'funciones.php';
 
 if(!isset($_SESSION['idciudad']))
 {
 
-	$stmt = $db->prepare("SELECT c.idciudad,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod limit 1  ");
+	$stmt = $db->prepare("SELECT c.cod,u.descripcion from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod limit 1  ");
 	$stmt->execute();
 	$data = array();
 	$row = $stmt->fetchObject();
 
 	$_SESSION['ciudad'] = $row->descripcion;
-	$_SESSION['idciudad'] = $row->idciudad;
+	$_SESSION['idciudad'] = $row->cod;
 }
 
 //$actual=dameURL();
@@ -28,7 +28,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 FacebookSession::setDefaultApplication($config['app_id'], $config['app_secret']);
-$helper = new FacebookRedirectLoginHelper('http://localhost/md/index.php');
+$helper = new FacebookRedirectLoginHelper('http://www.muchosdescuentos.com/index.php');
 
 try 
 {

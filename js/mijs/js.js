@@ -1,11 +1,12 @@
 var host=window.location.host;
 host=host+'/md';
-$(document).ready(function(){    
+//host=host;
+$(document).ready(function(){  
+  $("#search").focus();
 //Suscripciones
 $('.small-btns').on('click','.btn-wishlist',function(){var i=$(this).attr("id"),temp=i;i=i.split("-");i=i[2];if(i!=""){addwishlist(i);}});
 //fin suscripciones
-$("#recibir_ofertas").click(function(){
-    
+$("#recibir_ofertas").click(function(){    
   $.get('http://'+host+'/view/_suscripcion.php','',function(data)
   {    
     $("#frm-suscripcion").empty().append(data);
@@ -73,7 +74,7 @@ $.get('http://'+host+'/model/menu.php','&',function(data){
   var menu = "";
    $.each(data,function(i,j){
    	 var idc=j.codigo;
-	   menu += "<li id='categoria-"+idc+"'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"'><span class='hidden-sm'>"+j.texto+"</span><i class='fa fa-angle-down fa-fw'></i></a>";
+	   menu += "<li id='categoria-"+idc+"'><a href='http://"+host+"/descuentos/"+amigable(j.texto)+"'><span >"+j.texto+"</span><i class='fa fa-angle-down fa-fw'></i></a>";
 	   menu += "<nav id='submenu-"+idc+"' class='submenu'>";		
 		 $.each(j.enlaces,function(k,p)
      {			

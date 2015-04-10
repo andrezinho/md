@@ -74,14 +74,10 @@ $st = $db->prepare("SELECT p.*
 $st->execute();
 $lista= $st->rowCount();
 ?>
-
-
 <!DOCTYPE html>
 <html class="noIE" lang="es">
 <head>
-
 <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta name="description" content="<?php echo $r['titulo2'];?>">
 <meta name="keywords" content="<?php echo $r['titulo2'];?>" />
 <meta name="news_keywords" content="<?php echo $r['titulo2'];?>"/>
@@ -96,12 +92,11 @@ $lista= $st->rowCount();
 <meta name='Origen'     content='Muchos Descuentos' />
 <meta name="locality"     content="Lima, Peru" />
 
-
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo $host; ?>/favicon.ico">
 <title>Muchos Descuentos: <?php echo $titulo;?></title>
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
-<link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
+<link href="<?php echo $host; ?>/css/iview.css" rel="stylesheet">
 <link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
 
 <link href="<?php echo $host; ?>/css/suscripcion.css" rel="stylesheet"/>
@@ -127,7 +122,7 @@ $lista= $st->rowCount();
 <!-- iView Slider -->
 <script src="<?php echo $host; ?>/js/raphael-min.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/jquery.easing.js" type="text/javascript"></script>
-<script src="<?php echo $host; ?>/js/iView.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/iview.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
 <script>
   !window.jQuery && document.write("<script src='<?php echo $host; ?>/js/jquery.min.js'><\/script>")
@@ -144,8 +139,8 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  //host=host+"/md";
-  host=host;
+  host=host+"/md";
+  //host=host;
   $(document).ready(function(){
     
     $("#sendf").click(function(){
@@ -723,10 +718,8 @@ $lista= $st->rowCount();
       </div>
     </div>
   </div>
-  
 </footer>
 <!-- end: footer --> 
-
 <script src="<?php echo $host;?>/js/jquery.elevatezoom.js" type="text/javascript"></script> 
 <script>
 (function($) {

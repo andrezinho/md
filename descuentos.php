@@ -5,39 +5,39 @@ $url=$_GET["id"];
 
 if($url=="")
 {
-          if(!isset($_SESSION['idusuario']))
-          {
-            $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                     c.descripcion,p.precio,p.precio_regular,p.descuento,
-                                     p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                     0 as deseo, e.dominio
-                              FROM publicaciones as p
-                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                              INNER JOIN local as l on l.idlocal=su.idlocal
-                              INNER JOIN empresa as e on e.idempresa=l.idempresa
-                              WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+        if(!isset($_SESSION['idusuario']))
+        {
+          $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                   c.descripcion,p.precio,p.precio_regular,p.descuento,
+                                   p.imagen,p.idtipo_descuento,s.descripcion as categoria,
+                                   0 as deseo, e.dominio
+                            FROM publicaciones as p
+                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                            INNER JOIN local as l on l.idlocal=su.idlocal
+                            INNER JOIN empresa as e on e.idempresa=l.idempresa
+                            WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
+                              AND p.fecha_fin >= CURDATE()
+                            order by p.idpublicaciones desc";
+        }
+        else
+        {
+          $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
+                                   c.descripcion,p.precio,p.precio_regular,p.descuento,
+                                   p.imagen,p.idtipo_descuento,s.descripcion as categoria,
+                                   coalesce(d.idpublicaciones,0) as deseo,e.dominio
+                            FROM publicaciones as p
+                            INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                            INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                            INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
+                            INNER JOIN local as l on l.idlocal=su.idlocal
+                            INNER JOIN empresa as e on e.idempresa=l.idempresa
+                            left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
+                            WHERE l.idubigeo='".$_SESSION['idciudad']."' 
                                 AND p.fecha_fin >= CURDATE()
-                              order by p.idpublicaciones desc";
-          }
-          else
-          {
-            $sql_c = "SELECT p.idpublicaciones,p.titulo1, p.titulo2, p.descripcion,
-                                     c.descripcion,p.precio,p.precio_regular,p.descuento,
-                                     p.imagen,p.idtipo_descuento,s.descripcion as categoria,
-                                     coalesce(d.idpublicaciones,0) as deseo,e.dominio
-                              FROM publicaciones as p
-                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion 
-                              INNER JOIN local as l on l.idlocal=su.idlocal
-                              INNER JOIN empresa as e on e.idempresa=l.idempresa
-                              left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
-                              WHERE l.idubigeo='".$_SESSION['idciudad']."' 
-                                  AND p.fecha_fin >= CURDATE()
-                              order by p.idpublicaciones desc";
-          }
+                            order by p.idpublicaciones desc";
+        }
 
     $stmt = $db->prepare($sql_c);  
     
@@ -99,7 +99,7 @@ else
 
   else
   {
-
+      
     $str=explode("/", $url);
     $n = count($str);
     if($n>1&&$str[1]!="")
@@ -223,29 +223,31 @@ else
           <ul class="nav nav-pills pull-right">
             <li class="dropdown" style="padding:10px 10px 6px;">Descuentos en
               <select id="ciudades" name="ciudades" class="web-list list-local" style="max-width:200px;border:0;">
-                <?php                   
-                  $sql = "SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,'')) from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ";
-                  $stmt2 = $db->prepare($sql);
-                  $stmt2->execute();                  
-                  foreach($stmt2->fetchAll() as $r2)
+              <?php                   
+                  $sql = "SELECT c.cod,concat(u.descripcion,' ',coalesce(c.zona,'')) 
+                                from ciudad as c 
+                                inner join ubigeo as u on c.idciudad = u.idubigeo 
+                                where c.estado = 1 order by c.cod ";
+                  $stmtq = $db->prepare($sql);
+                  $stmtq->execute();                  
+                  foreach($stmtq->fetchAll() as $rr)
                   {
                      $s = "";
-                     if($r2[0]==$_SESSION['idciudad'])
+                     if($rr[0]==$_SESSION['idciudad'])
                      {
                        $s = "selected";
                      }
                      ?>
-                     <option value="<?php echo $r2[0] ?>" <?php echo $s; ?>><?php echo $r2[1]; ?></option>
+                     <option value="<?php echo $rr[0] ?>" <?php echo $s; ?>><?php echo $rr[1]; ?></option>
                      <?php
                   }
-                ?>
+              ?>
               </select>
             </li>           
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Descuentos</span></a> </li>
             <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
             <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php endif; ?>
-
             <?php echo login($helper,$config); ?>            
           </ul>
         </div>
@@ -253,20 +255,9 @@ else
     </div>
   </div>
   </div>
-  <div class="container">
-    <div class="row clearfix">      
-      <div class="pull-right" style="float:right; diaplay:inline-block; width:410px;margin-bottom: 6px; ">
-        <div class="searchbar" style="float:left; width:220px;">
-          <form action="resultados.php" method="get">                  
-            <div style="background: red; float: left; ">
-              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 40px;">
-            </div>
-            <div class="searchbox">
-              <button class="fa fa-search fa-fw" type="submit"></button>
-            </div>          
-          </form>     
-        </div>
-        <div class="searchbar" style="float:left; width:175px;">
+  <div class="container" style="height: 47px; "> 
+      <div class="row" style="padding: 0px 0 0 0;">
+          <div class="searchbar" style="float:right; width:175px; margin-right: 15px; background: #FFF;">
             <div class="social-icons">
                 <ul>
                   <li class="icon google-plus"><a href="#a"><i class="fa fa-google-plus fa-fw"></i></a></li>
@@ -276,9 +267,19 @@ else
                 </ul>
             </div>  
         </div>
+        <div class="searchbar" style="float:right; width:320px;">
+          <form action="resultados.php" method="get">                  
+            <div style="background: red; float: left; border:1px solid #dadada ">
+              <input class="searchinput" name="search" id="search" placeholder="Buscar..." type="search" style="height: 38px; width:290px; ">
+            </div>
+            <div class="searchbox center" style="width: 27px;background:#DE1215;">
+              <button class="fa fa-search fa-fw" type="submit" style="color:#FFF !important"></button>
+            </div>          
+          </form>          
+        </div>
+        
       </div>
-    </div>
-  </div>
+ </div>
   <div class="container">
     <div class="row clearfix" style="width: 1140px;margin-left: 0px;" id="posicion">
       <div> 
@@ -303,17 +304,16 @@ else
       <div class="box-heading"><span>Mostrando <?php echo $nc; ?> descuentos <b style="font-size:16px; color:#FCD209">- <?php echo $st;?></b></span></div>
       <div class="box-content" id="item">
         <div class="box-products slide" id="productc3">
-          <div class="carousel-inner"> 
+          <div class="carousel-inner">
             <!-- Items Row -->
             <div class="item active">
-              <div class="row box-product" > 
+              <div class="row box-product" >
                 <!-- Product -->
-
                 <?php
                   if($nc>0)
                   { 
                     while($r = $stmt->fetch())
-                    {
+                    {                      
                       $o = oferta($r);
                       echo $o;
                     } 

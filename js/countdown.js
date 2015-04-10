@@ -1,6 +1,6 @@
 var host=window.location.host;
-//host=host+"/md";
-host=host;
+host=host+"/md";
+//host=host;
 $(function(){
 var idp=$("#idp").val();
 $.get('http://'+host+'/model/timer.php','idp='+idp,function(datos){

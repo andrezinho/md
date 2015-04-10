@@ -78,7 +78,6 @@ $st->execute();
 <head>
 
 <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta name="description" content="<?php echo $idd;?>">
 <meta name="keywords" content="<?php echo $r['titulo2'];?>" />
 <meta name="news_keywords" content="<?php echo $r['titulo2'];?>"/>
@@ -101,7 +100,7 @@ $st->execute();
 <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
-<link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
+<link href="<?php echo $host; ?>/css/iview.css" rel="stylesheet">
 <link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
 
 <link href="<?php echo $host; ?>/css/suscripcion.css" rel="stylesheet"/>
@@ -127,7 +126,7 @@ $st->execute();
 <!-- iView Slider -->
 <script src="<?php echo $host; ?>/js/raphael-min.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/jquery.easing.js" type="text/javascript"></script>
-<script src="<?php echo $host; ?>/js/iView.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/iview.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
 <script>
   !window.jQuery && document.write("<script src='<?php echo $host; ?>/js/jquery.min.js'><\/script>")
@@ -388,10 +387,10 @@ return false;
 
 
         </td>
-        <td width="40%" valign="top"><b>Ubicaci&oacute;n - <a href="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>" style="color:blue;font-size:11px" target="_blank">Ver en otra pestaña</a></b>
+        <td width="40%" valign="top"><b>Ubicaci&oacute;n - <a href="http://www.muchosdescuentos.com/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>" style="color:blue;font-size:11px" target="_blank">Ver en otra pestaña</a></b>
           <section id="mapa">
                                                                             
-            <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://localhost/md/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
+            <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.muchosdescuentos.com/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
             </iframe>                                    
           </section>
         </td>

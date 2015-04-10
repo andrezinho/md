@@ -1,9 +1,9 @@
 # Activar RewriteEngine
-DirectoryIndex index.php
+# DirectoryIndex index.php
 RewriteOptions inherit
-<ifmodule mod_rewrite.c>
+#<ifmodule mod_rewrite.c>
 Options +FollowSymlinks
-RewriteBase /md
+# RewriteBase /
 RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-d  
 RewriteCond %{SCRIPT_FILENAME} !-f
@@ -36,4 +36,4 @@ RewriteRule recuperar/(.*) recuperar.php?page=recuperar&id=$1 [L]
 
 RewriteRule ^fichacompra/(\w+)/?$ fichacompra.php?id=$1 [L]
 RewriteRule fichacompra/(.*) fichacompra.php?page=fichacompra&id=$1 [L]
-</ifmodule>
+#</ifmodule>

@@ -1,7 +1,6 @@
 <?php 
-require_once '/app/start.php'; //Start para facebook -> ;)
-require_once '/app/funciones.php';
-
+require_once 'app/start.php'; //Start para facebook -> ;)
+require_once 'app/funciones.php';
 $error=$_GET["error"];
 if(isset($error)){
 	if($error==1){echo "<script>alert('Sus datos son incorrectos.');</script>";}
@@ -13,7 +12,6 @@ if(isset($error)){
 <head>
 
 <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="Viewport">
 <meta name="description" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc ">
 <meta name="keywords" content="qEn muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc " />
 <meta name="news_keywords" content="En muchosdescuentos.com puedes encontrar cualquier variedad de ofertas cualquiera sea tus gustos: Viajes, Turismo,Entretenimiento,Moda,Tecnologia,etc "/>
@@ -32,7 +30,7 @@ if(isset($error)){
 
 
 <link href="<?php echo $host; ?>/css/bootstrap.css" rel="stylesheet" />
-<link href="<?php echo $host; ?>/css/iView.css" rel="stylesheet">
+<link href="<?php echo $host; ?>/css/iview.css" rel="stylesheet">
 <link href="<?php echo $host; ?>/css/micss.css" rel="stylesheet"/>
 
 <link href="<?php echo $host; ?>/css/suscripcion.css" rel="stylesheet"/>
@@ -58,7 +56,7 @@ if(isset($error)){
 <!-- iView Slider -->
 <script src="<?php echo $host; ?>/js/raphael-min.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/jquery.easing.js" type="text/javascript"></script>
-<script src="<?php echo $host; ?>/js/iView.js" type="text/javascript"></script>
+<script src="<?php echo $host; ?>/js/iview.js" type="text/javascript"></script>
 <script src="<?php echo $host; ?>/js/retina-1.1.0.min.js" type="text/javascript"></script>
 <script>
   !window.jQuery && document.write("<script src='<?php echo $host; ?>/js/jquery.min.js'><\/script>")

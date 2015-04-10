@@ -56,7 +56,7 @@ class ciudad extends Main
 
     function arrayCiudad()
     {      
-       $stmt = $this->db->prepare("SELECT c.idciudad,concat(u.descripcion,' ',coalesce(c.zona,''))  from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ");
+       $stmt = $this->db->prepare("SELECT c.cod,concat(u.descripcion,' ',coalesce(c.zona,''))  from ciudad as c inner join ubigeo as u on c.idciudad = u.idubigeo where c.estado = 1 order by c.cod ");
        $stmt->execute();
        $data = array();
        foreach($stmt->fetchAll() as $r)
