@@ -201,7 +201,7 @@ function eliminar()
           if($actions[4])
           {
           ?>
-          <a class="print" title="Anular">            
+          <a class="anular" title="Anular">            
               <span class="box-boton boton-anular"></span> 
               <label>Anular</label>
           </a>

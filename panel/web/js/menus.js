@@ -33,7 +33,7 @@ $.fn.generaMenu = function(menu) {
          }
          elementoPrincipal.append(enlacePrincipal);
          t = this.enlaces.length;         
-         var capaSubmenu = $('<div class="submenu ui-corner-bl ui-corner-br ui-corner-tr "></div>');         
+         var capaSubmenu = $('<div class="submenu ui-corner-bl ui-corner-br ui-corner-tr"></div>');         
          if(t>0)
          {
             enlacePrincipal.data("capaSubmenu",capaSubmenu);                 

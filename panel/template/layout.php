@@ -83,7 +83,7 @@
 <div class="container" >
     <div class="row clearfix" style="width: 1140px;margin-left: 0px;">
       <div>         
-        <div class="menu-links hidden-xs head_nav">         
+        <div class="menu-links head_nav">         
          </div>
         <div class="clearfix"></div>
       </div>

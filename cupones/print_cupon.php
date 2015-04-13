@@ -198,7 +198,8 @@ $sql = "SELECT c.idcupon,
         inner join suscripcion as s on p.idsuscripcion = s.idsuscripcion
         inner join local as l on l.idlocal = s.idlocal
         inner join empresa as e on e.idempresa = l.idempresa
-        inner join ubigeo as ub on ub.idubigeo = l.idubigeo
+        inner join ciudad as ci on ci.cod = l.idubigeo
+        inner join ubigeo as ub on ub.idubigeo = ci.idciudad
         where c.token = :tk ";
 $stmt = $db->prepare($sql);
 $stmt->bindParam(':tk',$tk,PDO::PARAM_STR);
@@ -224,7 +225,7 @@ if($r->nombres!="")
 }
 else
 {   
-    echo "<script>alert('No se ha encontrado el cupon.');window.location='".$host."'</script>";
+    echo "<script>alert('No se ha encontrado el cupon.');window.close()</script>";
 }
 
 ?>

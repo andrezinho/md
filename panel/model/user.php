@@ -1,6 +1,7 @@
 <?php
 include_once("Main.php");
-class User extends Main {
+class User extends Main 
+{
     function Start() 
     {
         $statement = $this->db->prepare("SELECT     u.idusuario,
