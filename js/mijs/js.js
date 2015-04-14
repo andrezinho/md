@@ -362,17 +362,19 @@ var PI = {
 
                var email = $("#email_suscripcion").val(),
                    mname = $("#name_suscripcion").val(),
-                   idem = $("#iemp").val();
-               if (idem === undefined) 
+                   idem = $("#iemp").val(),
+                   iloc = $("#iloc").val();
+               if (iloc === undefined) 
                {
-                  idem = 0;
+                  iloc = 0;
                }
 
               if(mname!="")
                {
-                  if(PI.validar(email))
+                  
+                 if(PI.validar(email))
                  {
-                    $.post('model/suscripcion.php','e='+email+'&n='+mname+'&em='+idem,function(r){
+                    $.post('http://'+host+'/model/suscripcion.php','e='+email+'&n='+mname+'&iloc='+iloc,function(r){                      
                     if(r.res=="1")
                     {
                         alert("Gracias por suscribirte.\nTe estaremos enviando nuevos descuentos.");

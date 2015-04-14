@@ -3,11 +3,16 @@ require_once '../lib/spdo.php';
 $db = Spdo::singleton();
 $email = $_POST['e'];
 $name = $_POST['n'];
-$idem = $_POST['em'];
+$iloc = $_POST['iloc'];
+if($iloc=="")
+{
+    $iloc=0;
+}
 if (filter_var($email, FILTER_VALIDATE_EMAIL)) 
 {
-    $stmt = $db->prepare("SELECT count(*) as n from email where correo = :c");
+    $stmt = $db->prepare("SELECT count(*) as n FROM email WHERE correo = :c and local = :l");
     $stmt->bindParam(':c',$email,PDO::PARAM_STR);
+    $stmt->bindParam(':l',$iloc,PDO::PARAM_INT);
     $stmt->execute();
     $r = $stmt->fetchObject();
     if($r->n==0)
@@ -20,11 +25,11 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL))
             $name = substr($name,0,100);
             
             $fecha = date('Y-m-d');
-            $stmt = $db->prepare("INSERT INTO email(correo,fecha,nombre,empresa) values(:c,:f,:n,:e)");
+            $stmt = $db->prepare("INSERT INTO email(correo,fecha,nombre,local) values(:c,:f,:n,:e)");
             $stmt->bindParam(':c',$email,PDO::PARAM_STR);
             $stmt->bindParam(':f',$fecha,PDO::PARAM_STR);
             $stmt->bindParam(':n',$name,PDO::PARAM_STR);
-            $stmt->bindParam(':e',$idem,PDO::PARAM_STR);
+            $stmt->bindParam(':e',$iloc,PDO::PARAM_INT);
             $stmt->execute();
             send_email($email,$name);
             $db->commit();            
@@ -48,11 +53,10 @@ else
 
 function send_email($email,$name)
 {
-    $email_to  = $email. '';        
+    $email_to  = $email. '';
     //$email_to .= 'andres.gm15@gmail.com';
     
-    $email_subject = "Muchos Descuentos - Suscripcion";  
-    
+    $email_subject = "Muchos Descuentos - Suscripcion";
     $html = '<div style="background: #FAFAFA; padding: 30px;">
                 <div>
                     <img src="http://www.muchosdescuentos.com/img/logo.png"/>
