@@ -18,7 +18,7 @@ if($url=="")
                             INNER JOIN local as l on l.idlocal=su.idlocal
                             INNER JOIN empresa as e on e.idempresa=l.idempresa
                             WHERE p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
-                              AND p.fecha_fin >= CURDATE()
+                              AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                             order by p.idpublicaciones desc";
         }
         else
@@ -35,7 +35,7 @@ if($url=="")
                             INNER JOIN empresa as e on e.idempresa=l.idempresa
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                             WHERE l.idubigeo='".$_SESSION['idciudad']."' 
-                                AND p.fecha_fin >= CURDATE()
+                                AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                             order by p.idpublicaciones desc";
         }
 
@@ -72,7 +72,7 @@ else
                                     INNER JOIN local as l on l.idlocal=su.idlocal
                                     INNER JOIN empresa as e on e.idempresa=l.idempresa
                                     WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' 
-                                      AND p.fecha_fin >= CURDATE()
+                                      AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                                     order by p.idpublicaciones desc";        
         
                 }
@@ -89,7 +89,7 @@ else
                             INNER JOIN empresa as e on e.idempresa=l.idempresa
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                             WHERE p.tipo=1 and l.idubigeo='".$_SESSION['idciudad']."' 
-                                AND p.fecha_fin >= CURDATE()
+                                AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                             order by p.idpublicaciones desc";        
                 }
                 $stmt = $db->prepare($sql_qa);
@@ -130,7 +130,7 @@ else
                             INNER JOIN local as l on l.idlocal=su.idlocal
                             INNER JOIN empresa as e on e.idempresa=l.idempresa
                             WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' 
-                              AND p.fecha_fin >= CURDATE()
+                              AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                             order by p.idpublicaciones desc";
         }
         else
@@ -147,7 +147,7 @@ else
                             INNER JOIN empresa as e on e.idempresa=l.idempresa
                             left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                             WHERE s.idsubcategoria=:id and l.idubigeo='".$_SESSION['idciudad']."' 
-                            AND p.fecha_fin >= CURDATE()
+                            AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                             order by p.idpublicaciones desc";
         }
         
@@ -181,7 +181,7 @@ else
                                 INNER JOIN local as l on l.idlocal=su.idlocal                                
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa
                                 WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
-                                    AND p.fecha_fin >= CURDATE()
+                                    AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                                 order by p.idpublicaciones desc";
         }
         else
@@ -197,7 +197,7 @@ else
                     INNER JOIN empresa as e on e.idempresa=l.idempresa
                     left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                     WHERE c.descripcion=:id and l.idubigeo='".$_SESSION['idciudad']."' 
-                        AND p.fecha_fin >= CURDATE()
+                        AND p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1
                     order by p.idpublicaciones desc";
           
         }

@@ -33,8 +33,8 @@
         <input id="fecha_fin" name="fecha_fin" onkeypress="return permite(event,'num_car');" class="text ui-widget-content ui-corner-all" style=" width: 350px; text-align: left;" value="<?php if($obj->fecha_fin!="") {echo fdate($obj->fecha_fin,'ES');} else { echo date('d/m/Y');} ?>" maxlength="10" title="Ingrese la fecha Fin" /> <span class="item-required">*</span>
         <br>        
         <label for="max_publi" class="labels" style="width:120px">Max. Publicaciones:</label>
-        <input id="max_publi" name="max_publi" onkeypress="return permite(event,'num');" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->max_publi; ?>" maxlength="8" title="Ingrese el Maximo numero de Publicaciones" /> <span class="item-required">(Por mes) *</span>
-        <span style="vertical-align: middle !important;">Infinito</span> <input type="checkbox" name="infinito" id="infinito"  value="1" style="vertical-align: middle !important;" />        
+        <input id="max_publi" name="max_publi" onkeypress="return permite(event,'num');" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php if($obj->max_publi==0) { echo "-"; } else { echo $obj->max_publi;} ?>" maxlength="8" title="Ingrese el Maximo numero de Publicaciones" /> <span class="item-required">(Por mes) *</span>
+        <span style="vertical-align: middle !important;">Infinito</span> <input type="checkbox" name="infinito" id="infinito"  value="1" style="vertical-align: middle !important;" <?php if($obj->max_publi==0) { echo "checked='';"; } ?> />        
         <br>
         <label for="observacion" style="width:120px" class="labels">Observacion:</label>
         <textarea name="observacion" id="observacion" rows="4" onkeypress="return permite(event,'num_car');" class="text ui-widget-content ui-corner-all" style="width:350px"><?php echo $obj->observacion; ?></textarea>       

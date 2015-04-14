@@ -12,9 +12,9 @@ $db = Spdo::singleton();
                                    INNER JOIN local as l on l.idlocal=su.idlocal
                                    INNER JOIN empresa as e on e.idempresa=l.idempresa
                               WHERE p.estado=1 and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."'
-                                  and p.fecha_fin >= CURDATE()
+                                  and p.fecha_fin >= CURDATE() and su.fecha_fin >= CURDATE() and su.estado=1
                               ORDER BY c.idcategoria asc");
-        //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
+        
         $stmt->execute();
         $items = $stmt->fetchAll();
         $cont = 0;     

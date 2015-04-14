@@ -1,73 +1,31 @@
 <?php 
 session_start();
-require_once '/app/start.php'; //Start para facebook -> ;)
-require_once '/app/funciones.php';
+require_once 'app/start.php'; //Start para facebook -> ;)
+require_once 'app/funciones.php';
 $db = Spdo::singleton();
 
 $idd=$_GET["id"]; 
+$sql = "SELECT e.idempresa,
+               e.razon_social as empresa,
+               e.logo,
+               e.facebook,
+               e.twitter,
+               e.dominio,
+               e.youtube,
+               e.razon_comercial,                              
+               e.website,
+               e.nombre_contacto
+        FROM empresa as e
+        WHERE dominio=:id ";
 
-$stmt = $db->prepare("SELECT p.idpublicaciones,
-                              p.titulo1, 
-                              p.titulo2, 
-                              p.descripcion as desc_publi,
-                              c.descripcion as categoria,
-                              p.precio,
-                              p.precio_regular, 
-                              p.imagen,
-                              p.fecha_inicio,
-                              p.fecha_fin,
-                              p.hora_inicio,
-                              p.hora_fin,
-                              p.descuento,
-                              e.idempresa,
-                              e.razon_social as empresa,
-                              e.logo,
-                              e.facebook,
-                              e.twitter,
-                              e.dominio,
-                              e.youtube,
-                              e.razon_comercial,
-                              p.cc,
-                              e.website,
-                              e.nombre_contacto, 
-                              l.idubigeo,
-                              l.descripcion as local,
-                              l.direccion,
-                              l.referencia,
-                              l.telefono1,
-                              l.telefono2,
-                              l.horario,
-                              l.mapa_google,
-                              l.latitud,
-                              l.longitud,
-                              u.descripcion as ubigeo
-                      FROM publicaciones as p
-                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
-                              INNER JOIN local as l on l.idlocal=su.idlocal
-                              INNER JOIN empresa as e on e.idempresa=l.idempresa
-                              INNER JOIN ubigeo as u on u.idubigeo=l.idubigeo 
-                       WHERE dominio=:id and l.idubigeo='".$_SESSION['idciudad']."'");
-
+$stmt = $db->prepare($sql);
 $stmt->bindValue(':id', $idd , PDO::PARAM_STR);
 $stmt->execute();
 $r = $stmt->fetch();
 $idempresa = $r['idempresa'];
-$ahorro=$r['precio_regular']-$r['precio'];
-$img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
 
 if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
 else{$logo=$host."/images/nologo.png";}
-     
-$st = $db->prepare("SELECT p.* 
-                      FROM publicaciones as p 
-                           inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
-                           inner join local as l on l.idlocal = s.idlocal
-                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
-                      ORDER BY idpublicaciones desc limit 3");
-$st->execute();
-$lista= $st->rowCount();
 
 $st = $db->prepare("SELECT * FROM categoria ORDER BY orden asc");
 $st->execute();
@@ -85,7 +43,6 @@ $st->execute();
 <meta name='googlebot'    content='index, follow' />
 <meta name="organization"   content="Muchos Descuentos" />
 <meta property="og:url"   content="http://www.muchosdescuentos.com/producto/<?php echo $url; ?>" />
-<meta name="og:image"     content="<?php echo $img;?>" />
 <meta name="og:title"     content="<?php echo $r['titulo1'];?>" />
 <meta name="robots"     content="index, follow" />
 <meta name="author"     content="Muchos Descuentos" />
@@ -214,27 +171,15 @@ return false;
                 <?php 
                   $stmt = $db->prepare("SELECT l.*,u.descripcion as ubigeo
                                         FROM local as l 
-                                        inner join ubigeo as u on u.idubigeo=l.idubigeo
+                                        inner join ciudad as ci on ci.cod = l.idubigeo
+                                        inner join ubigeo as u on u.idubigeo=ci.idciudad
                                         WHERE l.idempresa=:ide");
+                  
                   $stmt->bindValue(':ide', $r['idempresa'] , PDO::PARAM_INT);
                   $stmt->execute();
                   $u=$stmt->fetch();
 
-                ?>
-                <!--
-                    <select class="web-list list-local" style="max-width:140px;">
-                    <?php 
-                      foreach($stmt->fetchAll() as $x)
-                      { 
-                    ?> 
-                      <option value="<?php echo $x['idubigeo'];?>"><?php echo $x['descripcion'];?></option>                    
-                    <?php 
-                      }
-                    ?>                    
-                    </select>
-                -->
-               <!-- </div>
-            </div>  -->                    
+                ?>                               
             <div class="searchbar" style="float:right; width:auto; margin-right: 7px; padding-left:7px;">                        
                 <div class="social-icons" style="">                    
                       <ul > 
@@ -286,9 +231,7 @@ return false;
               </form>
             </div>
         </div>
-
-  </div>
-
+        </div>
       </div>
     </div>
   </div>
@@ -299,12 +242,13 @@ return false;
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="box-heading" ><span>Datos de <?php echo $r["dominio"];?></span></div>
-        <table border="0" width="100%" style="background:#EEE">
-        <tr>
-        <td width="60%" valign="top">
-        <p><b><?php echo $r["razon_comercial"];?></b></p>
-        <hr>
-        <span><b>Nombre Contacto:</b><?php echo $r["nombre_contacto"]; ?></span><br>
+        <div style="background:#EEEEEE; padding: 10px;">
+        <p>
+            <b>Razon Comercial: </b><?php echo $r["razon_comercial"];?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>Nombre Contacto:</b><?php echo $r["nombre_contacto"]; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>Sitio Web: </b> <a target="_blank" href="http://<?php echo $r["website"] ?>" style="color:blue;"><?php echo $r["website"] ?></a>
+            <br>
+        </p>
         <hr>
         <?php
           $sl = $db->prepare("SELECT l.idlocal, 
@@ -325,78 +269,60 @@ return false;
                                      e.nombre_contacto 
                               FROM local as l 
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                              INNER JOIN ubigeo as u on u.idubigeo=l.idubigeo 
+                              inner join ciudad as ci on ci.cod = l.idubigeo
+                              INNER JOIN ubigeo as u on u.idubigeo=ci.idciudad
                               WHERE l.idempresa=:id");
 
           $sl->bindValue(':id', $r["idempresa"] , PDO::PARAM_INT);
           $sl->execute();
-        ?>
-        
-          <ul class="nav nav-tabs blog-tabs nav-justified">
+        ?>        
+          <ul class="nav nav-tabs blog-tabs ">
           <?php 
           $c=0;
           $tabs="";
-              foreach($sl->fetchAll() as $e){
-               $c++;
-               if($c==1){$c="active";}
-               else{$c="";} 
-          ?>   
-              <li class="<?php echo $c;?>">
-              <a href="#id_<?php echo $e['idlocal'];?>" data-toggle="tab"><?php echo $e["local"];?></a>
-              </li>
-
-
-              
-          <?php
-          $tabs .='<div class="tab-pane '.$c.'" id="id_'.$e["idlocal"].'">';
-          $tabs .='<div>';
-          $tabs .="<table border='0' style='width:100%'>";
-          $tabs .="<tr>";
-          $tabs .='<td  align="right"><b>Direccion:</b></td><td>'.$e["direccion"].' - '.$e["ubigeo"].'</td>';
-          $tabs .="</tr>";
-          $tabs .="<tr>";
-          $tabs .='<td align="right"><b>Referencia:</b></td><td>'.$e["referencia"].'</td>';
-          $tabs .="</tr>";
-          $tabs .="<tr>";
-          $tabs .='<td align="right"><b>Telefonos:</b></td><td>'.$e["telefono1"].' - '.$e["telefono2"].'</td>';
-          $tabs .="</tr>";
-          $tabs .="<tr>";
-          $tabs .='<td align="right"><b>Horario Atenci&oacute;n:</td><td>'.$e["horario"].'</td>';
-          $tabs .="</tr>";
-          $tabs .="<tr>";
-          $tabs .='<td align="right"><b>Web:</b></td><td><a href="'.$e["pagina_web"].'" target="_blank" style="color:blue">'.$e["pagina_web"].'</a></td>';
-          $tabs .="</tr>";
-          $tabs .="</table>";
-          $tabs .='</div>';
-          $tabs .='</div>';
-
-           } 
-
-
-           ?>
-            </ul>
+          foreach($sl->fetchAll() as $e)
+          {
+            $c++;
+            if($c==1){$c="active";}
+            else{$c="";} 
+            ?>
+            <li class="<?php echo $c;?>">
+                <a href="#id_<?php echo $e['idlocal'];?>" data-toggle="tab"><?php echo $e["local"];?></a>
+            </li>
+            <?php
+            $tabs .='<div class="tab-pane '.$c.'" id="id_'.$e["idlocal"].'">';
+            $tabs .='<div style="width:400px;float:left;">';
+            $tabs .="<table border='0' style='width:100%'>";
+            $tabs .="<tr>";
+            $tabs .='<td  align="right"><b>Direccion:</b></td><td>'.$e["direccion"].' - '.$e["ubigeo"].'</td>';
+            $tabs .="</tr>";
+            $tabs .="<tr>";
+            $tabs .='<td align="right"><b>Referencia:</b></td><td>'.$e["referencia"].'</td>';
+            $tabs .="</tr>";
+            $tabs .="<tr>";
+            $tabs .='<td align="right"><b>Telefonos:</b></td><td>'.$e["telefono1"].' - '.$e["telefono2"].'</td>';
+            $tabs .="</tr>";
+            $tabs .="<tr>";
+            $tabs .='<td align="right"><b>Horario Atenci&oacute;n:</td><td>'.$e["horario"].'</td>';
+            $tabs .="</tr>";
+            $tabs .="<tr>";
+            $tabs .='<td align="right"><b>Web:</b></td><td><a href="'.$e["pagina_web"].'" target="_blank" style="color:blue">'.$e["pagina_web"].'</a></td>';
+            $tabs .="</tr>";
+            $tabs .="</table>";
             
+            $tabs .='</div>';
+             $tabs .= "<div style='float:left; width:450px;'><section id='mapa".$e['idlocal']."'>
+                    <iframe width='425' height='350' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='http://www.muchosdescuentos.com/mapa.php?latitud=".$e['latitud']."&amp;longitud=".$e['longitud']."'>
+                    </iframe>                                    
+                    </section></div><div style='clear:both'></div>";
+            $tabs .='</div>';
+            } 
+            ?>
+          </ul>
             <div class="tab-content">
-            <?php echo $tabs;?>          
-                  
-            </div> <!-- fin tab-content -->
-
-
-
-
-
-
-        </td>
-        <td width="40%" valign="top"><b>Ubicaci&oacute;n - <a href="http://www.muchosdescuentos.com/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>" style="color:blue;font-size:11px" target="_blank">Ver en otra pestaña</a></b>
-          <section id="mapa">
-                                                                            
-            <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.muchosdescuentos.com/mapa.php?latitud=<?php echo $r['latitud']; ?>&amp;longitud=<?php echo $r['longitud'] ?>">
-            </iframe>                                    
-          </section>
-        </td>
-        </tr>
-        </table>
-        
+            <?php echo $tabs;?>                  
+            </div>
+        </div>
     </div>
 </div>
 </div>
@@ -407,11 +333,10 @@ return false;
     <div class="col-lg-12 col-md-12 main-column box-block">
       <?php 
       
-        while($c=$st->fetch()){
-        
+        while($c=$st->fetch())
+        {        
          echo' <div class="box-heading"><span>Descuentos de '.$c['descripcion'].'</span><span class="view-all">
-         <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';
-         
+         <a href="descuentos/'.urls_amigables($c['descripcion']).'">[Ver Todos]</a></span></div>';         
          if(!isset($_SESSION['idusuario']))
          {
            $sql_q = "SELECT p.idpublicaciones,p.idtipo_descuento,p.titulo1, p.titulo2, 
@@ -428,8 +353,8 @@ return false;
                                 INNER JOIN local as l on l.idlocal=su.idlocal
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa 
                          WHERE dominio=:d and c.idcategoria=:idc and l.idubigeo='".$_SESSION['idciudad']."' 
-                            and p.fecha_fin >= CURDATE()
-                         order by idpublicaciones desc limit 8";
+                            and p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1 
+                         order by idpublicaciones desc";
           }
          else
          {
@@ -447,8 +372,8 @@ return false;
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa 
                                 left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                          WHERE dominio=:d and c.idcategoria=:idc and l.idubigeo='".$_SESSION['idciudad']."' 
-                            and p.fecha_fin >= CURDATE()
-                         order by idpublicaciones desc limit 8";
+                            and p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1 
+                         order by idpublicaciones desc";
          }
          
          $pub = $db->prepare($sql_q);

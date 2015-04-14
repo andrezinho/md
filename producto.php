@@ -15,48 +15,49 @@ for($s=0; $s<($n-1); $s++)
 }
 $id=$id[$n-1];
 $sql = "SELECT p.idpublicaciones,
-                              p.titulo1, 
-                              p.titulo2, 
-                              p.descripcion as desc_publi,
-                              c.descripcion as categoria,
-                              p.precio,
-                              p.precio_regular, 
-                              p.imagen,
-                              p.fecha_inicio,
-                              p.fecha_fin,
-                              p.hora_inicio,
-                              p.hora_fin,
-                              p.descuento,
-                              e.idempresa,
-                              e.razon_social as empresa,
-                              e.logo,
-                              e.facebook,
-                              e.twitter,
-                              e.dominio,
-                              e.youtube,
-                              e.razon_comercial,
-                              p.cc,
-                              e.website,
-                              e.nombre_contacto, 
-                              l.idubigeo,
-                              l.descripcion as local,
-                              l.direccion,
-                              l.referencia,
-                              l.telefono1,
-                              l.telefono2,
-                              l.horario,
-                              l.mapa_google,
-                              l.latitud,
-                              l.longitud
-                      FROM publicaciones as p
-                              INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
-                              INNER JOIN categoria as c on c.idcategoria=s.idcategoria
-                              INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
-                              INNER JOIN local as l on l.idlocal=su.idlocal
-                              INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE idpublicaciones=:id and l.idubigeo='".$_SESSION['idciudad']."'";
-$stmt = $db->prepare($sql);
+                p.titulo1, 
+                p.titulo2, 
+                p.descripcion as desc_publi,
+                c.descripcion as categoria,
+                p.precio,
+                p.precio_regular, 
+                p.imagen,
+                p.fecha_inicio,
+                p.fecha_fin,
+                p.hora_inicio,
+                p.hora_fin,
+                p.descuento,
+                e.idempresa,
+                e.razon_social as empresa,
+                e.logo,
+                e.facebook,
+                e.twitter,
+                e.dominio,
+                e.youtube,
+                e.razon_comercial,
+                p.cc,
+                e.website,
+                e.nombre_contacto, 
+                l.idubigeo,
+                l.descripcion as local,
+                l.direccion,
+                l.referencia,
+                l.telefono1,
+                l.telefono2,
+                l.horario,
+                l.mapa_google,
+                l.latitud,
+                l.longitud
+        FROM publicaciones as p
+                INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
+                INNER JOIN categoria as c on c.idcategoria=s.idcategoria
+                INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
+                INNER JOIN local as l on l.idlocal=su.idlocal
+                INNER JOIN empresa as e on e.idempresa=l.idempresa 
+         WHERE p.idpublicaciones=:id and l.idubigeo='".$_SESSION['idciudad']."'    
+                and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1  ";
 
+$stmt = $db->prepare($sql);
 $stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $stmt->execute();
 $r = $stmt->fetch();
@@ -70,7 +71,8 @@ $st = $db->prepare("SELECT p.*
                       FROM publicaciones as p 
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
                            inner join local as l on l.idlocal = s.idlocal
-                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                      WHERE p.estado=0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                             and su.fecha_fin >= CURDATE() and su.estado=1
                       ORDER BY idpublicaciones desc limit 3");
 $st->execute();
 $lista= $st->rowCount();
@@ -233,7 +235,8 @@ $lista= $st->rowCount();
                 <?php 
                   $stmt = $db->prepare("SELECT l.*,u.descripcion as ubigeo
                                         FROM local as l 
-                                        inner join ubigeo as u on u.idubigeo=l.idubigeo
+                                        inner join ciudad as ci on ci.cod = l.idubigeo
+                                        inner join ubigeo as u on u.idubigeo=ci.idciudad
                                         WHERE l.idempresa=:ide");
                   $stmt->bindValue(':ide', $r['idempresa'] , PDO::PARAM_INT);
                   $stmt->execute();
@@ -528,8 +531,8 @@ $lista= $st->rowCount();
                            inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
                            inner join local as l on l.idlocal = s.idlocal
                            INNER JOIN empresa as e on e.idempresa=l.idempresa
-                      WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
-                            and p.fecha_fin >= CURDATE()
+                      WHERE p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
+                            and p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1 
                       ORDER BY idpublicaciones desc limit 3");
         $s->execute();
         $ne=$s->rowCount();
@@ -578,7 +581,8 @@ $lista= $st->rowCount();
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE l.idlocal=:idl and p.tipo<>1 order by idpublicaciones desc limit 3");
+                       WHERE l.idlocal=:idl and p.tipo<>1 and p.fecha_fin>=CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1 
+                       order by idpublicaciones desc limit 3");
          $pub->bindValue(':idl', $u['idlocal'] , PDO::PARAM_INT);
          $pub->execute();
            while($p=$pub->fetch()){
