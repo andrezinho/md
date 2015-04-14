@@ -9,7 +9,7 @@ $(function()
     });
     $("#precio_regular,#precio").change(function(){
        calc_descuento();
-    });
+    });    
 });
 
 function save()
@@ -110,4 +110,19 @@ function calc_descuento()
     $("#descuento").val(td);
   }
 
+}
+
+function anular_pub()
+{
+  var gr = $("#list").jqGrid('getGridParam','selrow');
+  if(gr!=null) 
+  {
+    if(confirm('Deseas Anular la Publicación?'))
+    {
+       $.get('index.php?controller=<?php echo $controlador; ?>&action=delete&id='+gr,function(data){
+          if(data[0]==1) gridReload();
+            else alert("Ha ocurrido un problema, por favor intentelo nuevamente.");
+       },'json');
+    }
+  }  
 }

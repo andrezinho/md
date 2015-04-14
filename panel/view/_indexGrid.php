@@ -39,6 +39,7 @@ $(document).ready(function()
     $('.editar').click(function(){editar();});
     $('.eliminar').click(function(){eliminar();});
     $('.ver').click(function(){ver();});
+    $('.anular').click(function(){anular();});
 });
 function doSearch(ev)
 {
@@ -132,6 +133,23 @@ function eliminar()
     }
   }
 }
+
+function anular()
+{
+  var gr = $("#list").jqGrid('getGridParam','selrow');
+  if(gr!=null) 
+  {
+    if(confirm('Deseas anular el registro?'))
+    {
+       $.get('index.php?controller=<?php echo $controlador; ?>&action=anular&id='+gr,function(data){
+          if(data[0]==1) gridReload();
+            else alert("Ha ocurrido un problema, por favor intentelo nuevamente.");
+       },'json');
+    }
+  }
+}
+
+
 </script>
 <?php 
   if(isset($script)&&$script!="")

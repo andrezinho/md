@@ -135,7 +135,7 @@
 
   function sending()
   {
-      
+      $("#btn-conf-compra").html('PROCESANDO...');
       if($("#acepto_terminos").is(':checked')) 
       {
           var str = $("#frm").serialize();          
@@ -154,7 +154,7 @@
                 if(data.res==1)
                 {
                     $.get('http://'+host+'/view/_cupon.php','token='+data.token,function(html_cupon){
-                      $("#box-compra-all").empty().append(html_cupon);
+                      $("#box-compra-all").empty().append(html_cupon);                      
                     })
                 }
                 else

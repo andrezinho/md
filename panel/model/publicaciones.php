@@ -14,7 +14,10 @@ class publicaciones extends Main
                            concat(substring(cast(p.fecha_fin as nchar),9,2),'/',substring(cast(p.fecha_fin as nchar),6,2),'/',substring(cast(p.fecha_fin as nchar),1,4)),
                            concat(e.razon_social,' - ',l.descripcion),
                            concat(u.nombres,' ',u.apellidos),
-                           case p.estado when 1 then 'Activo' else 'Inactiva' end as estado
+                           case p.estado when 1 then 'Publicado' 
+                                         when 0 then 'No Publicado' 
+                                         when 3 then 'Anulado' 
+                                end as estado
                     from publicaciones as p inner join subcategoria as sc on p.idsubcategoria = sc.idsubcategoria
                             inner join usuario as u on u.idusuario = p.idusuario
                             inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion                         
@@ -28,7 +31,10 @@ class publicaciones extends Main
                            sc.descripcion,
                            concat(substring(cast(p.fecha_inicio as nchar),9,2),'/',substring(cast(p.fecha_inicio as nchar),6,2),'/',substring(cast(p.fecha_inicio as nchar),1,4)),
                            concat(substring(cast(p.fecha_fin as nchar),9,2),'/',substring(cast(p.fecha_fin as nchar),6,2),'/',substring(cast(p.fecha_fin as nchar),1,4)),
-                           case p.estado when 1 then 'Activo' else 'Inactiva' end as estado,
+                           case p.estado when 1 then 'Publicado' 
+                                         when 0 then 'No Publicado' 
+                                         when 3 then 'Anulado' 
+                                end as estado,
                            concat(u.nombres,' ',u.apellidos)
                     from publicaciones as p inner join subcategoria as sc on p.idsubcategoria = sc.idsubcategoria
                             inner join usuario as u on u.idusuario = p.idusuario
@@ -48,12 +54,58 @@ class publicaciones extends Main
         $stmt->execute();
         return $stmt->fetchObject();
     }
+    function verif_suscripcion()
+    {
+        $idsuscripcion = $_SESSION['idsuscripcion'];            
+        $idusuario=$_SESSION['idusuario'];
+        $fecha_c = date('Y-m-d');
+        //Verificamos si tiene stock para realizar publicaciones o si aun no vence su 
+        //contrato de suscripcion
+        $sql = "SELECT max_publi,num_publi,fecha_fin from suscripcion where idsuscripcion = ".$idsuscripcion." and fecha_fin >= '".$fecha_c."'";        
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $num = $stmt->rowCount();
+        if($num==0)
+        {
+            return array('res'=>'2','msg'=>'Error : No se puede registrar la publicacion debido a que su suscripcion ya expiró.');            
+            
+        }
+        else
+        {
+            $dato = $stmt->fetchObject();
+            if($dato->max_publi!=0)
+            {
+                $stock=$dato->max_publi-$dat->num_publi;            
+                if($stock<=0)
+                {
+                    return array('res'=>'2','msg'=>'Error : No se puede registrar la publicacion debido a que ya supero el número de publicaciones permitidas ('.$dato->max_publi.').');                            
+                }
+                else
+                {
+                    return array('res'=>'1','msg'=>'Ok');
+                }                
+            }
+        }
+    }
     function insert($_P ) 
     {
+        $idsuscripcion = $_SESSION['idsuscripcion'];            
+        $idusuario=$_SESSION['idusuario'];
+        $fecha_c = date('Y-m-d');
+
         if(!isset($_P['tipo']))
         {
             $_P['tipo'] = 0;
         }
+
+        $response = $this->verif_suscripcion();
+
+        if($response['res']=='2')
+        {
+            return $response;
+            die;
+        }
+
         try 
         { 
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -83,9 +135,9 @@ class publicaciones extends Main
                                                     :p7,:p8,:p9,:p10,:p11,:p12,
                                                     :p13,:p14,:p15,:p16,:p17
                                             );");
-            $idsuscripcion = $_SESSION['idsuscripcion'];
+            
             $idtipo=1;
-            $idusuario=$_SESSION['idusuario'];
+            
 
             $_P['fecha_inicio'] = $this->fdate($_P['fecha_inicio'],'EN');
             $_P['fecha_fin'] = $this->fdate($_P['fecha_fin'],'EN');
@@ -110,6 +162,12 @@ class publicaciones extends Main
             $stmt->execute();
 
             $idp = $this->IdlastInsert("publicaciones","idpublicaciones");
+
+            //Actualizamos el stock de publicaciones permitidas
+            $sql = "UPDATE suscripcion set num_publi = num_publi+1 where idsuscripcion = ".$idsuscripcion;
+            $stmt2 = $this->db->prepare($sql);
+            $stmt2->execute();
+
             $this->db->commit();
             return array('res'=>'1','msg'=>'Bien!','idp'=>$idp);
         }
@@ -184,7 +242,15 @@ class publicaciones extends Main
 
     function delete($_P ) 
     {
-        $stmt = $this->db->prepare("DELETE FROM publicaciones WHERE idpublicaciones = :p1");
+        $stmt = $this->db->prepare("UPDATE publicaciones SET estado=3 WHERE idpublicaciones = :p1");
+        $stmt->bindParam(':p1', $_P , PDO::PARAM_INT);
+        $p1 = $stmt->execute();
+        $p2 = $stmt->errorInfo();
+        return array($p1 , $p2[2]);
+    }
+    function anular($_P) 
+    {
+        $stmt = $this->db->prepare("UPDATE publicaciones SET estado=3 WHERE idpublicaciones = :p1");
         $stmt->bindParam(':p1', $_P , PDO::PARAM_INT);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();

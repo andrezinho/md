@@ -92,7 +92,6 @@
         <input type="text" id="hora_inicio" name="hora_inicio" value="<?php if($obj->hora_inicio!="") {echo substr($obj->hora_inicio,0,5);} else {echo "00:00";} ?>"  class="text ui-widget-content ui-corner-all" style=" width: 50px; text-align: left;" />
         <span class="item-required">*</span> 
         <br/>
-
         <label for="fecha_fin" class="labels" style="width:130px;">Fecha Fin:</label>
         <input type="text" id="fecha_fin" name="fecha_fin" value="<?php if($obj->fecha_fin!="") {echo fdate($obj->fecha_fin,"ES");} else {echo date('d/m/Y');} ?>"  class="text ui-widget-content ui-corner-all" style=" width: 100px; text-align: left;" />
         <label for="hora_fin" class="labels" style="width:50px;">Hora:</label>
@@ -100,7 +99,7 @@
         <span class="item-required">*</span> 
         <br/>
 
-        <label for="estado" class="labels" style="width:130px;">Activo:</label>
+        <label for="estado" class="labels" style="width:130px;">Publicar ?</label>
         <?php
             if($obj->estado==true || $obj->estado==false)
             {

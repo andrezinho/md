@@ -14,7 +14,7 @@ for($s=0; $s<($n-1); $s++)
   $titulo .=$id[$s]." ";
 }
 $id=$id[$n-1];
-$stmt = $db->prepare("SELECT p.idpublicaciones,
+$sql = "SELECT p.idpublicaciones,
                               p.titulo1, 
                               p.titulo2, 
                               p.descripcion as desc_publi,
@@ -54,7 +54,8 @@ $stmt = $db->prepare("SELECT p.idpublicaciones,
                               INNER JOIN suscripcion as su on su.idsuscripcion=p.idsuscripcion
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
-                       WHERE idpublicaciones=:id and l.idubigeo='".$_SESSION['idciudad']."'");
+                       WHERE idpublicaciones=:id and l.idubigeo='".$_SESSION['idciudad']."'";
+$stmt = $db->prepare($sql);
 
 $stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $stmt->execute();
@@ -219,7 +220,8 @@ $lista= $st->rowCount();
                 <div class="short-info-det-name-empresa">                    
                   <div class="name-empresa" >
                     <img src="<?php echo $logo;?>" class="logo-empresa">  
-                    <b><?php echo strtoupper($r['empresa']);?></b>
+                    <b><?php echo strtoupper(trim($r['empresa']));?></b>
+                    <p style="font-size:11px;text-align:left;">(<?php echo $r['local'] ?>)</p>
                   </div>
                 <div class="frase-empresa"><?php //echo frase ?></div>
                 </div>

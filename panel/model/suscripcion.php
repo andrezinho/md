@@ -9,7 +9,7 @@ class suscripcion extends Main
                        concat(e.razon_social,' - ',l.descripcion),
                        concat(substr(cast(s.fecha_inicio as nchar),9,2),'/',substr(cast(s.fecha_inicio as nchar),6,2),'/',substr(cast(s.fecha_inicio as nchar),1,4)),
                        concat(substr(cast(s.fecha_fin as nchar),9,2),'/',substr(cast(s.fecha_fin as nchar),6,2),'/',substr(cast(s.fecha_fin as nchar),1,4)),
-                       s.max_publi,
+                       case s.max_publi when 0 then '&infin;' else s.max_publi end,
                        s.num_publi,
                        case s.estado when 0 then 'EN ESPERA'
                                      when 1 then 'ACTIVO' 
@@ -39,7 +39,7 @@ class suscripcion extends Main
 
         $fecha_i = $this->fdate($_P['fecha_inicio'],'EN');
         $fecha_f = $this->fdate($_P['fecha_fin'],'EN');
-
+        $_P['fecha_reg'] = date('Y-m-d');
         $stmt = $this->db->prepare("INSERT INTO suscripcion (idlocal,
                                                          fecha_reg,
                                                          fecha_inicio,
@@ -106,6 +106,14 @@ class suscripcion extends Main
     function delete($_P ) 
     {
         $stmt = $this->db->prepare("DELETE FROM suscripcion WHERE idsuscripcion = :p1");
+        $stmt->bindParam(':p1', $_P , PDO::PARAM_INT);
+        $p1 = $stmt->execute();
+        $p2 = $stmt->errorInfo();
+        return array($p1 , $p2[2]);
+    }
+    function anular($_P ) 
+    {
+        $stmt = $this->db->prepare("UPDATE suscripcion SET estado = 3 WHERE idsuscripcion = :p1");
         $stmt->bindParam(':p1', $_P , PDO::PARAM_INT);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();

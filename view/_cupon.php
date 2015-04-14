@@ -9,6 +9,7 @@ $sql = "SELECT c.idcupon,
 		        u.nombres,
 		        u.apellidos,
 		        u.nrodocumento,
+		        u.email,
 		        p.idpublicaciones,
 		        p.fecha_fin,
 		        p.precio_regular,
@@ -35,7 +36,8 @@ $sql = "SELECT c.idcupon,
 		inner join suscripcion as s on p.idsuscripcion = s.idsuscripcion
 		inner join local as l on l.idlocal = s.idlocal
 		inner join empresa as e on e.idempresa = l.idempresa
-		inner join ubigeo as ub on ub.idubigeo = l.idubigeo
+	    inner join ciudad as ci on ci.cod = l.idubigeo
+		inner join ubigeo as ub on ub.idubigeo = ci.idciudad
 		where c.token = :tk ";
 
 $stmt = $db->prepare($sql);
@@ -56,8 +58,8 @@ if($r->nombres!="")
 	<a target="_blank" href="<?php echo $host ?>/cupones/print_cupon.php?token=<?php echo $tk; ?>" style="float:right; color:#FFF; padding:3px 10px; background:#333">Imprimir</a>
 <h2>Cupon de Pago</h2>
 <p>
-	A continuación encontrarás el cupón para pagar tu reserva. Los págps se realizan mediante depósitos en cuenta bancaria los mismo que se muestran 
-	en este documento. Deberás presentar este Cupón junto al voucher de depósito para hacer efectivo el descuento.
+	A continuaci&oacute;n encontrar&aacute;s el cup&oacute;n para pagar tu reserva. Los p&aacute;gps se realizan mediante dep&oacute;sitos en cuenta bancaria los mismo que se muestran 
+	en este documento. Deber&aacute;s presentar este Cup&oacute;n junto al voucher de dep&oacute;sito para hacer efectivo el descuento.
 </p>
 <table class="table-cupon" style="width:100%;">
 	<tr>
@@ -108,6 +110,7 @@ if($r->nombres!="")
                                   where eb.idempresa =:ide");
 			$stmt_->bindParam(':ide',$r->idempresa,PDO::PARAM_INT);
 			$stmt_->execute();
+			$html_cta = '';
 			foreach ($stmt_->fetchAll() as $r_) 
 			{
             	?>
@@ -116,6 +119,11 @@ if($r->nombres!="")
             		<td>:&nbsp;<?php echo $r_['nrocuenta']; ?></td>
             	</tr>
             	<?php
+
+            	$html_cta .= '<tr>
+		            		<td>'.$r_['banco'].'</td>
+		            		<td>:&nbsp;'.$r_['nrocuenta'].'</td>
+		            	  </tr>';
         	}
 		?>
 		</table>	
@@ -130,9 +138,12 @@ if($r->nombres!="")
 </div>
 </div>
 </div>
-<?php } 
+<?php 		
+} 
 else
 {
-	echo "<h2></h2>";
+	echo "<h2>Error.</h2>";
 }
+
+
 ?>

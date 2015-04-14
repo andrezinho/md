@@ -15,7 +15,7 @@ class publicacionesController extends Controller
                             5 => array('Name'=>'Fecha Fin.','NameDB'=>'p.fecha_fin','search'=>true,'align'=>'center','width'=>'50'),
                             6 => array('Name'=>'Empresa Local','NameDB'=>'','width'=>'70','align'=>'center'),
                             7 => array('Name'=>'Publicador','NameDB'=>'u.nombres','width'=>'70','align'=>'center'),
-                            8 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'30','align'=>'center','color'=>'#FFFFFF')
+                            8 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'40','align'=>'center','color'=>'#FFFFFF')
                          );  
 
         var $cols_public = array(
@@ -24,7 +24,7 @@ class publicacionesController extends Controller
                             3 => array('Name'=>'Tipo','NameDB'=>'sc.descripcion','search'=>true,'align'=>'center','width'=>'70'),
                             4 => array('Name'=>'Fecha Incio.','NameDB'=>'p.fecha_inicio','search'=>true,'align'=>'center','width'=>'50'),
                             5 => array('Name'=>'Fecha Fin.','NameDB'=>'p.fecha_fin','search'=>true,'align'=>'center','width'=>'50'),
-                            6 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'30','align'=>'center','color'=>'#FFFFFF'),
+                            6 => array('Name'=>'Estado','NameDB'=>'p.estado','width'=>'40','align'=>'center','color'=>'#FFFFFF'),
                             7 => array('Name'=>'Publicador','NameDB'=>'u.nombres','width'=>'70','align'=>'center')
                          );     
         var $cols = array() ;
@@ -51,7 +51,7 @@ class publicacionesController extends Controller
         //......................(nuev,edit,elim,vermp)
         if($_SESSION['id_perfil']==3)
         {
-            $new = true;$update = true;$delete = true;$view=true;
+            $new = true;$update = true;$delete = false;$view=true;
             if($_SESSION['suscripcion_estado']!=1)
             {
                 $new=false;$update=false;$delete=false;
@@ -62,7 +62,7 @@ class publicacionesController extends Controller
             $new=false;$update=false;$delete=false;$view=true;
         }
 
-        $data['actions'] = array($new,$update,$delete,$view);
+        $data['actions'] = array($new,$update,$delete,$view,true);
         $data['titulo'] = "Publicaciones de Descuentos";
         if($_SESSION['empresa']!="")
             $data['enlace'] = "Publicaciones de Descuentos - Empresa: <b>".$_SESSION['empresa']."</b> &nbsp;&nbsp;Local: <b>".$_SESSION['local']."</b>";
@@ -102,12 +102,24 @@ class publicacionesController extends Controller
     {
         $data = array();
         $view = new View();        
-        
+        $obj = new publicaciones();
+
         $data['categoria'] = $this->Select(array('name'=>'idcategoria','id'=>'idcategoria','table'=>'categoria'));
-        $data['tipo_descuento'] = $this->Select(array('name'=>'idtipo_descuento','id'=>'idtipo_descuento','table'=>'tipo_descuento'));
+        $data['tipo_descuento'] = $this->Select(array('name'=>'idtipo_descuento','id'=>'idtipo_descuento','table'=>'tipo_descuento'));        
         
-        $view->setData($data);
-        $view->setTemplate( '../view/publicaciones/_form.php' );
+        $response = $obj->verif_suscripcion();
+        if($response['res']=='1')
+        {
+            $view->setData($data);
+            $view->setTemplate( '../view/publicaciones/_form.php' );
+        }        
+        else
+        {
+            $data['msg'] = $response['msg'];
+            $view->setData($data);
+            $view->setTemplate( '../view/_Error.php' );
+        }
+        
         echo $view->renderPartial();
     }
 
@@ -169,6 +181,15 @@ class publicacionesController extends Controller
         $obj = new publicaciones();
         $result = array();        
         $p = $obj->delete($_GET['id']);
+        if ($p[0]) $result = array(1,$p[1]);
+        else $result = array(2,$p[1]);
+        print_r(json_encode($result));
+    }
+    public function anular()
+    {
+        $obj = new publicaciones();
+        $result = array();        
+        $p = $obj->anular($_GET['id']);
         if ($p[0]) $result = array(1,$p[1]);
         else $result = array(2,$p[1]);
         print_r(json_encode($result));

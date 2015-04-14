@@ -24,7 +24,7 @@ class suscripcionController extends Controller
         $data['controlador'] = $_GET['controller'];
 
         //(nuevo,editar,eliminar,ver)
-        $data['actions'] = array(true,true,true,false);
+        $data['actions'] = array(true,true,false,false,true);
         $data['titulo'] = "Gestion de suscripciones";
 
         $view = new View();
@@ -95,11 +95,20 @@ class suscripcionController extends Controller
         print_r(json_encode($result));
 
     }
-    public function delete()
+    public function delete_()
     {
         $obj = new suscripcion();
         $result = array();        
         $p = $obj->delete($_GET['id']);
+        if ($p[0]) $result = array(1,$p[1]);
+        else $result = array(2,$p[1]);
+        print_r(json_encode($result));
+    }
+    public function anular()
+    {
+        $obj = new suscripcion();
+        $result = array();        
+        $p = $obj->anular($_GET['id']);
         if ($p[0]) $result = array(1,$p[1]);
         else $result = array(2,$p[1]);
         print_r(json_encode($result));
