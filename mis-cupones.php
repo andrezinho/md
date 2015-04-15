@@ -3,13 +3,6 @@ session_start();
 require_once 'head.php'; //Start para facebook -> ;)
 $url=$_GET["id"];
 $db = Spdo::singleton();
-$stmt = $db->prepare("SELECT * 
-                      FROM publicaciones
-                      WHERE estado<>0 and tipo=1
-                      ORDER BY idpublicaciones desc limit 3");
-$stmt->execute();
-$lista= $stmt->rowCount();
-
 ?>
 <script type="text/javascript">
   $("document").ready(function(){

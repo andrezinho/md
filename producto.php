@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '/app/start.php'; //Start para facebook -> ;)
-require_once '/app/funciones.php';
+require_once 'app/start.php'; //Start para facebook -> ;)
+require_once 'app/funciones.php';
 
 $db = Spdo::singleton();
 $url=$_GET["id"];
@@ -47,7 +47,8 @@ $sql = "SELECT p.idpublicaciones,
                 l.horario,
                 l.mapa_google,
                 l.latitud,
-                l.longitud
+                l.longitud,
+                l.idlocal
         FROM publicaciones as p
                 INNER JOIN subcategoria as s on s.idsubcategoria=p.idsubcategoria
                 INNER JOIN categoria as c on c.idcategoria=s.idcategoria
@@ -61,7 +62,9 @@ $stmt = $db->prepare($sql);
 $stmt->bindValue(':id', $id , PDO::PARAM_STR);
 $stmt->execute();
 $r = $stmt->fetch();
+$idpublicacion = $r['idpublicaciones'];
 $idempresa = $r['idempresa'];
+$idlocal=$r['idlocal'];
 $ahorro=$r['precio_regular']-$r['precio'];
 $img=$host."/panel/web/imagenes/".$r['imagen'].".jpg";
 if($r['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$r['logo'];}
@@ -142,7 +145,7 @@ $lista= $st->rowCount();
 <script type="text/javascript" src="<?php echo $host; ?>/js/jquery.countdown.js"></script>
 <script type="text/javascript">
   var host=window.location.host;
-  host=host+"/md";
+  //host=host+"/md";
   //host=host;
   $(document).ready(function(){
     
@@ -312,7 +315,8 @@ $lista= $st->rowCount();
             <div style="width:auto; float:right; border-right: 0">
                 <div style="padding:5px 0px 5px 0px">
                     <div>
-                        <input type="hidden" name="iemp" id="idemp" value="<?php echo $idempresa; ?>" />                        
+                        <input type="hidden" name="iemp" id="idemp" value="<?php echo $idempresa; ?>" />
+                        <input type="hidden" name="iloc" id="iloc" value="<?php echo $idlocal; ?>" />
                     </div>                    
                 </div>
             </div>
@@ -533,6 +537,7 @@ $lista= $st->rowCount();
                            INNER JOIN empresa as e on e.idempresa=l.idempresa
                       WHERE p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
                             and p.fecha_fin >= CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1 
+                            and p.idpublicaciones not in (".$idpublicacion.")
                       ORDER BY idpublicaciones desc limit 3");
         $s->execute();
         $ne=$s->rowCount();
@@ -582,6 +587,7 @@ $lista= $st->rowCount();
                               INNER JOIN local as l on l.idlocal=su.idlocal
                               INNER JOIN empresa as e on e.idempresa=l.idempresa 
                        WHERE l.idlocal=:idl and p.tipo<>1 and p.fecha_fin>=CURDATE() and p.estado = 1 and su.fecha_fin >= CURDATE() and su.estado=1 
+                                and p.idpublicaciones not in (".$idpublicacion.")
                        order by idpublicaciones desc limit 3");
          $pub->bindValue(':idl', $u['idlocal'] , PDO::PARAM_INT);
          $pub->execute();

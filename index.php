@@ -119,7 +119,7 @@ $st->execute();
                            inner join local as l on l.idlocal = s.idlocal
                            INNER JOIN empresa as e on e.idempresa=l.idempresa
                       WHERE p.estado<>0 and p.tipo=1 and l.idubigeo = '".$_SESSION['idciudad']."'
-                            and p.fecha_fin >= CURDATE()
+                            and p.fecha_fin >= CURDATE() and s.fecha_fin >= CURDATE() and s.estado=1
                       ORDER BY idpublicaciones desc limit 3");
         //$stmt->bindValue(':p1', $_SESSION['id_perfil'] , PDO::PARAM_INT);
         $stmt->execute();
@@ -205,7 +205,7 @@ $st->execute();
                                 INNER JOIN local as l on l.idlocal=su.idlocal
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa 
                          WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
-                            and p.fecha_fin >= CURDATE()
+                            and p.fecha_fin >= CURDATE() and p.estado=1 and su.fecha_fin >= CURDATE() and su.estado=1
                          order by idpublicaciones desc limit 8";
           }
          else
@@ -224,7 +224,7 @@ $st->execute();
                                 INNER JOIN empresa as e on e.idempresa=l.idempresa 
                                 left outer join deseos as d on d.idpublicaciones = p.idpublicaciones and d.idusuario = ".$_SESSION['idusuario']."
                          WHERE c.idcategoria=:idc and p.tipo<>1 and l.idubigeo='".$_SESSION['idciudad']."' 
-                            and p.fecha_fin >= CURDATE()
+                            and p.fecha_fin >= CURDATE() and p.estado=1 and su.fecha_fin >= CURDATE() and su.estado=1
                          order by idpublicaciones desc limit 8";
          }
          
