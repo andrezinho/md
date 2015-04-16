@@ -24,7 +24,7 @@ $sql = "SELECT  e.razon_social as empresa,
  	send_email($r); 	
  }
 
-
+echo "Se enviaron los correos";
 function send_email($datos)
 {
 	$email_to  = $datos['email_local']. ' ';			
