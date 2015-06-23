@@ -45,7 +45,7 @@
           <a href="<?php echo $host; ?>/index.php"><img src="<?php echo $host; ?>/images/logo.png" /></a>
           <ul class="nav nav-pills pull-right">                                 
             <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
-            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php endif; ?>
 
             <?php if (!isset($_SESSION['facebook'])&&!isset($_SESSION['email'])): ?>

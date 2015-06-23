@@ -51,7 +51,8 @@ else{$logo=$host."/images/nologo.png";}
   .box-msg-result { font-size:10px; color:red;font-style: italic;}
 </style>
 <body>
-<div id="frm-suscripcion"></div>
+    <div id="box-other-email"></div>
+    <div id="frm-suscripcion"></div>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
   <div class="container">
@@ -86,7 +87,7 @@ else{$logo=$host."/images/nologo.png";}
             </li>       
             <li> <a href="#" id="recibir_ofertas"> <i class="fa fa-envelope fa-fw"></i> <span class="hidden-xs">Quiero Recibir Descuentos</span></a> </li>
             <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
-            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php endif; ?>
             <?php echo login($helper,$config); ?>
           </ul>

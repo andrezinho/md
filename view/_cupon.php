@@ -47,18 +47,23 @@ $r = $stmt->fetchObject();
 
 if($r->nombres!="")
 {
-
 ?>
 <style type="text/css">
-	.table-cupon tr td { padding: 5px; border:1px solid #FFF;}
+    .table-cupon tr td { padding: 5px; border:1px solid #FFF;}
 </style>
-<h2>Gracias por su preferencia, <?php echo $r->nombres." ".$r->apellidos; ?></h2>
+<script type="text/javascript">
+    function popup(url,width,height){cuteLittleWindow = window.open(url,"littleWindow","location=no,width="+width+",height="+height+",top=80,left=300,scrollbars=yes"); }
+</script>
+<h2>Gracias por su preferencia <b><?php echo $r->nombres." ".$r->apellidos; ?></b>. Este cup&oacute;n fue enviado a su correo electronico.</h2>
 <div>
 <div style="width:870px; margin:0 auto; padding:20px 15px; background:#fafafa;">
-	<a target="_blank" href="<?php echo $host ?>/cupones/print_cupon.php?token=<?php echo $tk; ?>" style="float:right; color:#FFF; padding:3px 10px; background:#333">Imprimir</a>
+	<a target="_blank" href="<?php echo $host ?>/cupones/print_cupon.php?token=<?php echo $tk; ?>" style="float:right; color:#FFF; padding:3px 10px; background:#333"><i class="fa fa-print"></i> Imprimir</a>        
+        &nbsp;&nbsp;
+        <a href="javascript:popup('_other_emial.php?token=<?php echo $tk; ?>',500,500)" style="float:right; color:#FFF; padding:3px 10px; background:#333"><i class="fa fa-mail-reply"></i> Enviar a email</a>        
+        &nbsp;&nbsp;
 <h2>Cupon de Pago</h2>
 <p>
-	A continuaci&oacute;n encontrar&aacute;s el cup&oacute;n para pagar tu reserva. Los p&aacute;gps se realizan mediante dep&oacute;sitos en cuenta bancaria los mismo que se muestran 
+	A continuaci&oacute;n encontrar&aacute;s el cup&oacute;n para pagar tu reserva. Los pagos se realizan mediante dep&oacute;sitos en cuenta bancaria los mismo que se muestran 
 	en este documento. Deber&aacute;s presentar este Cup&oacute;n junto al voucher de dep&oacute;sito para hacer efectivo el descuento.
 </p>
 <table class="table-cupon" style="width:100%;">

@@ -1,4 +1,6 @@
  $(document).ready(function(){
+     $("#box-other-email").dialog();
+     $(".ui-dialog-titlebar-close").html("<a style='color:#D01111; font-weight:bold;vertical-align: top !important;'></a>");
       var lh=0;
       $(".box-pay").each(function(i,j){
           var h=parseInt($(j).css("height"));

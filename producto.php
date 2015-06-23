@@ -194,7 +194,7 @@ $lista= $st->rowCount();
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hoView="dropdown" href="#a">Tef: (01)33333) <i class="fa fa-angle-down fa-fw"></i> </a>
             </li>
             <?php if (isset($_SESSION['facebook'])||isset($_SESSION['email'])): ?>
-            <li> <a href="<?php echo $host; ?>/deseos"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
+            <li> <a href="<?php echo $host; ?>/deseos.php"> <i class="fa fa-heart fa-fw"></i> <span class="hidden-xs">Mis Deseos</span></a> </li>            
             <?php endif; ?>
 
             <?php echo login($helper,$config); ?>
