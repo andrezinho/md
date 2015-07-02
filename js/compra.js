@@ -1,6 +1,41 @@
- $(document).ready(function(){
-     $("#box-other-email").dialog();
-     $(".ui-dialog-titlebar-close").html("<a style='color:#D01111; font-weight:bold;vertical-align: top !important;'></a>");
+var tk = "";
+$(document).ready(function(){
+     $("#btn-enviar").click(function(){
+         var e = $("#oemail").val();
+         if(!validarEmail(e))
+         {
+             alert("Ingrese un correo válido");
+             $("#oemail").focus();
+             return 0;
+         }
+         else
+         {
+             $("#msg-send-email").empty().html('Enviando....').show();
+             $.post('http://'+host+'/model/send_email_cupon.php','tk='+tk+'&e='+e,function(data){
+                 alert(data);
+                 if(data=="")
+                 {
+                     $("#msg-send-email").empty().html('Se ha enviado correctamente!');
+                 }
+                 else
+                 {
+                     alert(data);
+                 }
+                 
+             });
+         }
+     });
+     $("#box-other-email").dialog({
+         autoOpen:false,
+         title:"Enviar a correo electronico",
+         modal:true
+     });
+     $("#box-compra-all").on('click','.open-other-email',function(){
+         $("#box-other-email").dialog('open');
+         tk = $(this).attr("id");
+         $(".ui-dialog-titlebar-close").html("<a style='color:#D01111; font-weight:bold;vertical-align: top !important;'>X</a>");
+     });
+     
       var lh=0;
       $(".box-pay").each(function(i,j){
           var h=parseInt($(j).css("height"));
@@ -178,3 +213,13 @@
         return 0;
       }  
   }
+  
+  function validarEmail( email ) {
+    expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if ( !expr.test(email) )
+    { return false;}
+    else
+    {
+        return true;
+    }
+}

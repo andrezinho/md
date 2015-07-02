@@ -1,10 +1,7 @@
 <?php
 session_start();
 require_once 'head.php';
-
-//$db = Spdo::singleton();
 $url=$_GET["id"];
-
 $id=explode("-",$url);
 $n=count($id);
 
@@ -42,16 +39,19 @@ $rr = $stmt->fetch();
 $ahorro=$rr['precio_regular']-$rr['precio'];
 $img=$host."/panel/web/imagenes/".$rr['imagen'].".jpg";
 if($rr['logo']!=""){$logo=$host."/panel/web/imagenes/logos/".$rr['logo'];}
-else{$logo=$host."/images/nologo.png";}
+ else{$logo=$host."/images/nologo.png";}
 ?>
-
 <script type="text/javascript" src="<?php echo $host; ?>/js/compra.js"></script>
 <style type="text/css">
   input {border:1px solid #dadada; height: 28px}
   .box-msg-result { font-size:10px; color:red;font-style: italic;}
 </style>
 <body>
-    <div id="box-other-email"></div>
+    <div id="box-other-email">        
+        <div id="msg-send-email" style="text-align: center; padding: 5px; display:none;">Enviando...</div>
+        <input type="text" name="oemail" id="oemail" value="" style="width:100%" placeholder="correo@dominio.com"/> <br><br>
+        <a href="javascript:" id="btn-enviar" class="btn btn-primary" style="margin-left:100px;color:#FFF; padding:3px 10px; background:#333">Enviar <i class="fa fa-envelope"></i></a>
+    </div>
     <div id="frm-suscripcion"></div>
 <header>   
   <div class="c-top" style="background: #EEEEEE; padding: 5px 0 0 0; margin-top: -8px; box-shadow: 3px 2px 5px #ccc;">
