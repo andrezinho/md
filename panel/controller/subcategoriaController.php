@@ -62,6 +62,7 @@ class subcategoriaController extends Controller
         $obj = $obj->edit($_GET['id']);
         $data['obj'] = $obj;        
         //$data['more_options'] = $this->more_options('subcategoria');
+        $data['categoria'] = $this->Select(array('name'=>'idcategoria','id'=>'idcategoria','table'=>'categoria','code'=>$obj->idcategoria));
         $view->setData($data);
         $view->setTemplate( '../view/subcategoria/_form.php' );
         echo $view->renderPartial();

@@ -191,7 +191,7 @@ if(isset($_POST['nombres'])&&isset($_POST['email']))
         //Insertamos el cupon
         $sql_p = "SELECT p.precio, c.cod
                   from publicaciones as p inner join suscripcion as s on s.idsuscripcion = p.idsuscripcion
-                    inner join local as l on l.idlocal = s.idlocal inner join ciudad as c on c.idciudad = l.idubigeo
+                    inner join local as l on l.idlocal = s.idlocal inner join ciudad as c on c.cod = l.idubigeo
                   where p.idpublicaciones = :idp";
         $stmt_p = $db->prepare($sql_p);
         $stmt_p->bindParam(':idp',$idpublicacion,PDO::PARAM_INT);

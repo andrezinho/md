@@ -142,11 +142,6 @@ $db = Spdo::singleton();
                         l.telefono2,
                         l.email,
                         e.website,
-                        e.bcp,
-                        e.scotiabank,
-                        e.interbank,
-                        e.continental,
-                        e.nacion,
                         p.titulo2,
                         p.cc,
                         ub.descripcion as ciudad
@@ -155,9 +150,10 @@ $db = Spdo::singleton();
                 inner join suscripcion as s on p.idsuscripcion = s.idsuscripcion
                 inner join local as l on l.idlocal = s.idlocal
                 inner join empresa as e on e.idempresa = l.idempresa
-                inner join ubigeo as ub on ub.idubigeo = l.idubigeo
-                where c.idcliente = ".$_SESSION['idusuario'];
-
+                inner join ciudad as ci on ci.cod = l.idubigeo
+                inner join ubigeo as ub on ub.idubigeo = ci.idciudad 
+                where c.idcliente = ".$_SESSION['idusuario']." order by idcupon desc";
+        
         $stmt = $db->prepare($sql);            
         $stmt->execute();
         $c = 0;
